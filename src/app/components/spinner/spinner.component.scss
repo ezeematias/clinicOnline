@@ -1,0 +1,59 @@
+
+.loader {
+    width: 48px;
+    height: 43px;
+    transform-origin: center 40%;
+    animation: rotate 4s linear infinite;
+    
+    svg {
+      position: absolute;
+      animation: triangulate 1.5s ease infinite;
+    }
+    
+    .loader-triangle {
+      animation-delay: -0.5s;
+      fill: #FF5A5A;
+    }
+    
+    .loader-square {
+      animation-delay: -1s;
+      fill: #62AAFF;
+    }
+    
+    .loader-pentagon {
+      animation-delay: 0;
+      fill: #FFD220;
+    }
+  }
+  .spinner {
+    position: fixed;
+    display: flex;
+    background-color: rgba(0, 0, 0, 0.658);
+    align-items: center;
+    justify-content: center;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    z-index: 1000;
+  }
+  
+  @keyframes triangulate {
+    0%, 100% {
+      transform: translate3d(0, 0, 0) rotate(0);
+    }
+    33% {
+      transform: translate3d(200%, 0, 0);
+    }
+    66% {
+      transform: translate3d(100%, calc(86.60259% * 2), 0) rotate(360deg);
+    }
+  }
+  
+  @keyframes rotate {
+    0% {
+      transform: rotate(0);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }

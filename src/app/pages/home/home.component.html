@@ -1,0 +1,22 @@
+<div class="container">
+    <div class="card text-center">
+        <div class="card-header">
+            <b>Clínica Online</b>
+        </div>
+        <div class="card-body p-4">
+            <app-error *ngIf="errorShow" mensaje="{{errorMessage}}" color="alert-danger"></app-error>          
+
+            <div *ngIf="userLogged|async as user; else then_content">
+                <button class="btn btn-danger form-control " (click)="logout()">Cerrar Sesión</button>
+                <a class="btn btn-info form-control" routerLink="/quien-soy"> Quien soy</a>
+                <a class="btn btn-warning form-control" routerLink="/juegos/cartas"> Juegos</a>
+
+            </div>
+            <ng-template #then_content>
+                <a class="btn btn-success form-control " routerLink="/login">
+                    Iniciar Sesión
+                </a>
+            </ng-template>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,44 @@
+<div class="container">
+    <div class="card text-center">
+        <div class="card-header">
+            <b>Registro</b>
+        </div>
+        <form [formGroup]="form">
+            <div class="card-body p-4">
+                <app-error *ngIf="errorShow" mensaje="{{errorMessage}}" color="alert-danger"></app-error>
+
+                <div class="form-group">
+                    <label style="float: left">Email</label>
+                    <input class="form-control" formControlName="email" type="email" placeholder="Ingrese su email"
+                        [(ngModel)]="usuario.email" required>
+                    <div class="errorMessage"
+                        *ngIf="getValue('email')?.invalid && (getValue('email').touched || getValue('email').dirty)">
+                        Ingrese un mail válido</div>
+                </div><br>
+
+                <div class="form-group">
+                    <label style="float: left">Contraseña</label>
+                    <input autocomplete="new-password" #password class="form-control" formControlName="password"
+                        type="password" placeholder="Ingrese su contraseña" [(ngModel)]="usuario.password" required>
+                    <div class="errorMessage"
+                        *ngIf="getValue('password')?.invalid && (getValue('password').touched || getValue('password').dirty)">
+                        Mínimo 6 caracteres</div>
+
+                </div><br>
+
+                <div class="form-group">
+                    <label style="float: left">Repita la contraseña</label>
+                    <input autocomplete="new-password" #password class="form-control" formControlName="rePassword"
+                        type="password" placeholder="Re-Ingrese su contraseña" [(ngModel)]="rePassword" required>
+                    <div class="errorMessage"
+                        *ngIf="getValue('rePassword')?.invalid && (getValue('rePassword').touched || getValue('rePassword').dirty)">
+                        Mínimo 6 caracteres</div>
+                </div><br>
+
+                <button class="btn btn-success form-control" (click)="registrar()"
+                    [disabled]="!form.valid">Registrar</button>
+                <a routerLink="/login" class="btn btn-danger form-control">Volver</a>
+            </div>
+        </form>
+    </div>
+</div>

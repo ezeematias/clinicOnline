@@ -1,44 +1,183 @@
-<div class="container">
-    <div class="card text-center">
-        <div class="card-header">
-            <b>Registro</b>
-        </div>
-        <form [formGroup]="form">
-            <div class="card-body p-4">
-                <app-error *ngIf="errorShow" mensaje="{{errorMessage}}" color="alert-danger"></app-error>
-
-                <div class="form-group">
-                    <label style="float: left">Email</label>
-                    <input class="form-control" formControlName="email" type="email" placeholder="Ingrese su email"
-                        [(ngModel)]="usuario.email" required>
-                    <div class="errorMessage"
-                        *ngIf="getValue('email')?.invalid && (getValue('email').touched || getValue('email').dirty)">
-                        Ingrese un mail válido</div>
-                </div><br>
-
-                <div class="form-group">
-                    <label style="float: left">Contraseña</label>
-                    <input autocomplete="new-password" #password class="form-control" formControlName="password"
-                        type="password" placeholder="Ingrese su contraseña" [(ngModel)]="usuario.password" required>
-                    <div class="errorMessage"
-                        *ngIf="getValue('password')?.invalid && (getValue('password').touched || getValue('password').dirty)">
-                        Mínimo 6 caracteres</div>
-
-                </div><br>
-
-                <div class="form-group">
-                    <label style="float: left">Repita la contraseña</label>
-                    <input autocomplete="new-password" #password class="form-control" formControlName="rePassword"
-                        type="password" placeholder="Re-Ingrese su contraseña" [(ngModel)]="rePassword" required>
-                    <div class="errorMessage"
-                        *ngIf="getValue('rePassword')?.invalid && (getValue('rePassword').touched || getValue('rePassword').dirty)">
-                        Mínimo 6 caracteres</div>
-                </div><br>
-
-                <button class="btn btn-success form-control" (click)="registrar()"
-                    [disabled]="!form.valid">Registrar</button>
-                <a routerLink="/login" class="btn btn-danger form-control">Volver</a>
+<div class="backgroundStyle"><img class="back" src="../../../assets/EMU_Patterns-background_01.jpg">
+    <div class="container">
+        <div class="card-body p-3">
+            <app-error *ngIf="errorShow" mensaje="{{errorMessage}}" color="alert-danger"></app-error>
+            <div class="buttonType">
+                <button class="btn btn-success" (click)="isSpecialist = true">Especialista</button>
+                <button class="btn btn-success" (click)="isSpecialist = false">Paciente</button>
             </div>
-        </form>
+            <div *ngIf="!isSpecialist; else then_content">
+                <form [formGroup]="form">
+                    <div class="form-group">
+                        <label style="float: left">Nombre</label>
+                        <input class="form-control" formControlName="name" type="name" placeholder="Ingrese su nombre"
+                            [(ngModel)]="patient.name" required>
+                        <div class="errorMessage"
+                            *ngIf="getValue('name')?.invalid && (getValue('name').touched || getValue('name').dirty)">
+                            Ingrese un nombre válido</div>
+                    </div>
+                    <div class="form-group">
+                        <label style="float: left">Apellido</label>
+                        <input class="form-control" formControlName="lastName" type="apellido"
+                            placeholder="Ingrese su apellido" [(ngModel)]="patient.lastName" required>
+                        <div class="errorMessage"
+                            *ngIf="getValue('lastName')?.invalid && (getValue('lastName').touched || getValue('lastName').dirty)">
+                            Ingrese un apellido válido</div>
+                    </div>
+                    <div class="form-group">
+                        <label style="float: left">Edad</label>
+                        <input class="form-control" formControlName="age" type="edad" placeholder="Ingrese su edad"
+                            [(ngModel)]="patient.age" required>
+                        <div class="errorMessage"
+                            *ngIf="getValue('age')?.invalid && (getValue('age').touched || getValue('age').dirty)">
+                            Ingrese una edad válida mayor de 18</div>
+                    </div>
+                    <div class="form-group">
+                        <label style="float: left">DNI</label>
+                        <input class="form-control" formControlName="dni" type="dni" placeholder="Ingrese su DNI"
+                            [(ngModel)]="patient.dni" required>
+                        <div class="errorMessage"
+                            *ngIf="getValue('dni')?.invalid && (getValue('dni').touched || getValue('dni').dirty)">
+                            Ingrese un DNI válido</div>
+                    </div>
+                    <div class="form-group">
+                        <label style="float: left">Obra Social</label>
+                        <input class="form-control" formControlName="socialWork" type="socialWork"
+                            placeholder="Ingrese su obra social" [(ngModel)]="patient.socialWork" required>
+                        <div class="errorMessage"
+                            *ngIf="getValue('socialWork')?.invalid && (getValue('socialWork').touched || getValue('socialWork').dirty)">
+                            Ingrese una obra social válida</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label style="float: left">Email</label>
+                        <input class="form-control" formControlName="email" type="email" placeholder="Ingrese su email"
+                            [(ngModel)]="patient.email" required>
+                        <div class="errorMessage"
+                            *ngIf="getValue('email')?.invalid && (getValue('email').touched || getValue('email').dirty)">
+                            Ingrese un mail válido</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label style="float: left">Contraseña</label>
+                        <input autocomplete="new-password" #password class="form-control" formControlName="password"
+                            type="password" placeholder="Ingrese su contraseña" [(ngModel)]="patient.password" required>
+                        <div class="errorMessage"
+                            *ngIf="getValue('password')?.invalid && (getValue('password').touched || getValue('password').dirty)">
+                            Mínimo 6 caracteres</div>
+
+                    </div>
+
+                    <div class="form-group">
+                        <label style="float: left">Repita la contraseña</label>
+                        <input autocomplete="new-password" #password class="form-control" formControlName="rePassword"
+                            type="password" placeholder="Re-Ingrese su contraseña" [(ngModel)]="rePassword" required>
+                        <div class="errorMessage"
+                            *ngIf="getValue('rePassword')?.invalid && (getValue('rePassword').touched || getValue('rePassword').dirty)">
+                            Mínimo 6 caracteres</div>
+                    </div>
+                    <div class="container-input-file">
+                        <div>
+                            <input class="form-control" formControlName="file" type="file"
+                                placeholder="Ingrese su imagen" [(ngModel)]="patient.imageUrl">
+                        </div>
+                    </div>
+                    <div class="container-input-file">
+                        <div>
+                            <input class="form-control" formControlName="file2" type="file"
+                                placeholder="Ingrese su imagen" [(ngModel)]="patient.imageUrl">
+                        </div>
+                    </div>
+
+                    <button class="btn btn-success form-control" (click)="registerPatient()"
+                        [disabled]="!form.valid">Registrar</button>
+                    <a routerLink="/login" class="btn btn-danger form-control">Volver</a>
+                </form>
+            </div>
+            <ng-template #then_content>
+                <form [formGroup]="formS">
+
+                    <div class="form-group">
+                        <label style="float: left">Nombre</label>
+                        <input class="form-control" formControlName="nameS" type="name" placeholder="Ingrese su nombre"
+                            [(ngModel)]="specialist.name" required>
+                        <div class="errorMessage"
+                            *ngIf="getValueS('nameS')?.invalid && (getValueS('nameS').touched || getValueS('nameS').dirty)">
+                            Ingrese un nombre válido</div>
+                    </div>
+                    <div class="form-group">
+                        <label style="float: left">Apellido</label>
+                        <input class="form-control" formControlName="lastNameS" type="apellido"
+                            placeholder="Ingrese su apellido" [(ngModel)]="specialist.lastName" required>
+                        <div class="errorMessage"
+                            *ngIf="getValueS('lastNameS')?.invalid && (getValueS('lastNameS').touched || getValueS('lastNameS').dirty)">
+                            Ingrese un apellido válido</div>
+                    </div>
+                    <div class="form-group">
+                        <label style="float: left">Edad</label>
+                        <input class="form-control" formControlName="ageS" type="edad" placeholder="Ingrese su edad"
+                            [(ngModel)]="specialist.age" required>
+                        <div class="errorMessage"
+                            *ngIf="getValueS('ageS')?.invalid && (getValueS('ageS').touched || getValueS('ageS').dirty)">
+                            Ingrese una edad válida mayor de 18</div>
+                    </div>
+                    <div class="form-group">
+                        <label style="float: left">DNI</label>
+                        <input class="form-control" formControlName="dniS" type="dni" placeholder="Ingrese su DNI"
+                            [(ngModel)]="specialist.dni" required>
+                        <div class="errorMessage"
+                            *ngIf="getValueS('dniS')?.invalid && (getValueS('dniS').touched || getValueS('dniS').dirty)">
+                            Ingrese un DNI válido</div>
+                    </div>
+                    <div class="form-group">
+                        <label style="float: left">Especialidad</label>
+                        <input class="form-control" formControlName="specialist" type="specialist"
+                            placeholder="Ingrese su especialidad" [(ngModel)]="specialist.specialist" required>
+                        <div class="errorMessage"
+                            *ngIf="getValueS('specialist')?.invalid && (getValueS('specialist').touched || getValueS('specialist').dirty)">
+                            Ingrese una especialidad válida</div>
+                    </div>
+                    <div class="form-group">
+                        <label style="float: left">Email</label>
+                        <input class="form-control" formControlName="emailS" type="email" placeholder="Ingrese su email"
+                            [(ngModel)]="specialist.email" required>
+                        <div class="errorMessage"
+                            *ngIf="getValueS('emailS')?.invalid && (getValueS('emailS').touched || getValueS('emailS').dirty)">
+                            Ingrese un mail válido</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label style="float: left">Contraseña</label>
+                        <input autocomplete="new-password" #password class="form-control" formControlName="passwordS"
+                            type="password" placeholder="Ingrese su contraseña" [(ngModel)]="specialist.password"
+                            required>
+                        <div class="errorMessage"
+                            *ngIf="getValueS('passwordS')?.invalid && (getValueS('passwordS').touched || getValueS('passwordS').dirty)">
+                            Mínimo 6 caracteres</div>
+
+                    </div>
+
+                    <div class="form-group">
+                        <label style="float: left">Repita la contraseña</label>
+                        <input autocomplete="new-password" #password class="form-control" formControlName="rePasswordS"
+                            type="password" placeholder="Re-Ingrese su contraseña" [(ngModel)]="rePassword" required>
+                        <div class="errorMessage"
+                            *ngIf="getValueS('rePasswordS')?.invalid && (getValueS('rePasswordS').touched || getValueS('rePasswordS').dirty)">
+                            Mínimo 6 caracteres</div>
+                    </div>
+                    <div class="container-input-file">
+                        <div>
+                            <input class="form-control" formControlName="fileS" type="file"
+                                placeholder="Ingrese su imagen" [(ngModel)]="specialist.imageUrl">
+                        </div>
+                    </div>
+
+                    <button class="btn btn-success form-control" (click)="registerSpecialist()"
+                        [disabled]="!formS.valid">Registrar</button>
+                    <a routerLink="/login" class="btn btn-danger form-control">Volver</a>
+                </form>
+            </ng-template>
+
+        </div>
     </div>
 </div>

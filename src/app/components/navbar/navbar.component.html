@@ -4,29 +4,29 @@
             <div style="display: flex; align-items: center;">
                 <img class="logoNav" src="../../../assets/logoCompleted.png" alt="">
             </div>
-        </a> 
-        <a class="navbar-brand" routerLink="" *ngIf="userLogged|async as user; else then_content">  
+        </a>
+        <a class="navbar-brand" routerLink="" *ngIf="userLogged|async as user; else then_content">
             <div style="display: flex; align-items: center;" *ngIf="user.displayName">
                 <a class="borderLog" routerLink="">
-                    <img class="picLog" src="{{user.photoURL}}" alt="">                    
+                    <img class="picLog" src="{{user.photoURL}}" alt="">
                 </a>
-                <div >
-                    <a class="navbar-brand" routerLink=""> {{user.displayName?user.displayName:user.email}} </a> 
+                <div>
+                    <a class="navbar-brand" routerLink=""> {{user.displayName?user.displayName:user.email}} </a>
                 </div>
             </div>
             <div style="display: inline-flex; align-items: center;" *ngIf="!user.displayName">
                 <a class="borderLog" routerLink="">
-                    <img class="picLog" src="../../../assets/picUser.jpeg" alt="">                    
+                    <img class="picLog" src="../../../assets/picUser.jpeg" alt="">
                 </a>
-                <div >
+                <div>
                     <a class="navbar-brand" routerLink=""> {{user.email}} </a>
                 </div>
             </div>
-        </a>        
+        </a>
         <ng-template #then_content>
-            <a class="navbar-brand" routerLink="login" >  
+            <a class="navbar-brand" routerLink="login">
                 Iniciar Sesión
             </a>
-        </ng-template>  
+        </ng-template>
     </div>
 </nav>

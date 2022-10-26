@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "eu-cliniconline": {
+      "hosting": {
+        "clinicOnline": [
+          "eu-cliniconline"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "eu-cliniconline"
+  }
+}

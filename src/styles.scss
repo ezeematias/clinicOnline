@@ -3,22 +3,23 @@
 html,
 body {
   //background: url(assets/EMU_Patterns-background_02.jpg);
-  background-size: auto;
+  background-size: cover;
   background-position: absolute;
   width: 100%;
   color: #006bdb;
-  background: linear-gradient(to left, #00a9e2, #006bdb);
+  //background: linear-gradient(to left, #00a9e2, #006bdb);
 }
 
-.container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-  margin-top: 5%;
-  margin-bottom: 10%;
-}
+// .container {
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   position: fixed;
+//   width: 100%;
+//   height: 100%;
+//   margin-top: 5%;
+//   margin-bottom: 10%;
+// }
 
 .picLog {
   display: flex;
@@ -64,35 +65,4 @@ footer {
 
 * {
   outline: none;
-}
-
-html,
-body {
-  margin: 0;
-  padding: 0;
-  font-family: 'Dongle', sans-serif;
-}
-
-.btnHangman {
-  border-radius: 4px;
-  min-width: 36px;
-  min-height: 36px;
-  background-color: #f5216e;
-  color: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: none;
-  cursor: pointer;
-
-  &:hover {
-    &:not(.btn--disabled) {
-      opacity: 0.7;
-    }
-  }
-
-  &--disabled {
-    background-color: #dcdcdc;
-    cursor: default;
-  }
 }

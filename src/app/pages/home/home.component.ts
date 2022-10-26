@@ -1,4 +1,5 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { SpinnerService } from 'src/app/services/spinner.service';
 
@@ -10,23 +11,26 @@ import { SpinnerService } from 'src/app/services/spinner.service';
 export class HomeComponent implements OnInit, AfterViewInit {
 
   userLogged = this.auth.getAuth();
-  errorShow : boolean = false;
-  errorMessage : string = '';
-  
-  constructor (private auth: AuthService, private spinnerService: SpinnerService) {
-  }     
+  errorShow: boolean = false;
+  errorMessage: string = '';
 
-  logout(){
+  constructor(private auth: AuthService, private spinnerService: SpinnerService, private router: Router) {
+  }
+
+  logout() {
     this.spinnerService.show();
-    this.auth.logout().catch(error => {this.errorShow = true; this.errorMessage = error.message; console.log("Error en ingreso",error)}).finally(() => {this.spinnerService.hide();});
-  } 
-  
+    this.auth.logout().catch(error => { this.errorShow = true; this.errorMessage = error.message; console.log("Error en ingreso", error) }).finally(() => { this.spinnerService.hide(); });
+  }
+
   ngOnInit(): void {
     this.spinnerService.show();
   }
 
   ngAfterViewInit(): void {
     this.spinnerService.hide();
+    if (!this.auth.userCredential?.emailVerified) {
+      this.router.navigate(['verification'])
+    }
   }
 
 }

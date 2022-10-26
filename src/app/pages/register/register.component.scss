@@ -1,0 +1,23 @@
+.back {
+    background-size: cover;
+    background-position: absolute;
+    width: 100%;
+    position: fixed;
+}
+
+.container {
+    background-color: white;
+    position: fixed;
+    right: 0;
+    padding: 0%;
+    margin-top: 0%;
+    width: 50%;
+    height: 100%;
+    opacity: .9;
+    justify-content: center;
+    align-items: center;
+}
+
+.form-group {
+    margin-bottom: 5px;
+}

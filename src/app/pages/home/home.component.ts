@@ -28,7 +28,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     this.spinnerService.hide();
-    if (!this.auth.userCredential?.emailVerified) {
+    if (this.auth.userCredential != null && !this.auth.userCredential?.emailVerified) {
       this.router.navigate(['verification'])
     }
   }

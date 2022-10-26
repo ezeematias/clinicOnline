@@ -3,19 +3,18 @@
     <div class="container">
         <div class="card mt-5" *ngIf="user$ | async as user; else loading">
             <div class="card-body">
-                <h3 class="card-title text-center">Thank you for Registering!</h3>
+                <h3 class="card-title text-center">¡Gracias por registrarte {{user?.displayName}}!</h3>
                 <div class="form-group mt-2">
                     <p class="text-center">
-                        We have sent a confirmation email to <strong>{{ user?.email }}</strong>
+                        Por favor revisa tu correo <strong>{{ user?.email }}</strong> para verificar tu cuenta.
                     </p>
                     <p class="text-center">
-                        Please check your email and click on the link to verify your email
-                        address.
+                        (Controlá la carpeta de correo no deseado)
                     </p>
                 </div>
-                <div class="form-group text-center mt-5">
+                <div class="form-group text-center ">
                     <button class="btn btn-primary" (click)="onSendEmail()">
-                        Resend verification email
+                        Re-enviar el correo de verificación
                     </button><br>
                     <button class="btn btn-danger" (click)="logout()">Cerrar Sesión</button>
                 </div>
@@ -23,7 +22,7 @@
         </div>
 
         <ng-template #loading>
-            Loading....
+            <p class="text-center">Cargando...</p>
         </ng-template>
     </div>
 </div>

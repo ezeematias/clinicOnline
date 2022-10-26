@@ -78,14 +78,9 @@
                     </div>
                     <div class="container-input-file">
                         <div>
-                            <input class="form-control" formControlName="file" type="file"
-                                placeholder="Ingrese su imagen" [(ngModel)]="patient.imageUrl">
-                        </div>
-                    </div>
-                    <div class="container-input-file">
-                        <div>
-                            <input class="form-control" formControlName="file2" type="file"
-                                placeholder="Ingrese su imagen" [(ngModel)]="patient.imageUrl">
+                            <input class="form-control" formControlName="file" type="file" multiple
+                                (change)="uploadImage($event)" placeholder="Ingrese su imagen"
+                                [(ngModel)]="patient.imageUrl">
                         </div>
                     </div>
 

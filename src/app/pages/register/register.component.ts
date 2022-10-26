@@ -7,7 +7,8 @@ import { SpinnerService } from 'src/app/services/spinner.service';
 import { Specialist } from 'src/app/entities/specialist';
 import { Patient } from 'src/app/entities/patient';
 import { FirestoreService } from 'src/app/services/firestore.service';
-
+import { StorageService } from 'src/app/services/storage.service';
+import { throws } from 'assert';
 
 @Component({
   selector: 'app-register',
@@ -15,8 +16,13 @@ import { FirestoreService } from 'src/app/services/firestore.service';
   styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent implements OnInit {
+  files: any;
 
-  constructor(private auth: AuthService, private router: Router, private readonly fb: FormBuilder, private spinnerService: SpinnerService, public firestore: FirestoreService) { }
+  constructor(private auth: AuthService, private router: Router,
+    private readonly fb: FormBuilder,
+    private spinnerService: SpinnerService,
+    public firestore: FirestoreService,
+    public storage: StorageService) { }
 
   form!: FormGroup;
   formS!: FormGroup;
@@ -65,6 +71,10 @@ export class RegisterComponent implements OnInit {
         this.firestore.addPatient(this.patient)?.catch(() => { console.log('Error sending patient') });
       }).catch(error => {
         this.errorShow = true; this.errorMessage = error.message; console.log("Error de registro", error)
+      }).then(async res => {
+        await this.storage.updateImage(this.patient.email, this.files);
+        const urls = this.storage.getImages(this.patient.email);
+        await this.auth.uploadUser(this.patient.name, urls[0]);
       }).finally(() => {
         this.spinnerService.hide();
       });
@@ -73,6 +83,11 @@ export class RegisterComponent implements OnInit {
       this.spinnerService.hide();
       this.errorMessage = 'Las contraseñas no coinciden';
     }
+  }
+
+  uploadImage($event: any) {
+    this.files = $event.target.files;
+    console.log(this.files);
   }
 
   ngOnInit(): void {

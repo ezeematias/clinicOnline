@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import firebase from 'firebase/compat/app';
 import { Router } from '@angular/router';
-import { createUserWithEmailAndPassword, sendEmailVerification, signInWithEmailAndPassword, UserCredential } from "firebase/auth";
+import { createUserWithEmailAndPassword, getAuth, sendEmailVerification, signInWithEmailAndPassword, updateProfile, UserCredential } from "firebase/auth";
 import { Auth } from '@angular/fire/auth';
 
 @Injectable({
@@ -12,11 +12,11 @@ export class AuthService {
 
   public userCredential: UserCredential | any;
 
-  constructor(public afauth: AngularFireAuth, private router: Router, private readonly auth: Auth) {
-  }
+  constructor(public afauth: AngularFireAuth, private router: Router, private readonly auth: Auth) { }
 
-  async sendEmail(){
-    return await sendEmailVerification(this.userCredential.user);
+  async sendEmail() {
+    this.userCredential = this.auth.currentUser;
+    return await sendEmailVerification(this.userCredential).then((res) => { console.log("Se envió correctamente", res); }).catch(error => { console.log("Error en ingreso", error) }).finally(() => { });
   }
 
   async login(email: string, password: string) {
@@ -25,7 +25,7 @@ export class AuthService {
       if (res.user?.emailVerified) {
         this.router.navigate(['home'])
       } else {
-        this.userCredential = res;        
+        this.userCredential = res;
         this.router.navigate(['verification'])
       }
 
@@ -59,6 +59,12 @@ export class AuthService {
           throw new Error(error.message);
       }
     });
+  }
+
+  async uploadUser(name: string, url: string) {
+    let auth = getAuth();
+    return await updateProfile(auth.currentUser!, { displayName: name, photoURL: url }).catch(
+      (err) => console.log(err));
   }
 
   async register2(email: string, password: string) {

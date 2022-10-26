@@ -16,13 +16,14 @@ export class VerificationComponent implements OnInit {
   errorShow: boolean = false;
   errorMessage: string = '';
 
-  constructor(private auth: AuthService,private spinnerService: SpinnerService) { }
+  constructor(private auth: AuthService, private spinnerService: SpinnerService) { }
 
   ngOnInit(): void {
   }
 
-  onSendEmail(): void {
-    this.auth.sendEmail();
+  onSendEmail() {
+    this.spinnerService.show();
+    this.auth.sendEmail().then((res) => { this.spinnerService.hide(); });
   }
 
   logout() {

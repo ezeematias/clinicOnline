@@ -22,15 +22,17 @@ import { environment } from '../environments/environment';
 import { provideAuth, getAuth } from '@angular/fire/auth';
 import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 import { VerificationComponent } from './pages/verification/verification.component';
+import { provideStorage, getStorage } from '@angular/fire/storage';
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBCkbwYkMKyoNUzNugwmMhU7QwVicYKREM",
-  authDomain: "eu-cliniconline.firebaseapp.com",
-  projectId: "eu-cliniconline",
-  storageBucket: "eu-cliniconline.appspot.com",
-  messagingSenderId: "826947770950",
-  appId: "1:826947770950:web:d916ff73ce9da799fe4847",
-  measurementId: "G-7KQD3C7E1Y"
+  projectId: 'eu-cliniconline',
+  appId: '1:826947770950:web:702b4d66632faa25fe4847',
+  storageBucket: 'eu-cliniconline.appspot.com',
+  locationId: 'us-central',
+  apiKey: 'AIzaSyBCkbwYkMKyoNUzNugwmMhU7QwVicYKREM',
+  authDomain: 'eu-cliniconline.firebaseapp.com',
+  messagingSenderId: '826947770950',
+  measurementId: 'G-D3C9S1K8CV',
 };
 
 @NgModule({
@@ -56,7 +58,7 @@ const firebaseConfig = {
     HttpClientModule,
     SpinnerModule,
     AngularFirestoreModule,
-    AngularFireStorageModule, provideFirebaseApp(() => initializeApp(environment.firebase)), provideAuth(() => getAuth()), provideFirestore(() => getFirestore()),
+    AngularFireStorageModule, provideFirebaseApp(() => initializeApp(environment.firebase)), provideAuth(() => getAuth()), provideFirestore(() => getFirestore()), provideStorage(() => getStorage())
   ],
   providers: [],
   bootstrap: [AppComponent]

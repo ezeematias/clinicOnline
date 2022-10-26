@@ -29,4 +29,21 @@ export class FirestoreService {
     };
     return await this.afs.collection('patient').add(newPatient);
   }
+
+  async addSpecialist(specialist: Specialist) {
+    let newSpecialist: Specialist = {
+      email: specialist.email,
+      password: specialist.password,
+      displayName: specialist.name,
+      photoURL: specialist.photoURL,
+      name: specialist.name,
+      lastName: specialist.lastName,
+      age: specialist.age,
+      dni: specialist.dni,
+      specialist: specialist.specialist,
+      imageUrl: specialist.imageUrl,
+    };
+
+    return await this.afs.collection('patient').add(newSpecialist);
+  }
 }

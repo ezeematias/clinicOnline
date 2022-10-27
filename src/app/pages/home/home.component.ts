@@ -24,6 +24,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.spinnerService.show();
+    console.log(this.auth.auth.currentUser);
   }
 
   ngAfterViewInit(): void {

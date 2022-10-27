@@ -78,7 +78,7 @@ export class RegisterComponent implements OnInit {
   }
 
   registerPatient() {
-    this.spinnerService.show();
+    this.spinnerService.show();    
     if (this.patient.password === this.rePassword) {
       this.auth.register(this.patient.email, this.patient.password).then(() => {
         this.storage.updateImage(this.patient.email, this.files).then(async () => {
@@ -126,10 +126,10 @@ export class RegisterComponent implements OnInit {
       email: ['', Validators.pattern("^[^@]+@[^@]+\.[a-zA-Z]{2,}$")],
       password: ['', [Validators.minLength(6), Validators.maxLength(20)]],
       rePassword: ['', [Validators.minLength(6), Validators.maxLength(20)]],
-      name: ['', [Validators.minLength(6), Validators.maxLength(20)]],
-      lastName: ['', [Validators.minLength(6), Validators.maxLength(20)]],
+      name: ['', [Validators.minLength(3), Validators.maxLength(20)]],
+      lastName: ['', [Validators.minLength(3), Validators.maxLength(20)]],
       age: ['', [Validators.max(120), Validators.min(18)]],
-      dni: ['', [Validators.minLength(8), Validators.maxLength(9)]],
+      dni: ['', [Validators.pattern("[0-9]{8}")]],
       file: ['', Validators.maxLength(5000)],
       file2: ['', Validators.maxLength(5000)],
       socialWork: ['',]

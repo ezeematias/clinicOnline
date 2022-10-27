@@ -54,8 +54,8 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  autoLogin(): void {
-    this.usuario.email = 'auto@session.com';
+  autoLogin(user: string): void {
+    this.usuario.email = `${user}@session.com`;
     this.usuario.password = '123456';
   }
 

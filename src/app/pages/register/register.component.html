@@ -3,8 +3,10 @@
         <div class="card-body p-3">
             <app-error *ngIf="errorShow" mensaje="{{errorMessage}}" color="alert-danger"></app-error>
             <div class="buttonType">
-                <button class="btn btn-success" (click)="isSpecialist = true">Especialista</button>
-                <button class="btn btn-success" (click)="isSpecialist = false">Paciente</button>
+                <input type=image src="../../../assets/CO_People_01.svg" (click)="isSpecialist = false" width="450"
+                    height="150" class="imageBtn">
+                <input type=image src="../../../assets/CO_Specialist_01.svg" (click)="isSpecialist = true" width="450"
+                    height="150" class="imageBtn">
             </div>
             <div *ngIf="!isSpecialist; else then_content">
                 <form [formGroup]="form">
@@ -26,7 +28,7 @@
                     </div>
                     <div class="form-group">
                         <label style="float: left">Edad</label>
-                        <input class="form-control" formControlName="age" type="edad" placeholder="Ingrese su edad"
+                        <input class="form-control" formControlName="age" type="number" placeholder="Ingrese su edad"
                             [(ngModel)]="patient.age" required>
                         <div class="errorMessage"
                             *ngIf="getValue('age')?.invalid && (getValue('age').touched || getValue('age').dirty)">
@@ -34,7 +36,7 @@
                     </div>
                     <div class="form-group">
                         <label style="float: left">DNI</label>
-                        <input class="form-control" formControlName="dni" type="dni" placeholder="Ingrese su DNI"
+                        <input class="form-control" formControlName="dni" type="number" placeholder="Ingrese su DNI"
                             [(ngModel)]="patient.dni" required>
                         <div class="errorMessage"
                             *ngIf="getValue('dni')?.invalid && (getValue('dni').touched || getValue('dni').dirty)">
@@ -109,7 +111,7 @@
                     </div>
                     <div class="form-group">
                         <label style="float: left">Edad</label>
-                        <input class="form-control" formControlName="ageS" type="edad" placeholder="Ingrese su edad"
+                        <input class="form-control" formControlName="ageS" type="number" placeholder="Ingrese su edad"
                             [(ngModel)]="specialist.age" required>
                         <div class="errorMessage"
                             *ngIf="getValueS('ageS')?.invalid && (getValueS('ageS').touched || getValueS('ageS').dirty)">
@@ -117,7 +119,7 @@
                     </div>
                     <div class="form-group">
                         <label style="float: left">DNI</label>
-                        <input class="form-control" formControlName="dniS" type="dni" placeholder="Ingrese su DNI"
+                        <input class="form-control" formControlName="dniS" type="number" placeholder="Ingrese su DNI"
                             [(ngModel)]="specialist.dni" required>
                         <div class="errorMessage"
                             *ngIf="getValueS('dniS')?.invalid && (getValueS('dniS').touched || getValueS('dniS').dirty)">

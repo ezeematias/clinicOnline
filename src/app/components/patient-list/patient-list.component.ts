@@ -16,7 +16,7 @@ export class PatientListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.firestore.getPatient().subscribe((patient) => {
+    this.firestore.getPatientAll().subscribe((patient) => {
       this.patients = patient;
     })
   }
@@ -24,6 +24,9 @@ export class PatientListComponent implements OnInit {
   async onClickDeleted(patient: Patient) {
     const resp = await this.firestore.deletePatient(patient);
     console.log(resp);
+  }
+  async onClickupdate(patient: Patient, status: boolean) {
+    await this.firestore.updatePlace(patient, status);
   }
 
 }

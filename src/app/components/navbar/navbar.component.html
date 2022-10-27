@@ -5,21 +5,21 @@
                 <img class="logoNav" src="../../../assets/logoCompleted.png" alt="">
             </div>
         </a>
-        <a class="navbar-brand" routerLink="" *ngIf="userLogged|async as user; else then_content">
+        <a class="navbar-brand" routerLink="panel" *ngIf="userLogged|async as user; else then_content">
             <div style="display: flex; align-items: center;" *ngIf="user.displayName">
-                <a class="borderLog" routerLink="">
+                <a class="borderLog" routerLink="panel">
                     <img class="picLog" src="{{user.photoURL}}" alt="">
                 </a>
                 <div>
-                    <a class="navbar-brand" routerLink=""> {{user.displayName?user.displayName:user.email}} </a>
+                    <a class="navbar-brand" routerLink="panel"> {{user.displayName?user.displayName:user.email}} </a>
                 </div>
             </div>
             <div style="display: inline-flex; align-items: center;" *ngIf="!user.displayName">
-                <a class="borderLog" routerLink="">
+                <a class="borderLog" routerLink="panel">
                     <img class="picLog" src="../../../assets/picUser.jpeg" alt="">
                 </a>
                 <div>
-                    <a class="navbar-brand" routerLink=""> {{user.email}} </a>
+                    <a class="navbar-brand" routerLink="panel"> {{user.email}} </a>
                 </div>
             </div>
         </a>

@@ -24,6 +24,8 @@ import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 import { VerificationComponent } from './pages/verification/verification.component';
 import { provideStorage, getStorage } from '@angular/fire/storage';
 import { PatientListComponent } from './components/patient-list/patient-list.component';
+import { AdminPanelComponent } from './pages/admin-panel/admin-panel.component';
+import { SpecialistListComponent } from './components/specialist-list/specialist-list.component';
 
 const firebaseConfig = {
   projectId: 'eu-cliniconline',
@@ -48,6 +50,8 @@ const firebaseConfig = {
     NotFoundComponent,
     VerificationComponent,
     PatientListComponent,
+    AdminPanelComponent,
+    SpecialistListComponent,
   ],
   imports: [
     BrowserModule,

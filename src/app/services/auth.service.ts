@@ -12,7 +12,7 @@ export class AuthService {
 
   public userCredential: UserCredential | any;
 
-  constructor(public afauth: AngularFireAuth, private router: Router, private readonly auth: Auth) { }
+  constructor(public afauth: AngularFireAuth, private router: Router, public readonly auth: Auth) { }
 
   async sendEmail() {
     this.userCredential = this.auth.currentUser;
@@ -66,7 +66,7 @@ export class AuthService {
     console.log(url);
     return await updateProfile(auth.currentUser!, { displayName: name, photoURL: url }).then(() => console.log(auth.currentUser?.photoURL)).catch(
       (err) => console.log(err));
-  }  
+  }
 
   async logout() {
     return await this.afauth.signOut().then(res => this.router.navigate(['login'])).catch(error => {

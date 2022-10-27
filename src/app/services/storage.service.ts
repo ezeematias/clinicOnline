@@ -11,6 +11,7 @@ export class StorageService {
   constructor(public storage: Storage) { }
 
   async updateImage(user: string, files: any) {
+    this.listUrl = [];
     for (let item in files) {
       const imgRef = ref(this.storage, 'images/' + user + "/" + new Date().getTime().toString());
       const element = files[item];

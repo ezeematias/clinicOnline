@@ -10,8 +10,9 @@ export class Patient {
     dni: string;
     socialWork: string;
     imageUrl: string[] = [];
+    enable: boolean;
 
-    constructor(email: string = '', password: string = '', displayName: string = '', photoURL: string = '', name: string = '', lastName: string = '', age: number = 0, dni: string = '', socialWork: string = '', imageUrl: string[] = []) {
+    constructor(email: string = '', password: string = '', displayName: string = '', photoURL: string = '', name: string = '', lastName: string = '', age: number = 0, dni: string = '', socialWork: string = '', imageUrl: string[] = [], enable: boolean = false) {
         this.email = email;
         this.password = password;
         this.displayName = displayName;
@@ -22,5 +23,6 @@ export class Patient {
         this.dni = dni;
         this.socialWork = socialWork;
         this.imageUrl = imageUrl;
+        this.enable = enable;
     }
 }

@@ -63,31 +63,13 @@ export class AuthService {
 
   async uploadUser(name: string, url: string) {
     let auth = getAuth();
-    return await updateProfile(auth.currentUser!, { displayName: name, photoURL: url }).catch(
+    console.log(url);
+    return await updateProfile(auth.currentUser!, { displayName: name, photoURL: url }).then(() => console.log(auth.currentUser?.photoURL)).catch(
       (err) => console.log(err));
-  }
-
-  async register2(email: string, password: string) {
-    try {
-      const newUserCredential: UserCredential = await createUserWithEmailAndPassword(this.auth, email, password);
-      await sendEmailVerification(newUserCredential.user);
-      this.router.navigate(['verification']);
-      return newUserCredential;
-    } catch (error) {
-      switch (error) {
-        case 'auth/invalid-email':
-          throw new Error('Mail Inválido');
-        case 'auth/email-already-in-use':
-          throw new Error('El correo ya se encuentra en uso');
-        default:
-          throw new Error();
-      }
-    }
-  }
+  }  
 
   async logout() {
     return await this.afauth.signOut().then(res => this.router.navigate(['login'])).catch(error => {
-      ;
       throw new Error('Error en desloguearse');
     });
   }

@@ -1,18 +1,19 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { collectionData, Firestore, doc, deleteDoc } from '@angular/fire/firestore';
+import { collection } from 'firebase/firestore';
+import { Observable } from 'rxjs';
 import { Patient } from '../entities/patient';
 import { Specialist } from '../entities/specialist';
-import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FirestoreService {
-  private itemsCollection?: AngularFirestoreCollection<any>;
   public specialist: Specialist | any;
   public patient: Patient | any;
 
-  constructor(private authService: AuthService, private afs: AngularFirestore) { }
+  constructor(private afs: AngularFirestore, private firestore: Firestore) { }
 
   async addPatient(patient: Patient) {
     let newPatient: Patient = {
@@ -28,6 +29,16 @@ export class FirestoreService {
       imageUrl: patient.imageUrl,
     };
     return await this.afs.collection('patient').add(newPatient);
+  }
+
+  getPatient(): Observable<Patient[]> {
+    const pattientRef = collection(this.firestore, 'patient');
+    return collectionData(pattientRef, { idField: 'id' }) as Observable<Patient[]>;
+  }
+
+  deletePatient(patient: Patient) {
+    const patientDocRef = doc(this.firestore, `patient/${patient.id}`);
+    return deleteDoc(patientDocRef);
   }
 
   async addSpecialist(specialist: Specialist) {

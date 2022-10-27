@@ -8,7 +8,6 @@ import { Specialist } from 'src/app/entities/specialist';
 import { Patient } from 'src/app/entities/patient';
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { StorageService } from 'src/app/services/storage.service';
-import { throws } from 'assert';
 
 @Component({
   selector: 'app-register',
@@ -17,15 +16,29 @@ import { throws } from 'assert';
 })
 export class RegisterComponent implements OnInit {
   files: any;
+  form: FormGroup;
+  formS!: FormGroup;
 
   constructor(private auth: AuthService, private router: Router,
     private readonly fb: FormBuilder,
     private spinnerService: SpinnerService,
     public firestore: FirestoreService,
-    public storage: StorageService) { }
+    public storage: StorageService) {
 
-  form!: FormGroup;
-  formS!: FormGroup;
+    this.form = new FormGroup({
+      email: new FormControl(),
+      password: new FormControl(),
+      rePassword: new FormControl(),
+      name: new FormControl(),
+      lastName: new FormControl(),
+      age: new FormControl(),
+      dni: new FormControl(),
+      file: new FormControl(),
+      file2: new FormControl(),
+      socialWork: new FormControl(),
+    })
+  }
+
 
   usuario = new User();
   rePassword: string = '';
@@ -68,13 +81,17 @@ export class RegisterComponent implements OnInit {
     this.spinnerService.show();
     if (this.patient.password === this.rePassword) {
       this.auth.register(this.patient.email, this.patient.password).then(() => {
-        this.firestore.addPatient(this.patient)?.catch(() => { console.log('Error sending patient') });
+        this.storage.updateImage(this.patient.email, this.files).then(async () => {
+          await this.storage.getImages(this.patient.email).then(() => {
+            this.auth.uploadUser(this.patient.name, this.storage.listUrl[0]);
+            for (let item in this.storage.listUrl) {
+              this.patient.imageUrl.push(this.storage.listUrl[item]);
+            }
+            this.firestore.addPatient(this.patient)?.catch(() => { console.log('Error sending patient') });
+          })
+        })
       }).catch(error => {
         this.errorShow = true; this.errorMessage = error.message; console.log("Error de registro", error)
-      }).then(async res => {
-        await this.storage.updateImage(this.patient.email, this.files);
-        const urls = this.storage.getImages(this.patient.email);
-        await this.auth.uploadUser(this.patient.name, urls[0]);
       }).finally(() => {
         this.spinnerService.hide();
       });

@@ -1,4 +1,5 @@
 export class Patient {
+    id?: string;
     email: string;
     password: string;
     displayName: string;
@@ -10,7 +11,7 @@ export class Patient {
     socialWork: string;
     imageUrl: string[] = [];
 
-    constructor(email: string = '', password: string = '', displayName: string = '', photoURL: string = '', name: string = '', lastName: string = '', age: number = 0, dni: string = '', socialWork: string = '', imageUrl: string = '') {
+    constructor(email: string = '', password: string = '', displayName: string = '', photoURL: string = '', name: string = '', lastName: string = '', age: number = 0, dni: string = '', socialWork: string = '', imageUrl: string[] = []) {
         this.email = email;
         this.password = password;
         this.displayName = displayName;
@@ -20,6 +21,6 @@ export class Patient {
         this.age = age;
         this.dni = dni;
         this.socialWork = socialWork;
-        this.imageUrl.push(imageUrl);
+        this.imageUrl = imageUrl;
     }
 }

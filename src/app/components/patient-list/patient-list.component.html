@@ -1,0 +1,19 @@
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Apellido</th>
+            <th scope="col">Edad</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let user of patients; index as i">
+            <th scope="row">{{ i + 1 }}</th>
+            <td>{{ user.name }}</td>
+            <td>{{ user.lastName }}</td>
+            <td>{{ user.age }}</td>
+            <td><button class="btn btn-outline-danger" (click)="onClickDeleted(user)">Borrar</button></td>
+        </tr>
+    </tbody>
+</table>

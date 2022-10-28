@@ -10,7 +10,8 @@ import { Specialist } from '../entities/specialist';
   providedIn: 'root'
 })
 export class FirestoreService {
-  public specialist: Specialist | any;
+
+  //Patient Services ---------------------------------------------
   public patient: Patient | any;
 
   constructor(private afs: AngularFirestore, private firestore: Firestore) { }
@@ -28,6 +29,7 @@ export class FirestoreService {
       socialWork: patient.socialWork,
       imageUrl: patient.imageUrl,
       enable: patient.enable,
+      typeUser: "Patient",
     };
     return await this.afs.collection('patient').add(newPatient);
   }
@@ -42,11 +44,12 @@ export class FirestoreService {
       return doc.data();
     });
   }
+
   getPatientAll(): Observable<Patient[]> {
     const pattientRef = collection(this.firestore, 'patient');
-
     return collectionData(pattientRef, { idField: 'id' }) as Observable<Patient[]>;
   }
+
 
   deletePatient(patient: Patient) {
     const patientDocRef = doc(this.firestore, `patient/${patient.id}`);
@@ -58,12 +61,31 @@ export class FirestoreService {
     return updateDoc(placeRef, { enable: status });
   }
 
+  //Specialist Service ---------------------------------------------
+  public specialist: Specialist | any;
+
+  getSpecialistAll(): Observable<Specialist[]> {
+    const pattientRef = collection(this.firestore, 'specialist');
+    return collectionData(pattientRef, { idField: 'id' }) as Observable<Specialist[]>;
+  }
+
   approveSpecialist(specialist: Specialist) {
-    const patientRef = this.afs.collection('patient');
+    const patientRef = this.afs.collection('specialist');
     patientRef.doc(specialist.id).update({ enabled: true });
   }
 
+  deleteSpecialist(specialist: Specialist) {
+    const patientDocRef = doc(this.firestore, `specialist/${specialist.id}`);
+    return deleteDoc(patientDocRef);
+  }
+
+  updateSpecialist(specialist: Specialist, status: boolean) {
+    const placeRef = doc(this.firestore, `specialist/${specialist.id}`);
+    return updateDoc(placeRef, { enable: status });
+  }
+
   async addSpecialist(specialist: Specialist) {
+    console.log(specialist);
     let newSpecialist: Specialist = {
       email: specialist.email,
       password: specialist.password,
@@ -76,8 +98,9 @@ export class FirestoreService {
       specialist: specialist.specialist,
       imageUrl: specialist.imageUrl,
       enable: false,
+      typeUser: "Specialist",
     };
 
-    return await this.afs.collection('patient').add(newSpecialist);
+    return await this.afs.collection('specialist').add(newSpecialist);
   }
 }

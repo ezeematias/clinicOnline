@@ -1,1 +1,27 @@
-<p>specialist-list works!</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Apellido</th>
+            <th scope="col">Edad</th>
+            <th scope="col">Especialidad</th>
+            <th scope="col">Estado</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let user of specialists; index as i">
+            <th scope="row">{{ i + 1 }}</th>
+            <td>{{ user.name }}</td>
+            <td>{{ user.lastName }}</td>
+            <td>{{ user.age }}</td>
+            <td>{{ user.specialist }}</td>
+            <td *ngIf="!user.enable"><button class="btn btn-success"
+                    (click)="onClickupdate(user, true)">Habilitar</button></td>
+            <td *ngIf="user.enable"><button class="btn btn-outline-danger"
+                    (click)="onClickupdate(user, false)">Suspender</button></td>
+            <td><button class="btn btn-danger" (click)="onClickDeleted(user)">Borrar</button></td>
+        </tr>
+    </tbody>
+</table>

@@ -11,8 +11,9 @@ export class Patient {
     socialWork: string;
     imageUrl: string[] = [];
     enable: boolean;
+    typeUser: string;
 
-    constructor(email: string = '', password: string = '', displayName: string = '', photoURL: string = '', name: string = '', lastName: string = '', age: number = 0, dni: string = '', socialWork: string = '', imageUrl: string[] = [], enable: boolean = false) {
+    constructor(email: string = '', password: string = '', displayName: string = '', photoURL: string = '', name: string = '', lastName: string = '', age: number = 0, dni: string = '', socialWork: string = '', imageUrl: string[] = [], enable: boolean = false, typeUser: string = 'Patient') {
         this.email = email;
         this.password = password;
         this.displayName = displayName;
@@ -24,5 +25,6 @@ export class Patient {
         this.socialWork = socialWork;
         this.imageUrl = imageUrl;
         this.enable = enable;
+        this.typeUser = typeUser;
     }
 }

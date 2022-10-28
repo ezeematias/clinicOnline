@@ -61,7 +61,7 @@ export class RegisterComponent implements OnInit {
     return this.formS.get(value) as FormGroup;
   }
 
-  registerSpecialist() {
+  registerSpecialistOld() {
     this.spinnerService.show();
     if (this.specialist.password === this.rePassword) {
       this.auth.register(this.specialist.email, this.specialist.password).catch(error => {
@@ -77,11 +77,35 @@ export class RegisterComponent implements OnInit {
     }
   }
 
+  registerSpecialist() {
+    this.spinnerService.show();
+    if (this.specialist.password === this.rePassword) {
+      this.auth.register(this.specialist.email, this.specialist.password).then(() => {
+        this.storage.updateImages(this.specialist.email, this.files).then(async () => {
+          await this.storage.getImages(this.specialist.email).then(() => {
+            this.auth.uploadUser(this.specialist.name, this.storage.listUrl[0]);
+            this.specialist.imageUrl = this.storage.listUrl[0];
+
+            this.firestore.addSpecialist(this.specialist)?.catch(() => { console.log('Error sending specialist') });
+          })
+        })
+      }).catch(error => {
+        this.errorShow = true; this.errorMessage = error.message; console.log("Error de registro", error)
+      }).finally(() => {
+        this.spinnerService.hide();
+      });
+    } else {
+      this.errorShow = true;
+      this.spinnerService.hide();
+      this.errorMessage = 'Las contraseñas no coinciden';
+    }
+  }
+
   registerPatient() {
-    this.spinnerService.show();    
+    this.spinnerService.show();
     if (this.patient.password === this.rePassword) {
       this.auth.register(this.patient.email, this.patient.password).then(() => {
-        this.storage.updateImage(this.patient.email, this.files).then(async () => {
+        this.storage.updateImages(this.patient.email, this.files).then(async () => {
           await this.storage.getImages(this.patient.email).then(() => {
             this.auth.uploadUser(this.patient.name, this.storage.listUrl[0]);
             for (let item in this.storage.listUrl) {
@@ -114,10 +138,10 @@ export class RegisterComponent implements OnInit {
       emailS: ['', Validators.pattern("^[^@]+@[^@]+\.[a-zA-Z]{2,}$")],
       passwordS: ['', [Validators.minLength(6), Validators.maxLength(20)]],
       rePasswordS: ['', [Validators.minLength(6), Validators.maxLength(20)]],
-      nameS: ['', [Validators.minLength(6), Validators.maxLength(20)]],
-      lastNameS: ['', [Validators.minLength(6), Validators.maxLength(20)]],
+      nameS: ['', [Validators.minLength(3), Validators.maxLength(20)]],
+      lastNameS: ['', [Validators.minLength(3), Validators.maxLength(20)]],
       ageS: ['', [Validators.max(120), Validators.min(18)]],
-      dniS: ['', [Validators.minLength(8), Validators.maxLength(9)]],
+      dniS: ['', [Validators.pattern("[0-9]{8}")]],
       fileS: ['', Validators.maxLength(5000)],
       specialist: ['', [Validators.minLength(3), Validators.maxLength(100)]]
     });
@@ -132,9 +156,7 @@ export class RegisterComponent implements OnInit {
       dni: ['', [Validators.pattern("[0-9]{8}")]],
       file: ['', Validators.maxLength(5000)],
       file2: ['', Validators.maxLength(5000)],
-      socialWork: ['',]
+      socialWork: ['', [Validators.minLength(3), Validators.maxLength(100)]]
     });
-
-
   }
 }

@@ -5,6 +5,8 @@
             <th scope="col">Nombre</th>
             <th scope="col">Apellido</th>
             <th scope="col">Edad</th>
+            <th scope="col">Obra Social</th>
+            <th scope="col">DNI</th>
         </tr>
     </thead>
     <tbody>
@@ -13,11 +15,8 @@
             <td>{{ user.name }}</td>
             <td>{{ user.lastName }}</td>
             <td>{{ user.age }}</td>
-            <td><button class="btn btn-outline-danger" (click)="onClickDeleted(user)">Borrar</button></td>
-            <td><button *ngIf="!user.enable" class="btn btn-outline-danger"
-                    (click)="onClickupdate(user, true)">Aceppted</button></td>
-            <td><button *ngIf="user.enable" class="btn btn-outline-danger"
-                    (click)="onClickupdate(user, false)">Cancel</button></td>
+            <td>{{ user.socialWork }}</td>
+            <td>{{ user.dni }}</td>
         </tr>
     </tbody>
 </table>

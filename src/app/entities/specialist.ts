@@ -11,8 +11,9 @@ export class Specialist {
     imageUrl: string;
     specialist: string[] = [];
     enable: boolean;
+    typeUser: string;
 
-    constructor(email: string = '', password: string = '', displayName: string = '', photoURL: string = '', name: string = '', lastName: string = '', age: number = 0, dni: string = '', imageUrl: string = '', specialist: string = '', enable: boolean = false) {
+    constructor(email: string = '', password: string = '', displayName: string = '', photoURL: string = '', name: string = '', lastName: string = '', age: number = 0, dni: string = '', imageUrl: string = '', specialist: string = '', enable: boolean = false, typeUser: string = 'Specialist') {
         this.email = email;
         this.password = password;
         this.displayName = displayName;
@@ -24,5 +25,6 @@ export class Specialist {
         this.imageUrl = imageUrl;
         this.specialist.push(specialist);
         this.enable = enable;
+        this.typeUser = typeUser;
     }
 }

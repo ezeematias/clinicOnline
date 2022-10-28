@@ -10,7 +10,7 @@ export class StorageService {
 
   constructor(public storage: Storage) { }
 
-  async updateImage(user: string, files: any) {
+  async updateImages(user: string, files: any) {
     this.listUrl = [];
     for (let item in files) {
       const imgRef = ref(this.storage, 'images/' + user + "/" + new Date().getTime().toString());
@@ -25,7 +25,7 @@ export class StorageService {
     const imagesRef = ref(this.storage, 'images/' + user);
     await listAll(imagesRef).then(async res => {
       console.log(res);
-      for (let item of res.items) {
+      for (let item of res.items) {        
         await getDownloadURL(item).then(res => { console.log(res), this.listUrl.push(res); });
       }
     }).catch(error => console.log(error));

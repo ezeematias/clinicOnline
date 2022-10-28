@@ -16,8 +16,17 @@ export class AuthService {
 
   async sendEmail() {
     this.userCredential = this.auth.currentUser;
+    console.log("----------------------");
+    console.log(this.userCredential);
+    console.log("----------------------");
+    console.log(this.auth);
+    console.log("----------------------");
+    console.log(this.auth.currentUser);
+    console.log("----------------------");
     return await sendEmailVerification(this.userCredential).then((res) => { console.log("Se envió correctamente", res); }).catch(error => { console.log("Error en ingreso", error) }).finally(() => { });
   }
+
+
 
   async login(email: string, password: string) {
 

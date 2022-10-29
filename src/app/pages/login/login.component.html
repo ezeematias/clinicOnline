@@ -8,17 +8,14 @@
                 <div class="form-group">
                     <label style="float: left">Email</label>
                     <input class="form-control" formControlName="email" type="email" placeholder="Ingrese su email"
-                        [(ngModel)]="usuario.email" required>
+                        required>
                     <div class="errorMessage"
                         *ngIf="getValue('email')?.invalid && (getValue('email').touched || getValue('email').dirty)">
                         Ingrese un mail válido</div>
 
-                </div><br>
-
-                <div class="form-group">
                     <label style="float: left">Password</label>
                     <input autocomplete="new-password" #password class="form-control" formControlName="password"
-                        type="password" placeholder="Ingrese su password" [(ngModel)]="usuario.password" required>
+                        type="password" placeholder="Ingrese su password" required>
                     <div class="errorMessage"
                         *ngIf="getValue('password')?.invalid && (getValue('password').touched || getValue('password').dirty)">
                         Mínimo 6 caracteres</div>

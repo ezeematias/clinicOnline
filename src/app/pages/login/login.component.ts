@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { User } from 'src/app/entities/user';
 import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
-import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { SpinnerService } from 'src/app/services/spinner.service';
 
 @Component({
@@ -14,9 +13,13 @@ export class LoginComponent implements OnInit {
 
   form!: FormGroup;
 
-  constructor(private auth: AuthService, private router: Router, private readonly fb: FormBuilder, private spinnerService: SpinnerService) { }
+  constructor(private auth: AuthService, private router: Router, private readonly fb: FormBuilder, private spinnerService: SpinnerService) {
 
-  usuario = new User();
+    this.form = new FormGroup({
+      email: new FormControl(),
+      password: new FormControl()
+    });
+  }
 
   errorShow: boolean = false;
   errorMessage: string = '';
@@ -25,24 +28,16 @@ export class LoginComponent implements OnInit {
     return this.form.get(value) as FormGroup;
   }
 
-  get emailCtrl(): AbstractControl {
-    return this.form.get('email') as FormGroup;
-  }
-
-  get passwordCtrl(): AbstractControl {
-    return this.form.get('password') as FormGroup;
-  }
-
   ingresar() {
     this.spinnerService.show();
-    this.auth.login(this.usuario.email, this.usuario.password).then(res => {
+    this.auth.login(this.form.value).then(res => {
       console.log("Ingresó", res)
     }).catch(error => { this.errorShow = true; this.errorMessage = error.message; console.log("Error en ingreso", error) }).finally(() => { this.spinnerService.hide(); });
   }
 
   ingresarConGoogle() {
     this.spinnerService.show();
-    this.auth.loginWuthGoogle(this.usuario.email, this.usuario.password).then(res => {
+    this.auth.loginWuthGoogle(this.getValue('email').value, this.getValue('password').value).then(res => {
       console.log("Se logueo", res)
     }).catch(error => { this.errorShow = true; this.errorMessage = error.message; console.log("Error en ingreso", error) }).finally(() => { this.spinnerService.hide(); });
   }
@@ -55,8 +50,8 @@ export class LoginComponent implements OnInit {
   }
 
   autoLogin(user: string): void {
-    this.usuario.email = `${user}@session.com`;
-    this.usuario.password = '123456';
+    this.form.controls['email'].setValue(`${user}@session.com`);
+    this.form.controls['password'].setValue('123456');
   }
 
   onSubmit() {

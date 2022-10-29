@@ -4,6 +4,7 @@ import firebase from 'firebase/compat/app';
 import { Router } from '@angular/router';
 import { createUserWithEmailAndPassword, getAuth, sendEmailVerification, signInWithEmailAndPassword, updateProfile, UserCredential } from "firebase/auth";
 import { Auth } from '@angular/fire/auth';
+import { User } from '../entities/user';
 
 @Injectable({
   providedIn: 'root'
@@ -26,11 +27,9 @@ export class AuthService {
     return await sendEmailVerification(this.userCredential).then((res) => { console.log("Se envió correctamente", res); }).catch(error => { console.log("Error en ingreso", error) }).finally(() => { });
   }
 
+  async login(user: User) {
 
-
-  async login(email: string, password: string) {
-
-    return await signInWithEmailAndPassword(this.auth, email, password).then(res => {
+    return await signInWithEmailAndPassword(this.auth, user.email, user.password).then(res => {
       if (res.user?.emailVerified) {
         this.router.navigate(['home'])
       } else {
@@ -57,8 +56,8 @@ export class AuthService {
     });
   }
 
-  async register(email: string, password: string) {
-    return await createUserWithEmailAndPassword(this.auth, email, password).then(res => { sendEmailVerification(res.user), this.router.navigate(['verification']) }).catch(error => {
+  async register(user: User) {
+    return await createUserWithEmailAndPassword(this.auth, user.email, user.password).then(res => { sendEmailVerification(res.user), this.router.navigate(['verification']) }).catch(error => {
       switch (error.code) {
         case 'auth/invalid-email':
           throw new Error('Mail Inválido');

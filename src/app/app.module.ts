@@ -61,7 +61,7 @@ const firebaseConfig = {
     AngularFireModule.initializeApp(firebaseConfig),
     RouterModule,
     ReactiveFormsModule,
-    HttpClientModule,
+    HttpClientModule,    
     SpinnerModule,
     AngularFirestoreModule,
     AngularFireStorageModule, provideFirebaseApp(() => initializeApp(environment.firebase)), provideAuth(() => getAuth()), provideFirestore(() => getFirestore()), provideStorage(() => getStorage())

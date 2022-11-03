@@ -2,6 +2,7 @@ import { Roles } from "./role";
 
 export class User {
     id?: string;
+    uid?: string;
     email: string;
     password: string;
     displayName: string;
@@ -15,8 +16,9 @@ export class User {
     specialty?: string[] = [];
     enable: boolean;
     role: Roles;
+    emailVerified?: boolean;
 
-    constructor(email: string = '', password: string = '', displayName: string = '', photoURL: string = '', name: string = '', lastName: string = '', age: number = 0, dni: string = '', socialWork: string ='',imageUrl: string[] = [], specialty: string[] = [], enable: boolean = false, role: Roles = 'Admin') {
+    constructor(uid: string = '', email: string = '', password: string = '', displayName: string = '', photoURL: string = '', name: string = '', lastName: string = '', age: number = 0, dni: string = '', socialWork: string = '', imageUrl: string[] = [], specialty: string[] = [], enable: boolean = false, role: Roles = 'Admin', emailVerified: boolean = false) {
         this.email = email;
         this.password = password;
         this.displayName = displayName;
@@ -30,5 +32,7 @@ export class User {
         this.specialty = specialty;
         this.enable = enable;
         this.role = role;
-    }    
+        this.emailVerified = emailVerified;
+        this.uid = uid;
+    }
 }

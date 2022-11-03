@@ -1,4 +1,18 @@
-<h3 class="text-center">Listado de pacientes</h3>
-<app-patient-list></app-patient-list>
-<h3 class="text-center">Listado de medicos</h3>
-<app-specialist-list></app-specialist-list>
+<div *ngIf="userLogged|async as user; ">
+    <div *ngIf="userBase.enable; else verify">
+        <div *ngIf="userBase.role === 'Patient'; else welcome">
+            <h3 class="text-center">Listado de pacientes</h3>
+            <app-pacient-list></app-pacient-list>
+            <h3 class="text-center">Listado de medicos</h3>
+            <app-specialist-list></app-specialist-list>
+            <button (click)="userCurrent()">User Log</button>
+        </div>
+    </div>
+    <ng-template #welcome>
+        <h4 class="text-center">Bienvenido {{userBase.name + " " +userBase.lastName}}</h4>
+    </ng-template>
+    <ng-template #verify>
+        <h4 class="text-center">Tenés que esperar la habilitación de un administrador</h4>
+    </ng-template>
+
+</div>

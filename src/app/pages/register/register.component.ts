@@ -6,6 +6,7 @@ import { SpinnerService } from 'src/app/services/spinner.service';
 import { StorageService } from 'src/app/services/storage.service';
 import { User } from 'src/app/entities/user';
 import { UsersService } from 'src/app/services/users.service';
+import { ModalService } from 'src/app/services/modal.service';
 
 @Component({
   selector: 'app-register',
@@ -15,8 +16,6 @@ import { UsersService } from 'src/app/services/users.service';
 export class RegisterComponent implements OnInit {
   files: any;
   form: FormGroup;
-  errorShow: boolean = false;
-  errorMessage: string = '';
   isSpecialist: boolean = true;
   user = new User();
 
@@ -24,7 +23,8 @@ export class RegisterComponent implements OnInit {
     private readonly fb: FormBuilder,
     private spinnerService: SpinnerService,
     public userService: UsersService,
-    public storage: StorageService) {
+    public storage: StorageService,
+    private modal : ModalService) {
 
     this.form = new FormGroup({
       email: new FormControl(),
@@ -64,36 +64,29 @@ export class RegisterComponent implements OnInit {
     this.getValue('files').updateValueAndValidity();
   }
 
-  registerSpecialistOld() {
+  registerUser() {
     this.spinnerService.show();
     this.user = this.form.value;
     this.user.role = this.isSpecialist ? 'Specialist' : 'Patient';
     this.user.enable = this.isSpecialist ? false : true;
+
     if (this.getValue("password").value === this.getValue("rePassword").value) {
-      this.auth.register(this.form.value).then(() => {
-        this.storage.updateImages(this.user.email, this.files).then(async () => {
-          await this.storage.getImages(this.user.email).then(() => {
-            this.auth.uploadUser(this.user.name, this.storage.listUrl[0]);
-            this.user.photoURL = this.storage.listUrl[0];
-            this.user.imageUrl = [...this.storage.listUrl];
-            this.userService.addUser(this.user)?.catch(() => { console.log('Error sending patient') });
-          })
-        })
+
+      this.auth.register(this.form.value, this.files).then((res) => {
       }).catch(error => {
-        this.errorShow = true; this.errorMessage = error.message; console.log("Error de registro", error)
+        this.modal.modalMessage(error.message, "error"); console.log("Error de registro", error)
       }).finally(() => {
         this.spinnerService.hide();
       });
+
     } else {
-      this.errorShow = true;
       this.spinnerService.hide();
-      this.errorMessage = 'Las contraseñas no coinciden';
+      this.modal.modalMessage('Las contraseñas no coinciden', "error");
     }
   }
 
   uploadImage($event: any) {
     this.files = $event.target.files;
-    console.log(this.files);
   }
 
   ngOnInit(): void {
@@ -111,5 +104,9 @@ export class RegisterComponent implements OnInit {
       specialty: ['', [Validators.minLength(3), Validators.maxLength(100)]],
       socialWork: ['', [Validators.minLength(3), Validators.maxLength(100)]]
     });
+  }
+
+  async userA() {
+    this.userService.getUserAll();
   }
 }

@@ -1,10 +1,7 @@
 <div class="backgroundStyle"><img class="back" src="../../../assets/EMU_Patterns-background_03.jpg">
     <div class="container">
-
         <form [formGroup]="form" (ngSubmit)="onSubmit()">
             <div class="card-body p-4">
-                <app-error *ngIf="errorShow" mensaje="{{errorMessage}}" color="alert-danger"></app-error>
-
                 <div class="form-group">
                     <label style="float: left">Email</label>
                     <input class="form-control" formControlName="email" type="email" placeholder="Ingrese su email"
@@ -20,26 +17,25 @@
                         *ngIf="getValue('password')?.invalid && (getValue('password').touched || getValue('password').dirty)">
                         Mínimo 6 caracteres</div>
                 </div>
-                <button class="btn btn-primary form-control" type="submit" (click)="ingresar()"
-                    [disabled]="!form.valid">Ingresar</button>
+                <button class="btn btn-primary form-control" type="submit" [disabled]="!form.valid">Ingresar</button>
                 <button class="btn btn-danger form-control" (click)="ingresarConGoogle()">Ingresar con Google</button>
                 <button class="btn btn-success form-control" (click)="autoLogin('auto')">Auto-Completar Ingreso</button>
-                <div class="autoLog">
-                    <input type=image src="../../../assets/CO_Patient_01.png" (click)="autoLogin('paciente1')"
-                        width="150" height="150" class="imageBtn">
-                    <input type=image src="../../../assets/CO_Patient_03.png" (click)="autoLogin('paciente2')"
-                        width="150" height="150" class="imageBtn">
-                    <input type=image src="../../../assets/CO_Patient_02.png" (click)="autoLogin('paciente3')"
-                        width="150" height="150" class="imageBtn">
-                    <input type=image src="../../../assets/CO_SpecialistAvatar_01.png"
-                        (click)="autoLogin('especialista1')" width="150" height="150">
-                    <input type=image src="../../../assets/CO_SpecialistAvatar_02.png"
-                        (click)="autoLogin('especialista2')" width="150" height="150">
-                    <input type=image src="../../../assets/CO_Admin_01.png" (click)="autoLogin('admin')" width="150"
-                        height="150">
-                </div>
                 <label class="register">¿Todavia no tenés tu cuenta? <a routerLink="/register">Registrate</a></label>
             </div>
         </form>
+        <div class="card-body p-4 autoLog">
+            <input type=image src="../../../assets/CO_Patient_01.png" (click)="autoLogin('pacienteroberto.p1')"
+                width="150" height="150" class="imageBtn">
+            <input type=image src="../../../assets/CO_Patient_03.png" (click)="autoLogin('pacientemaria.p2')"
+                width="150" height="150" class="imageBtn">
+            <input type=image src="../../../assets/CO_Patient_02.png" (click)="autoLogin('pacientesandra.p3')"
+                width="150" height="150" class="imageBtn">
+            <input type=image src="../../../assets/CO_SpecialistAvatar_01.png"
+                (click)="autoLogin('especialistacandela.e1')" width="150" height="150">
+            <input type=image src="../../../assets/CO_SpecialistAvatar_02.png"
+                (click)="autoLogin('especialistalorena.e2')" width="150" height="150">
+            <input type=image src="../../../assets/CO_Admin_01.png" (click)="autoLogin('admjorge.a1')" width="150"
+                height="150">
+        </div>
     </div>
 </div>

@@ -1,0 +1,72 @@
+<div class="center card" style="width: 500px;">
+    <ngb-carousel *ngIf="userBase">
+        <ng-template ngbSlide *ngFor="let img of userBase.imageUrl; index as i">
+            <div class="picsum-img-wrapper">
+                <img [src]="img" alt="" />
+            </div>
+            <div class="carousel-caption">
+                <h3>{{userBase.name + " " + userBase.lastName}}</h3>
+                <a class="btn btn-sm btn-outline-light" (click)="setImg(img)">Click para seleccionar ésta foto de
+                    perfil.</a>
+            </div>
+        </ng-template>
+    </ngb-carousel>
+    <div class="card-body">
+        <div class="row align-items-md-stretch">
+            <div class="col-md-12">
+                <form>
+                    <div class="row align-items-md-stretch">
+                        <div class="form-group col-md-6">
+                            <label for="name" class="form-label">NOMBRE</label>
+                            <input type="text" class="form-control" id="name" aria-describedby="name" required=""
+                                formControlName="name">
+                            <div class="invalid-feedback">
+                                Ingrese su nombre.
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <label for="lastName" class="form-label">APELLIDO</label>
+                            <input type="text" class="form-control" id="lastName" aria-describedby="lastName"
+                                required="" formControlName="lastName">
+                            <div class="invalid-feedback">
+                                Ingrese su apellido.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row align-items-md-stretch">
+                        <div class="form-group col-md-9">
+                            <label for="idNumber" class="form-label">DNI</label>
+                            <input type="number" class="form-control" id="idNumber" aria-describedby="idNumber"
+                                required="" min="00000001" max="99999999" formControlName="idNumber">
+                            <div class="invalid-feedback">
+                                Ingrese su DNI.
+                            </div>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="age" class="form-label">EDAD</label>
+                            <input type="number" class="form-control" id="age" aria-describedby="age" required=""
+                                min="1" max="120" formControlName="age">
+                            <div class="invalid-feedback">
+                                Ingrese su edad.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-8">
+                        <label for="email" class="form-label">CORREO ELECTRONICO</label>
+                        <input type="email" class="form-control" id="email" aria-describedby="email" required=""
+                            formControlName="email">
+                        <div class="invalid-feedback">
+                            Ingrese su correo electronico.
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        <button type="submit" class="btn btn-primary" style="width: 80%;"
+                            (click)="onSubmit()">ENVIAR</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

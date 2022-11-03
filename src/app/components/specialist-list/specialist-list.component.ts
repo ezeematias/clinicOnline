@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Specialist } from 'src/app/entities/specialist';
-import { FirestoreService } from 'src/app/services/firestore.service';
+import { User } from 'src/app/entities/user';
+import { ModalService } from 'src/app/services/modal.service';
+import { UsersService } from 'src/app/services/users.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-specialist-list',
@@ -9,24 +11,39 @@ import { FirestoreService } from 'src/app/services/firestore.service';
 })
 export class SpecialistListComponent implements OnInit {
 
-  specialists: Specialist[] = [];
+  public specialists: any = [];
 
-  constructor(private firestore: FirestoreService) {
-
-  }
+  constructor(private userService: UsersService, private modal: ModalService) { }
 
   ngOnInit(): void {
-    this.firestore.getSpecialistAll().subscribe((specialist) => {
-      this.specialists = specialist;
+    this.userService.getUserAllSpecialist().subscribe((users) => {
+      this.specialists = users;
     })
   }
 
-  async onClickDeleted(specialist: Specialist) {
-    const resp = await this.firestore.deleteSpecialist(specialist);
-    console.log(resp);
-  }
-  async onClickupdate(specialist: Specialist, status: boolean) {
-    await this.firestore.updateSpecialist(specialist, status);
+  onClickupdate(user: User, status: boolean) {
+    this.userService.updateUser(user, status);
+    this.modal.modalMessage(status ? 'Habilitado' : 'Suspendido', status ? 'success' : 'error');
   }
 
+  onClickDeleted(user: User) {
+    /*
+        this.modal.modalCancel("").then((result) => {
+          if (result.isConfirmed) {
+            console.log("Usuario Borrado " + user.email);
+            //this.userService.deleteUser(user);
+            this.modal.modalSimple("Eliminado", "Se eliminó correctamente", "success");
+          }
+        })*/
+
+    this.modal.modalCancelConfirm().then((result) => {
+      if (result.isConfirmed) {
+        this.modal.modalSimple("Eliminado", "Se eliminó correctamente", "success");
+        console.log("Usuario Borrado " + user.email);
+        //this.userService.deleteUser(user);
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        this.modal.modalSimple("Cancelado", "El documento está a salvo", "error");
+      }
+    })
+  }
 }

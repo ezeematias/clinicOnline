@@ -4,12 +4,11 @@ import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AngularFireModule } from '@angular/fire/compat';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { LoginComponent } from './pages/login/login.component';
-import { HomeComponent } from './pages/home/home.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { ErrorComponent } from './components/error/error.component';
 import { FooterComponent } from './components/footer/footer.component';
@@ -21,11 +20,11 @@ import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { environment } from '../environments/environment';
 import { provideAuth, getAuth } from '@angular/fire/auth';
 import { provideFirestore, getFirestore } from '@angular/fire/firestore';
-import { VerificationComponent } from './pages/verification/verification.component';
 import { provideStorage, getStorage } from '@angular/fire/storage';
-import { PatientListComponent } from './components/patient-list/patient-list.component';
-import { AdminPanelComponent } from './pages/admin-panel/admin-panel.component';
-import { SpecialistListComponent } from './components/specialist-list/specialist-list.component';
+import { AuthService } from './services/auth.service';
+import { PermissionsGuard } from './guards/permissions.guard';
+import { WelcomeComponent } from './pages/welcome/welcome.component';
+import { VerificationComponent } from './pages/verification/verification.component';
 
 const firebaseConfig = {
   projectId: 'eu-cliniconline',
@@ -43,15 +42,12 @@ const firebaseConfig = {
     AppComponent,
     NavbarComponent,
     FooterComponent,
-    HomeComponent,
     LoginComponent,
     RegisterComponent,
     ErrorComponent,
     NotFoundComponent,
     VerificationComponent,
-    PatientListComponent,
-    AdminPanelComponent,
-    SpecialistListComponent,
+    WelcomeComponent,
   ],
   imports: [
     BrowserModule,
@@ -61,12 +57,12 @@ const firebaseConfig = {
     AngularFireModule.initializeApp(firebaseConfig),
     RouterModule,
     ReactiveFormsModule,
-    HttpClientModule,    
+    HttpClientModule,
     SpinnerModule,
     AngularFirestoreModule,
     AngularFireStorageModule, provideFirebaseApp(() => initializeApp(environment.firebase)), provideAuth(() => getAuth()), provideFirestore(() => getFirestore()), provideStorage(() => getStorage())
   ],
-  providers: [],
+  providers: [AuthService/*, PermissionsGuard*/],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

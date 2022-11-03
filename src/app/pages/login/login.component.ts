@@ -3,6 +3,8 @@ import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { SpinnerService } from 'src/app/services/spinner.service';
+import { User } from 'src/app/entities/user';
+import { ModalService } from 'src/app/services/modal.service';
 
 @Component({
   selector: 'app-login',
@@ -13,7 +15,9 @@ export class LoginComponent implements OnInit {
 
   form!: FormGroup;
 
-  constructor(private auth: AuthService, private router: Router, private readonly fb: FormBuilder, private spinnerService: SpinnerService) {
+  constructor(private auth: AuthService, private router: Router,
+    private readonly fb: FormBuilder, private spinnerService: SpinnerService,
+    private modal: ModalService) {
 
     this.form = new FormGroup({
       email: new FormControl(),
@@ -21,25 +25,21 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  errorShow: boolean = false;
-  errorMessage: string = '';
-
   getValue(value: string): AbstractControl {
     return this.form.get(value) as FormGroup;
   }
 
-  ingresar() {
+  ingresar(user: User) {
     this.spinnerService.show();
-    this.auth.login(this.form.value).then(res => {
-      console.log("Ingresó", res)
-    }).catch(error => { this.errorShow = true; this.errorMessage = error.message; console.log("Error en ingreso", error) }).finally(() => { this.spinnerService.hide(); });
+    this.auth.login(user).then(res => {
+    }).catch(error => { this.modal.modalMessage(error.message, "error"); console.log("Error en ingreso", error) }).finally(() => { this.spinnerService.hide(); });
   }
 
   ingresarConGoogle() {
     this.spinnerService.show();
     this.auth.loginWuthGoogle(this.getValue('email').value, this.getValue('password').value).then(res => {
       console.log("Se logueo", res)
-    }).catch(error => { this.errorShow = true; this.errorMessage = error.message; console.log("Error en ingreso", error) }).finally(() => { this.spinnerService.hide(); });
+    }).catch(error => { this.modal.modalMessage(error.message, "error"); console.log("Error en ingreso", error) }).finally(() => { this.spinnerService.hide(); });
   }
 
   ngOnInit(): void {
@@ -50,11 +50,11 @@ export class LoginComponent implements OnInit {
   }
 
   autoLogin(user: string): void {
-    this.form.controls['email'].setValue(`${user}@session.com`);
-    this.form.controls['password'].setValue('123456');
+    this.form.controls['email'].setValue(`${user}@gmail.com`);
+    this.form.controls['password'].setValue('co123456');
   }
 
   onSubmit() {
-    console.log(this.form.value);
+    this.ingresar(this.form.value);
   }
 }

@@ -5,21 +5,28 @@
                 <img class="logoNav" src="../../../assets/logoCompleted.png" alt="">
             </div>
         </a>
-        <a class="navbar-brand" routerLink="panel" *ngIf="userLogged|async as user; else then_content">
+        <div style="display: inline-flex; align-items: center; " *ngIf="userLogged|async as user;">
+            Panel de control
+        </div>
+        <div style="display: inline-flex; align-items: center;">
+            Panel de control
+        </div>
+        <a class="navbar-brand" routerLink="home" *ngIf="userLogged|async as user; else then_content">
             <div style="display: flex; align-items: center;" *ngIf="user.displayName">
-                <a class="borderLog" routerLink="panel">
-                    <img class="picLog" src="{{user.photoURL}}" alt="">
+                <a class="borderLog" routerLink="home">
+                    <img class="picLog" src="{{user.photoURL}}" *ngIf="user.photoURL" alt="">
+                    <img class="picLog" src="../../../assets/picUser.jpeg" *ngIf="!user.photoURL" alt="">
                 </a>
                 <div>
-                    <a class="navbar-brand" routerLink="panel"> {{user.displayName?user.displayName:user.email}} </a>
+                    <a class="navbar-brand" routerLink="home"> {{user.displayName?user.displayName:user.email}} </a>
                 </div>
             </div>
             <div style="display: inline-flex; align-items: center;" *ngIf="!user.displayName">
                 <a class="borderLog" routerLink="panel">
-                    <img class="picLog" src="../../../assets/picUser.jpeg" alt="">
+                    <img class="picLog" src="../../../assets/picUser.jpeg" *ngIf="!user.photoURL" alt="">
                 </a>
                 <div>
-                    <a class="navbar-brand" routerLink="panel"> {{user.email}} </a>
+                    <a class="navbar-brand" routerLink="home"> {{user.email}} </a>
                 </div>
             </div>
         </a>

@@ -1,18 +1,26 @@
 import { Injectable } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot, UrlTree } from '@angular/router';
+import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
+import { AuthService } from '../services/auth.service';
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class PermissionsGuard implements CanActivate {
-  canActivate(    
+  constructor(public auth: AuthService, private router: Router) { }
+
+  canActivate(
     route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+    state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
+
+    return true;
+    /*
+    if (this.auth.getAuth()) {
     return true;
   }
-
-    
+  this.router.navigate(['welcome']);
+  return false;
+  */
+  }
 }

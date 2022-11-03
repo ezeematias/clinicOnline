@@ -16,7 +16,7 @@
             <td>{{ user.name }}</td>
             <td>{{ user.lastName }}</td>
             <td>{{ user.age }}</td>
-            <td>{{ user.specialist }}</td>
+            <td>{{ user.specialty }}</td>
             <td *ngIf="!user.enable"><button class="btn btn-success"
                     (click)="onClickupdate(user, true)">Habilitar</button></td>
             <td *ngIf="user.enable"><button class="btn btn-outline-danger"

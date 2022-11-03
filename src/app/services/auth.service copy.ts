@@ -5,21 +5,30 @@ import { Router } from '@angular/router';
 import { createUserWithEmailAndPassword, getAuth, sendEmailVerification, signInWithEmailAndPassword, updateProfile, UserCredential } from "firebase/auth";
 import { Auth } from '@angular/fire/auth';
 import { User } from '../entities/user';
-import { StorageService } from './storage.service';
-import { UsersService } from './users.service';
+import { Observable, of, switchMap } from 'rxjs';
+import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/compat/firestore';
+import { RoleValidator } from '../helpers/role-validator';
 
 @Injectable({
   providedIn: 'root'
 })
 
-export class AuthService {
+export class AuthService extends RoleValidator {
+
+  public user$: Observable<User | any>;
   public userCredential: UserCredential | any;
 
-  constructor(private afauth: AngularFireAuth,
-    private router: Router,
-    private readonly auth: Auth,
-    private userService: UsersService,
-    private storage: StorageService) { }
+  constructor(public afauth: AngularFireAuth, private router: Router, public readonly auth: Auth, private afs: AngularFirestore) {
+    super();
+    this.user$ = this.afauth.authState.pipe(
+      switchMap((user) => {
+        if (user) {
+          return this.afs.doc<User>(`users/${user.uid}`).valueChanges();
+        }
+        return of(null);
+      })
+    );
+  }
 
   async sendEmail() {
     return await sendEmailVerification(this.auth.currentUser!).then((res) => {
@@ -34,9 +43,29 @@ export class AuthService {
       if (res.user?.emailVerified) {
         this.router.navigate(['home'])
       } else {
+        this.userCredential = res;
         this.router.navigate(['verification'])
       }
-      this.userCredential = res;
+    }).catch(error => {
+      switch (error.code) {
+        case 'auth/invalid-email':
+        case 'auth/user-not-found':
+        case 'auth/wrong-password':
+        case 'auth/internal-error':
+          throw new Error('Credenciales Inválidas');
+        default:
+          throw new Error(error.message);
+      }
+    });    
+  }
+  async login2(user: User) {    
+    return await this.afauth.signInWithEmailAndPassword(user.email, user.password).then(res => {
+      if (res.user?.emailVerified) {
+        this.router.navigate(['home'])
+      } else {
+        this.userCredential = res;
+        this.router.navigate(['verification'])
+      }
     }).catch(error => {
       switch (error.code) {
         case 'auth/invalid-email':
@@ -56,18 +85,9 @@ export class AuthService {
     });
   }
 
-  async register(user: User, files: any) {
+  async register(user: User) {
     return await createUserWithEmailAndPassword(this.auth, user.email, user.password).then(res => {
       sendEmailVerification(res.user);
-      user.uid = res.user.uid;
-      this.storage.updateImages(user.email, files).then(async () => {
-        await this.storage.getImages(user.email).then(() => {
-          this.uploadUser(user.name, this.storage.listUrl[0]);
-          user.photoURL = this.storage.listUrl[0];
-          user.imageUrl = [...this.storage.listUrl];
-          this.userService.addUser(user)?.catch(() => { console.log('Error sending patient') });
-        })
-      })
       this.router.navigate(['verification']);
       return res;
     }).catch(error => {
@@ -84,13 +104,8 @@ export class AuthService {
 
   async uploadUser(name: string, url: string) {
     let auth = getAuth();
-    return await updateProfile(auth.currentUser!, { displayName: name, photoURL: url }).then().catch(
-      (err) => console.log(err));
-  }
-
-  async uploadPhoto(url: string) {
-    let auth = getAuth();
-    return await updateProfile(auth.currentUser!, { photoURL: url }).then().catch(
+    console.log(url);
+    return await updateProfile(auth.currentUser!, { displayName: name, photoURL: url }).then(() => console.log(auth.currentUser?.photoURL)).catch(
       (err) => console.log(err));
   }
 
@@ -99,19 +114,22 @@ export class AuthService {
       throw new Error('Error en desloguearse');
     });
   }
+  async logout2() {
+    return await this.auth.signOut().then(res => this.router.navigate(['login'])).catch(error => {
+      throw new Error('Error en desloguearse');
+    });
+  }
 
   getAuth() {
     return this.afauth.authState;
   }
 
-  async currentUser(): Promise<any> {
-    let auth = await getAuth();
-    return auth.currentUser?.uid;
-
+  async getCurrentUser() {
+    return await this.afauth.currentUser;
   }
 
-  async userCurrent() {
-    let auth = await getAuth();
-    return auth;
+  private updateUserData(user: User) {
+    const userRef: AngularFirestoreDocument<User> = this.afs.doc(`users/${user.uid}`);
+    //const data: User = {    
   }
 }

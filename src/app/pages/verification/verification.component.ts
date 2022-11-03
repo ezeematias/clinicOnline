@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { getAuth } from 'firebase/auth';
 import { Observable } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
+import { ModalService } from 'src/app/services/modal.service';
 import { SpinnerService } from 'src/app/services/spinner.service';
 
 @Component({
@@ -13,22 +16,26 @@ export class VerificationComponent implements OnInit {
 
   public user$: Observable<any> = this.auth.getAuth();
   userLogged = this.auth.getAuth();
-  errorShow: boolean = false;
-  errorMessage: string = '';
 
-  constructor(private auth: AuthService, private spinnerService: SpinnerService) { }
+  constructor(private auth: AuthService, private afs: AngularFireAuth, private spinnerService: SpinnerService,
+    private modal: ModalService) { }
 
   ngOnInit(): void {
   }
 
   onSendEmail() {
-    this.spinnerService.show();
-    this.auth.sendEmail().then((res) => { this.spinnerService.hide(); });
+    //this.spinnerService.show();
+    const user = getAuth();
+    if (!user.currentUser?.emailVerified) {
+      this.auth.sendEmail().then((res) => { this.modal.modalMessage("Correo enviado", "success"); });
+    } else {
+      this.modal.modalMessage("El correo ya fue verificado", "info");
+    }
   }
 
   logout() {
     this.spinnerService.show();
-    this.auth.logout().catch(error => { this.errorShow = true; this.errorMessage = error.message; console.log("Error en ingreso", error) }).finally(() => { this.spinnerService.hide(); });
+    this.auth.logout().catch(error => { this.modal.modalMessage(error.message, "error"); console.log("Error en egreso", error) }).finally(() => { this.spinnerService.hide(); });
   }
 
 }

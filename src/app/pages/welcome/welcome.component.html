@@ -1,0 +1,14 @@
+<div class="backgroundStyle"><img class="back" src="../../../assets/EMU_Patterns-background_02.jpg">
+    <div class="container">
+        <div class="textHome">
+            <div class="titleHome">¿Querés asociarte?</div>
+            <div class="commentHome">Contratá la mejor cobertura médica para vos y tu familia</div>
+            <div *ngIf="userLogged|async as user; else loading">
+                <button class="btn btn-danger" (click)="logout()">Cerrar Sesión</button>
+            </div>
+            <ng-template #loading>
+                <a class="btn btn-primary" routerLink="/register">Registrate</a>
+            </ng-template>            
+        </div>
+    </div>
+</div>

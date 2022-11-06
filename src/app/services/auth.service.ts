@@ -31,6 +31,7 @@ export class AuthService {
 
   async login(user: User): Promise<any> {
     return await signInWithEmailAndPassword(this.auth, user.email, user.password).then(res => {
+      this.userService.isLogged = true;
       if (res.user?.emailVerified) {
         this.router.navigate(['home'])
       } else {
@@ -82,6 +83,42 @@ export class AuthService {
     });
   }
 
+  async registerAdmin(user: User): Promise<string> {
+    return await createUserWithEmailAndPassword(this.auth, user.email, user.password).then(res => {
+      sendEmailVerification(res.user);
+      this.uploadUser(user.name, user.photoURL);
+      this.router.navigate(['verification']);
+      return res.user.uid;
+    }).catch(error => {
+      switch (error.code) {
+        case 'auth/invalid-email':
+          throw new Error('Mail Inválido');
+        case 'auth/email-already-in-use':
+          throw new Error('El correo ya se encuentra en uso');
+        default:
+          throw new Error(error.message);
+      }
+    });
+  }
+
+  async registerPanel(user: User, files: any) {
+    user.registerAdmin = true;
+    user.uid = 'n/n';
+    this.storage.updateImages(user.email, files).then(async () => {
+      await this.storage.getImages(user.email).then(() => {
+        user.photoURL = this.storage.listUrl[0];
+        user.imageUrl = [...this.storage.listUrl];
+        console.log(user);
+        this.userService.addUser(user)?.catch(() => { console.log('Error sending patient') });
+      })
+    })
+  }
+
+  getUserData(): User {
+    console.log(JSON.parse(sessionStorage.getItem('user')!));
+    return JSON.parse(sessionStorage.getItem('user')!);
+  }
+
   async uploadUser(name: string, url: string) {
     let auth = getAuth();
     return await updateProfile(auth.currentUser!, { displayName: name, photoURL: url }).then().catch(
@@ -95,7 +132,10 @@ export class AuthService {
   }
 
   async logout() {
-    return await this.afauth.signOut().then(res => this.router.navigate(['login'])).catch(error => {
+    sessionStorage.clear();
+    this.userService.isLogged = false;
+    this.userService.userLogged = [];
+    return await this.afauth.signOut().then(res => this.router.navigate(['welcome'])).catch(error => {
       throw new Error('Error en desloguearse');
     });
   }

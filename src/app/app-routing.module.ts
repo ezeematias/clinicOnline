@@ -14,7 +14,7 @@ const routes: Routes = [
   { path: 'welcome', component: WelcomeComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'verification', component: VerificationComponent },
-  { path: 'home', loadChildren: () => import('./pages/home/home.module').then(m => m.HomeModule)/*, canActivate: [PermissionsGuard]*/ },
+  { path: 'home', loadChildren: () => import('./pages/home/home.module').then(m => m.HomeModule), canActivate: [PermissionsGuard] },
   { path: '**', component: NotFoundComponent }
 ];
 

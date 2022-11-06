@@ -17,8 +17,9 @@ export class User {
     enable: boolean;
     role: Roles;
     emailVerified?: boolean;
+    registerAdmin?: boolean;
 
-    constructor(uid: string = '', email: string = '', password: string = '', displayName: string = '', photoURL: string = '', name: string = '', lastName: string = '', age: number = 0, dni: string = '', socialWork: string = '', imageUrl: string[] = [], specialty: string[] = [], enable: boolean = false, role: Roles = 'Admin', emailVerified: boolean = false) {
+    constructor(uid: string = '', email: string = '', password: string = '', displayName: string = '', photoURL: string = '', name: string = '', lastName: string = '', age: number = 0, dni: string = '', socialWork: string = '', imageUrl: string[] = [], specialty: string[] = [], enable: boolean = false, role: Roles = 'Admin', emailVerified: boolean = false, registerAdmin: boolean = false) {
         this.email = email;
         this.password = password;
         this.displayName = displayName;
@@ -34,5 +35,6 @@ export class User {
         this.role = role;
         this.emailVerified = emailVerified;
         this.uid = uid;
+        this.registerAdmin = registerAdmin;
     }
 }

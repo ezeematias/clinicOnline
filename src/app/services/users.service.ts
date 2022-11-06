@@ -4,14 +4,19 @@ import { collectionData, Firestore, doc, deleteDoc } from '@angular/fire/firesto
 import { collection, getDoc, getDocs, query, updateDoc, where } from 'firebase/firestore';
 import { Observable } from 'rxjs';
 import { User } from '../entities/user';
+import { RoleValidator } from '../helpers/role-validator';
 
 @Injectable({
   providedIn: 'root'
 })
-export class UsersService {
+export class UsersService extends RoleValidator {
   public user = new User();
+  public isLogged = false;
+  public userLogged: User | any;
 
-  constructor(private afs: AngularFirestore, private firestore: Firestore) { }
+  constructor(private afs: AngularFirestore, private firestore: Firestore) {
+    super();
+  }
 
   async addUser(user: User) {
     let newUser: User = {
@@ -29,6 +34,7 @@ export class UsersService {
       enable: user.enable,
       role: user.role,
       uid: user.uid,
+      registerAdmin: user.registerAdmin
     };
     return await this.afs.collection('users').add(newUser);
   }
@@ -57,6 +63,12 @@ export class UsersService {
     return collectionData(q, { idField: 'id' }) as Observable<User[]>;
   }
 
+  getUserEmail(email: any): Observable<User[]> {
+    const pattientRef = collection(this.firestore, 'users');
+    const q = query(pattientRef, where("email", "==", email));
+    return collectionData(q, { idField: 'id' }) as Observable<User[]>;
+  }
+
   getUserAllSpecialist(): Observable<User[]> {
     const pattientRef = collection(this.firestore, 'users');
     const q = query(pattientRef, where("role", "==", "Specialist"));
@@ -81,5 +93,15 @@ export class UsersService {
   updateUser(user: User, status: boolean) {
     const placeRef = doc(this.firestore, `users/${user.id}`);
     return updateDoc(placeRef, { enable: status });
+  }
+
+  updateUserUid(user: User, uid: string) {
+    const placeRef = doc(this.firestore, `users/${user.id}`);
+    return updateDoc(placeRef, { uid: uid, registerAdmin: false });
+  }
+
+  get isLoggedIn(): boolean {
+    const user = JSON.parse(localStorage.getItem('user')!);
+    return (user !== null) ? true : false;
   }
 }

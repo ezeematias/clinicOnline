@@ -1,0 +1,79 @@
+<button class="btn btn-primary" (click)="selector('Specialist')">Especialista</button>
+<button class="btn btn-primary" (click)="selector('Admin')">Administrador</button>
+<button class="btn btn-primary" (click)="selector('Patient')">Paciente</button>
+
+<form [formGroup]="form">
+    <div class="form-group input-group-sm">
+        <label style="float: left">Nombre</label>
+        <input class="form-control" formControlName="name" type="name" placeholder="Ingrese su nombre" required>
+        <div class="errorMessage"
+            *ngIf="getValue('name')?.invalid && (getValue('name').touched || getValue('name').dirty)">
+            Ingrese un nombre válido</div>
+
+        <label style="float: left">Apellido</label>
+        <input class="form-control" formControlName="lastName" type="apellido" placeholder="Ingrese su apellido"
+            required>
+        <div class="errorMessage"
+            *ngIf="getValue('lastName')?.invalid && (getValue('lastName').touched || getValue('lastName').dirty)">
+            Ingrese un apellido válido</div>
+
+        <label style="float: left">Edad</label>
+        <input class="form-control" formControlName="age" type="number" placeholder="Ingrese su edad" required>
+        <div class="errorMessage"
+            *ngIf="getValue('age')?.invalid && (getValue('age').touched || getValue('age').dirty)">
+            Ingrese una edad válida mayor de 18</div>
+
+
+        <label style="float: left">DNI</label>
+        <input class="form-control" formControlName="dni" type="number" placeholder="Ingrese su DNI" required>
+        <div class="errorMessage"
+            *ngIf="getValue('dni')?.invalid && (getValue('dni').touched || getValue('dni').dirty)">
+            Ingrese un DNI válido</div>
+
+        <div class="input-group-sm" *ngIf="role == 'Patient'">
+            <label style="float: left">Obra Social</label>
+            <input class="form-control" formControlName="socialWork" type="socialWork"
+                placeholder="Ingrese su obra social" required>
+            <div class="errorMessage"
+                *ngIf="getValue('socialWork')?.invalid && (getValue('socialWork').touched || getValue('socialWork').dirty)">
+                Ingrese una obra social válida</div>
+        </div>
+        <div class="input-group-sm" *ngIf="role == 'Specialist'">
+            <label style="float: left">Especialidad</label>
+            <input class="form-control" formControlName="specialty" type="specialty"
+                placeholder="Ingrese su especialidad">
+            <div class="errorMessage"
+                *ngIf="getValue('specialty')?.invalid && (getValue('specialty').touched || getValue('specialty').dirty)">
+                Ingrese una especialidad válida</div>
+        </div>
+
+        <label style="float: left">Email</label>
+        <input class="form-control" formControlName="email" type="email" placeholder="Ingrese su email" required>
+        <div class="errorMessage"
+            *ngIf="getValue('email')?.invalid && (getValue('email').touched || getValue('email').dirty)">
+            Ingrese un mail válido</div>
+
+        <label style="float: left">Contraseña</label>
+        <input autocomplete="new-password" #password class="form-control" formControlName="password" type="password"
+            placeholder="Ingrese su contraseña" required>
+        <div class="errorMessage"
+            *ngIf="getValue('password')?.invalid && (getValue('password').touched || getValue('password').dirty)">
+            Mínimo 6 caracteres</div>
+
+        <label style="float: left">Repita la contraseña</label>
+        <input autocomplete="new-password" #password class="form-control" formControlName="rePassword" type="password"
+            placeholder="Re-Ingrese su contraseña" required>
+        <div class="errorMessage"
+            *ngIf="getValue('rePassword')?.invalid && (getValue('rePassword').touched || getValue('rePassword').dirty)">
+            Mínimo 6 caracteres</div>
+        <div class="input-group-sm" *ngIf="role == 'Patient' || role == 'Admin'; else then_image">
+            <input class="form-control" formControlName="files" type="file" multiple placeholder="Ingrese sus imagenes"
+                (change)="uploadImage($event)" required>
+        </div>
+        <ng-template #then_image>
+            <input class="form-control" formControlName="file" type="file" placeholder="Ingrese su imagen"
+                (change)="uploadImage($event)">
+        </ng-template>
+    </div>
+</form>
+<button class="btn btn-success form-control" (click)="registerUser()" [disabled]="!form.valid">Registrar</button>

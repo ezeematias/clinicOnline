@@ -23,44 +23,37 @@ export class ProfileComponent implements OnInit {
 
   constructor(private authService: AuthService, private userService: UsersService, private router: Router, private modal: ModalService, private fb: FormBuilder) {
     this.forms = new FormGroup({
-      email: new FormControl(),
-      password: new FormControl(),
-      rePassword: new FormControl(),
       name: new FormControl(),
       lastName: new FormControl(),
       age: new FormControl(),
       dni: new FormControl(),
-      file: new FormControl(),
-      files: new FormControl(),
-      socialWork: new FormControl(),
-      specialty: new FormControl(),
-    })
+      email: new FormControl()
+    });
   }
 
   ngOnInit(): void {
     this.authService.getAuth().subscribe(res => {
       if (res != null) {
+        this.userService.isLogged = true;
         this.logged = true;
         this.userRes = res;
         this.userService.getUserId(res.uid).subscribe(user => {
           this.userBase = user[0];
+          this.forms = this.fb.group({
+            email: [this.userBase.email, Validators.pattern("^[^@]+@[^@]+\.[a-zA-Z]{2,}$")],
+            name: [this.userBase.name, [Validators.minLength(3), Validators.maxLength(20)]],
+            lastName: [this.userBase.lastName, [Validators.minLength(3), Validators.maxLength(20)]],
+            age: [this.userBase.age, [Validators.max(120), Validators.min(18)]],
+            dni: [this.userBase.dni, [Validators.pattern("[0-9]{8}")]],
+          });
         })
       } else {
         this.logged = false;
       }
     });
-    this.forms = this.fb.group({
-      email: ['', Validators.pattern("^[^@]+@[^@]+\.[a-zA-Z]{2,}$")],
-      name: ['', [Validators.minLength(3), Validators.maxLength(20)]],
-      lastName: ['', [Validators.minLength(3), Validators.maxLength(20)]],
-      age: ['', [Validators.max(120), Validators.min(18)]],
-      dni: ['', [Validators.pattern("[0-9]{8}")]],
-    });
   }
 
   onSubmit() {
-
-
   }
 
   user() {

@@ -25,6 +25,12 @@ import { AuthService } from './services/auth.service';
 import { PermissionsGuard } from './guards/permissions.guard';
 import { WelcomeComponent } from './pages/welcome/welcome.component';
 import { VerificationComponent } from './pages/verification/verification.component';
+import { CaptchaComponent } from './components/captcha/captcha.component';
+import { UsersService } from './services/users.service';
+import { RegistrationComponent } from './components/registration/registration.component';
+import { RequestShiftComponent } from './pages/request-shift/request-shift.component';
+import { MyShiftComponent } from './pages/my-shift/my-shift.component';
+import { AdminShiftComponent } from './pages/admin-shift/admin-shift.component';
 
 const firebaseConfig = {
   projectId: 'eu-cliniconline',
@@ -48,21 +54,26 @@ const firebaseConfig = {
     NotFoundComponent,
     VerificationComponent,
     WelcomeComponent,
+    CaptchaComponent,
+    RequestShiftComponent,
+    MyShiftComponent,
+    AdminShiftComponent,
+    //RegistrationComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     NgbModule,
     FormsModule,
+    ReactiveFormsModule,
     AngularFireModule.initializeApp(firebaseConfig),
     RouterModule,
-    ReactiveFormsModule,
     HttpClientModule,
     SpinnerModule,
     AngularFirestoreModule,
     AngularFireStorageModule, provideFirebaseApp(() => initializeApp(environment.firebase)), provideAuth(() => getAuth()), provideFirestore(() => getFirestore()), provideStorage(() => getStorage())
   ],
-  providers: [AuthService/*, PermissionsGuard*/],
+  providers: [AuthService, UsersService, PermissionsGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

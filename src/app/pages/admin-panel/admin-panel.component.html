@@ -1,6 +1,6 @@
 <div *ngIf="userLogged|async as user; ">
     <div *ngIf="userBase.enable; else verify">
-        <div *ngIf="userBase.role === 'Patient'; else welcome">
+        <div *ngIf="userBase.role === 'Admin'; else welcome">
             <h3 class="text-center">Listado de pacientes</h3>
             <app-pacient-list></app-pacient-list>
             <h3 class="text-center">Listado de medicos</h3>
@@ -14,5 +14,6 @@
     <ng-template #verify>
         <h4 class="text-center">Tenés que esperar la habilitación de un administrador</h4>
     </ng-template>
+    <app-registration></app-registration>
 
 </div>

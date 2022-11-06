@@ -5,31 +5,53 @@
                 <img class="logoNav" src="../../../assets/logoCompleted.png" alt="">
             </div>
         </a>
-        <div style="display: inline-flex; align-items: center; " *ngIf="userLogged|async as user;">
-            Panel de control
-        </div>
-        <div style="display: inline-flex; align-items: center;">
-            Panel de control
-        </div>
-        <a class="navbar-brand" routerLink="home" *ngIf="userLogged|async as user; else then_content">
-            <div style="display: flex; align-items: center;" *ngIf="user.displayName">
-                <a class="borderLog" routerLink="home">
-                    <img class="picLog" src="{{user.photoURL}}" *ngIf="user.photoURL" alt="">
-                    <img class="picLog" src="../../../assets/picUser.jpeg" *ngIf="!user.photoURL" alt="">
-                </a>
-                <div>
-                    <a class="navbar-brand" routerLink="home"> {{user.displayName?user.displayName:user.email}} </a>
+        <div class="row">
+            <div class="col">
+                <div ngbDropdown display="dynamic" class="d-inline-block">
+                    <a class="navbar-brand" *ngIf="userLogged|async as user; else then_content" id="dropdownBasic1"
+                        ngbDropdownToggle>
+                        <div style="display: flex; align-items: center;" *ngIf="user.displayName">
+                            <a class="borderLog">
+                                <img class="picLog" src="{{user.photoURL}}" *ngIf="user.photoURL" alt="">
+                                <img class="picLog" src="../../../assets/picUser.jpeg" *ngIf="!user.photoURL" alt="">
+                            </a>
+                            <div>
+                                <a class="navbar-brand">
+                                    {{user.displayName?user.displayName:user.email}}
+                                </a>
+                            </div>
+                        </div>
+                        <div style="display: inline-flex; align-items: center;" *ngIf="!user.displayName">
+                            <a class="borderLog">
+                                <img class="picLog" src="../../../assets/picUser.jpeg" *ngIf="!user.photoURL" alt="">
+                            </a>
+                            <div>
+                                <a class="navbar-brand"> {{user.email}} </a>
+                            </div>
+                        </div>
+
+                        <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                            <button ngbDropdownItem routerLink="home/profile">Mi perfil</button>
+                            <div class="dropdown-divider"></div>
+
+                            <div *ngIf="admin|async as User">
+                                <a ngbDropdownItem id="control" routerLink="home/panel"
+                                    *ngIf="User[0].role == 'Admin' && user">Panel de Control</a>
+                                <a ngbDropdownItem routerLink="home/panel-shift"
+                                    *ngIf="User[0].role == 'Admin' && user">Panel de Turnos</a>
+
+                            </div>
+                            <div class="dropdown-divider"></div>
+                            <button ngbDropdownItem routerLink="home/turns">Mis Turnos</button>
+                            <button ngbDropdownItem routerLink="home/request">Solicitar Turno</button>
+                            <div class="dropdown-divider"></div>
+                            <button ngbDropdownItem (click)="logout()">Cerrar Sesión</button>
+                        </div>
+                    </a>
                 </div>
             </div>
-            <div style="display: inline-flex; align-items: center;" *ngIf="!user.displayName">
-                <a class="borderLog" routerLink="panel">
-                    <img class="picLog" src="../../../assets/picUser.jpeg" *ngIf="!user.photoURL" alt="">
-                </a>
-                <div>
-                    <a class="navbar-brand" routerLink="home"> {{user.email}} </a>
-                </div>
-            </div>
-        </a>
+        </div>
+
         <ng-template #then_content>
             <a class="navbar-brand" routerLink="login">
                 Iniciar Sesión

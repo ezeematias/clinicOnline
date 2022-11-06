@@ -1,27 +1,26 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from 'src/app/services/auth.service';
-import { Router } from '@angular/router';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Roles } from 'src/app/entities/role';
+import { User } from 'src/app/entities/user';
+import { AuthService } from 'src/app/services/auth.service';
+import { ModalService } from 'src/app/services/modal.service';
 import { SpinnerService } from 'src/app/services/spinner.service';
 import { StorageService } from 'src/app/services/storage.service';
-import { User } from 'src/app/entities/user';
 import { UsersService } from 'src/app/services/users.service';
-import { ModalService } from 'src/app/services/modal.service';
-import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-register',
-  templateUrl: './register.component.html',
-  styleUrls: ['./register.component.scss']
+  selector: 'app-registration',
+  templateUrl: './registration.component.html',
+  styleUrls: ['./registration.component.scss']
 })
-export class RegisterComponent implements OnInit {
+export class RegistrationComponent implements OnInit {
+
+  public role: Roles = 'Admin';
   files: any;
   form: FormGroup;
-  isSpecialist: boolean = true;
   user = new User();
-  captcha: boolean = false;
 
-  constructor(private auth: AuthService, private router: Router,
+  constructor(private auth: AuthService,
     private readonly fb: FormBuilder,
     private spinnerService: SpinnerService,
     public userService: UsersService,
@@ -43,62 +42,8 @@ export class RegisterComponent implements OnInit {
     })
   }
 
-  getValue(value: string): AbstractControl {
-    return this.form.get(value) as FormGroup;
-  }
-
-  changeStatus(isSpecialist: boolean) {
-    this.isSpecialist = isSpecialist;
-    if (this.isSpecialist) {
-      this.getValue('specialty').addValidators(Validators.required);
-      this.getValue('file').addValidators(Validators.required);
-      this.getValue('socialWork').clearValidators();
-      this.getValue('files').clearValidators();
-    } else {
-      this.getValue('socialWork').addValidators(Validators.required);
-      this.getValue('files').addValidators(Validators.required);
-      this.getValue('specialty').clearValidators();
-      this.getValue('file').clearValidators();
-    }
-    this.getValue('socialWork').updateValueAndValidity();
-    this.getValue('specialty').updateValueAndValidity();
-    this.getValue('file').updateValueAndValidity();
-    this.getValue('files').updateValueAndValidity();
-  }
-
-  registerUser() {
-    this.spinnerService.show();
-    this.user = this.form.value;
-    this.user.role = this.isSpecialist ? 'Specialist' : 'Patient';
-    this.user.enable = this.isSpecialist ? false : true;
-
-    if (this.getValue("password").value === this.getValue("rePassword").value) {
-
-      this.modal.modarlCaptcha().then(res => {
-
-        if (res) {
-          this.auth.register(this.form.value, this.files).then((res) => {
-          }).catch(error => {
-            this.modal.modalMessage(error.message, "error"); console.log("Error de registro", error)
-          }).finally(() => {
-            this.spinnerService.hide();
-          });
-        }
-        this.spinnerService.hide();
-      })
-    } else {
-      this.spinnerService.hide();
-      this.modal.modalMessage('Las contraseñas no coinciden', "error");
-    }
-  }
-
-
-  uploadImage($event: any) {
-    this.files = $event.target.files;
-  }
-
   ngOnInit(): void {
-    this.changeStatus(false);
+    this.changeStatus();
     this.form = this.fb.group({
       email: ['', Validators.pattern("^[^@]+@[^@]+\.[a-zA-Z]{2,}$")],
       password: ['', [Validators.minLength(6), Validators.maxLength(20)]],
@@ -114,14 +59,65 @@ export class RegisterComponent implements OnInit {
     });
   }
 
-  validateCaptcha(value: any) {
-    console.log(value)
-    this.captcha = value
+  changeStatus() {
+    if (this.role == 'Specialist') {
+      this.getValue('specialty').addValidators(Validators.required);
+      this.getValue('file').addValidators(Validators.required);
+      this.getValue('socialWork').clearValidators();
+      this.getValue('files').clearValidators();
+    } else if (this.role == 'Patient') {
+      this.getValue('socialWork').addValidators(Validators.required);
+      this.getValue('files').addValidators(Validators.required);
+      this.getValue('specialty').clearValidators();
+      this.getValue('file').clearValidators();
+    } else {
+      this.getValue('socialWork').clearValidators();
+      this.getValue('files').addValidators(Validators.required);
+      this.getValue('specialty').clearValidators();
+      this.getValue('file').clearValidators();
+    }
+    this.getValue('socialWork').updateValueAndValidity();
+    this.getValue('specialty').updateValueAndValidity();
+    this.getValue('file').updateValueAndValidity();
+    this.getValue('files').updateValueAndValidity();
   }
 
-  async userA() {
-    //this.userService.getUserAll();
-    this.modal.modarlCaptcha();
-
+  selector(role: Roles) {
+    this.role = role;
+    this.changeStatus();
   }
+
+  getValue(value: string): AbstractControl {
+    return this.form.get(value) as FormGroup;
+  }
+
+  uploadImage($event: any) {
+    this.files = $event.target.files;
+  }
+
+  registerUser() {
+    this.spinnerService.show();
+    this.user = this.form.value;
+    this.user.role = this.role;
+    this.user.enable = this.role === 'Specialist' ? false : true;
+
+    if (this.getValue("password").value === this.getValue("rePassword").value) {
+
+      this.modal.modarlCaptcha().then(res => {
+        if (res) {
+          this.auth.registerPanel(this.form.value, this.files).then((res) => {
+          }).catch(error => {
+            this.modal.modalMessage(error.message, "error"); console.log("Error de registro", error)
+          }).finally(() => {
+            this.spinnerService.hide();
+          });
+        }
+        this.spinnerService.hide();
+      })
+    } else {
+      this.spinnerService.hide();
+      this.modal.modalMessage('Las contraseñas no coinciden', "error");
+    }
+  }
+
 }

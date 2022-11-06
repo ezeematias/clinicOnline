@@ -9,6 +9,8 @@ export type icon = 'warning' | 'error' | 'success' | 'info' | 'question';
 
 export class ModalService {
 
+  captcha: any = [];
+
   constructor() { }
 
   modalMessage(msg: string, icon: icon) {
@@ -17,7 +19,7 @@ export class ModalService {
       icon: icon,
       title: msg,
       showConfirmButton: false,
-      timer: 1500
+      timer: 2000
     })
   }
 
@@ -52,5 +54,45 @@ export class ModalService {
       msg,
       icon
     )
+  }
+
+  async modarlCaptcha(): Promise<boolean> {
+    let captcha = []
+    for (let q = 0; q < 6; q++) {
+      if (q % 2 == 0) {
+        captcha[q] = String.fromCharCode(Math.floor(Math.random() * 26 + 65));
+      } else {
+        captcha[q] = Math.floor(Math.random() * 10 + 0);
+      }
+    }
+    const theCaptcha = captcha.join("");
+
+    const { value: result } = await Swal.fire({
+      title: `Ingrese el código \n\n${theCaptcha}`,
+      input: 'text',
+      text: '¡No sea un robot!',
+      icon: 'info',
+      showCancelButton: true,
+      cancelButtonText: 'Cancelar',
+      confirmButtonText: 'Confirmar',
+      inputValidator: (value) => {
+        if (!value || value != theCaptcha) {
+          return 'El código ingresado es incorrecto.'
+        } else {
+          return null;
+        }
+      }
+    })
+    if (result) {
+      Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: 'Captcha correcto',
+        showConfirmButton: false,
+        timer: 1500
+      })
+      return true;
+    }
+    return false;
   }
 }

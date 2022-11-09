@@ -1,0 +1,109 @@
+<div class="container">
+    <h4 class="text-center">{{specialtyParent}}</h4>
+    <table class="table table-responsive">
+        <thead>
+            <tr>
+                <th scope="col">Días</th>
+                <th scope="col">Desde</th>
+                <th scope="col">Hasta</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <input type="checkbox" class="btn-check" [(ngModel)]="sundayFlag" id="Sunday"
+                        (click)="enable('Sunday')" autocomplete="off">
+                    <label class="btn btn-outline-primary" for="Sunday">Domingo</label>
+                </td>
+                <td>
+                    <ngb-timepicker [disabled]="!sundayFlag" [(ngModel)]="sundayTimeFrom"></ngb-timepicker>
+                </td>
+                <td>
+                    <ngb-timepicker [disabled]="!sundayFlag" [(ngModel)]="sundayTimeTo"></ngb-timepicker>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <input type="checkbox" class="btn-check" [(ngModel)]="mondayFlag" id="Monday"
+                        (click)="enable('Monday')">
+                    <label class="btn btn-outline-primary" for="Monday">Lunes</label>
+                </td>
+                <td>
+                    <ngb-timepicker [disabled]="!mondayFlag" [(ngModel)]="mondayTimeFrom"></ngb-timepicker>
+                </td>
+                <td>
+                    <ngb-timepicker [disabled]="!mondayFlag" [(ngModel)]="mondayTimeTo"></ngb-timepicker>
+                </td>
+            </tr>
+
+            <tr>
+                <td><input type="checkbox" class="btn-check" [(ngModel)]="tuesdayFlag" id="Tuesday" checked
+                        (click)="enable('Tuesday')">
+                    <label class="btn btn-outline-primary" for="Tuesday">Martes</label>
+                </td>
+                <td>
+                    <ngb-timepicker [disabled]="!tuesdayFlag" [(ngModel)]="tuesdayTimeFrom"></ngb-timepicker>
+                </td>
+                <td>
+                    <ngb-timepicker [disabled]="!tuesdayFlag" [(ngModel)]="tuesdayTimeTo"></ngb-timepicker>
+                </td>
+            </tr>
+
+            <tr>
+                <td><input type="checkbox" class="btn-check" [(ngModel)]="wednesdayFlag" id="Wednesday"
+                        (click)="enable('Wednesday')">
+                    <label class="btn btn-outline-primary" for="Wednesday">Miércoles</label>
+                </td>
+                <td>
+                    <ngb-timepicker [disabled]="!wednesdayFlag" [(ngModel)]="wednesdayTimeFrom"></ngb-timepicker>
+                </td>
+                <td>
+                    <ngb-timepicker [disabled]="!wednesdayFlag" [(ngModel)]="wednesdayTimeTo"></ngb-timepicker>
+                </td>
+            </tr>
+
+            <tr>
+                <td><input type="checkbox" class="btn-check" [(ngModel)]="thursdayFlag" id="Thursday"
+                        (click)="enable('Thursday')">
+                    <label class="btn btn-outline-primary" for="Thursday">Jueves</label>
+                </td>
+                <td>
+                    <ngb-timepicker [disabled]="!thursdayFlag" [(ngModel)]="thursdayTimeFrom"></ngb-timepicker>
+                </td>
+                <td>
+                    <ngb-timepicker [disabled]="!thursdayFlag" [(ngModel)]="thursdayTimeTo"></ngb-timepicker>
+                </td>
+            </tr>
+
+            <tr>
+                <td> <input type="checkbox" class="btn-check" [(ngModel)]="fridayFlag" id="Friday"
+                        (click)="enable('Friday')">
+                    <label class="btn btn-outline-primary" for="Friday">Viernes</label>
+                </td>
+                <td>
+                    <ngb-timepicker [disabled]="!fridayFlag" [(ngModel)]="fridayTimeFrom"></ngb-timepicker>
+                </td>
+                <td>
+                    <ngb-timepicker [disabled]="!fridayFlag" [(ngModel)]="fridayTimeTo"></ngb-timepicker>
+                </td>
+            </tr>
+
+            <tr class="">
+                <td><input type="checkbox" class="btn-check" [(ngModel)]="saturdayFlag" id="Saturday"
+                        (click)="enable('Saturday')">
+                    <label class="btn btn-outline-primary" for="Saturday">Sábado</label>
+                </td>
+                <td>
+                    <ngb-timepicker [disabled]="!saturdayFlag" [(ngModel)]="saturdayTimeFrom"></ngb-timepicker>
+
+                </td>
+                <td>
+                    <ngb-timepicker [disabled]="!saturdayFlag" [(ngModel)]="saturdayTimeTo"></ngb-timepicker>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <button class="btn btn-primary" (click)="sendSchedule()">Guardar horarios</button>
+</div>

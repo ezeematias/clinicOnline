@@ -7,6 +7,8 @@ import { Auth } from '@angular/fire/auth';
 import { User } from '../entities/user';
 import { StorageService } from './storage.service';
 import { UsersService } from './users.service';
+import { Specialty } from '../entities/specialty';
+import { IfStmt } from '@angular/compiler';
 
 @Injectable({
   providedIn: 'root'
@@ -57,10 +59,20 @@ export class AuthService {
     });
   }
 
-  async register(user: User, files: any) {
+  async register(user: User, files: any, specialty: Specialty[], isSpecialist: boolean) {
     return await createUserWithEmailAndPassword(this.auth, user.email, user.password).then(res => {
       sendEmailVerification(res.user);
       user.uid = res.user.uid;
+      user.role = isSpecialist ? 'Specialist' : 'Patient';
+      user.registerAdmin = false;
+      let bufferSpe: string[] = [];
+      specialty.forEach(spe => {
+        if (spe.name) {
+          bufferSpe.push(spe.name);
+        }
+      })
+      user.specialty = bufferSpe;
+      console.log(specialty);
       this.storage.updateImages(user.email, files).then(async () => {
         await this.storage.getImages(user.email).then(() => {
           this.uploadUser(user.name, this.storage.listUrl[0]);
@@ -142,6 +154,9 @@ export class AuthService {
 
   getAuth() {
     return this.afauth.authState;
+  }
+
+  deleteUserAuth(user: User) {
   }
 
   async currentUser(): Promise<any> {

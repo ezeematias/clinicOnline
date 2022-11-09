@@ -27,20 +27,10 @@ export class SpecialistListComponent implements OnInit {
   }
 
   onClickDeleted(user: User) {
-    /*
-        this.modal.modalCancel("").then((result) => {
-          if (result.isConfirmed) {
-            console.log("Usuario Borrado " + user.email);
-            //this.userService.deleteUser(user);
-            this.modal.modalSimple("Eliminado", "Se eliminó correctamente", "success");
-          }
-        })*/
-
     this.modal.modalCancelConfirm().then((result) => {
       if (result.isConfirmed) {
         this.modal.modalSimple("Eliminado", "Se eliminó correctamente", "success");
-        console.log("Usuario Borrado " + user.email);
-        //this.userService.deleteUser(user);
+        this.userService.deleteUser(user);
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         this.modal.modalSimple("Cancelado", "El documento está a salvo", "error");
       }

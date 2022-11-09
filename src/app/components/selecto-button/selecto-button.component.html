@@ -1,0 +1,5 @@
+<div class="container" *ngFor="let item of listParent; index as i">
+    <input type="radio" class="btn-check" name="{{className}}" id="{{item.name}}" (click)="selector(item)"
+        autocomplete="off">
+    <label class="btn btn-outline-primary" for="{{item.name}}">{{ item.name }}</label>
+</div>

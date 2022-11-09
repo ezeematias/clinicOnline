@@ -1,1 +1,10 @@
-<p>my-shift works!</p>
+<app-selecto-button [listParent]="specialtys" [className]="specialityName" (itemSelected)="selector($event)">
+</app-selecto-button>
+<br>
+
+<div *ngIf="specialtySelected">
+    <app-selecto-button [listParent]="specialist" [className]="specialistName" (itemSelected)="selectorSpe($event)">
+    </app-selecto-button>
+</div>
+<br>
+

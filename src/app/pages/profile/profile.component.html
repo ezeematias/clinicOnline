@@ -1,9 +1,9 @@
 <div class="profile">
-    <div class="center card" style="width: 400px;">
+    <div class="center card" style="width: 25%;">
         <ngb-carousel *ngIf="userBase">
             <ng-template ngbSlide *ngFor="let img of userBase.imageUrl; index as i">
                 <div class="picsum-img-wrapper">
-                    <img [src]="img" alt="" style="width: 400px;" />
+                    <img [src]="img" alt="" style="width: 100%;" />
                 </div>
                 <div class="carousel-caption">
                     <h3>{{userBase.name + " " + userBase.lastName}}</h3>
@@ -67,8 +67,22 @@
                                 (click)="onSubmit()">ENVIAR</button>
                         </div>
                     </form>
+                    <div class="d-flex justify-content-center">
+                        <button type="submit" class="btn btn-primary" style="width: 80%;"
+                            (click)="scheduleStatus()">Gestionar mis Horarios</button>
+                    </div>
                 </div>
             </div>
         </div>
+    </div>
+    <div class="center card" *ngIf="schedule" style="width: 10%; margin-left: 3%;">
+        <h5 class="text-center mt-3">Elegir especiaidad</h5>
+        <div class="dropdown-divider"></div>
+        <app-selecto-button [listParent]="userBase.specialty" (itemSelected)="specialtySelector($event)">
+        </app-selecto-button>
+    </div>
+    <div class="center card" *ngIf="sendSpecialty && schedule" style="width: 30%; margin-left: 3%;">
+        <app-schedule [specialtyParent]="sendSpecialty" [specialistParent]="userBase.uid!" [listSchedule]="listSchedule()"
+            (scheduleManag)="addSchedule($event)"></app-schedule>
     </div>
 </div>

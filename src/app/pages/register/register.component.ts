@@ -8,6 +8,7 @@ import { User } from 'src/app/entities/user';
 import { UsersService } from 'src/app/services/users.service';
 import { ModalService } from 'src/app/services/modal.service';
 import Swal from 'sweetalert2';
+import { Specialty } from 'src/app/entities/specialty';
 
 @Component({
   selector: 'app-register',
@@ -20,6 +21,7 @@ export class RegisterComponent implements OnInit {
   isSpecialist: boolean = true;
   user = new User();
   captcha: boolean = false;
+  specialty: Specialty[] = [];
 
   constructor(private auth: AuthService, private router: Router,
     private readonly fb: FormBuilder,
@@ -50,18 +52,16 @@ export class RegisterComponent implements OnInit {
   changeStatus(isSpecialist: boolean) {
     this.isSpecialist = isSpecialist;
     if (this.isSpecialist) {
-      this.getValue('specialty').addValidators(Validators.required);
+
       this.getValue('file').addValidators(Validators.required);
       this.getValue('socialWork').clearValidators();
       this.getValue('files').clearValidators();
     } else {
       this.getValue('socialWork').addValidators(Validators.required);
       this.getValue('files').addValidators(Validators.required);
-      this.getValue('specialty').clearValidators();
       this.getValue('file').clearValidators();
     }
     this.getValue('socialWork').updateValueAndValidity();
-    this.getValue('specialty').updateValueAndValidity();
     this.getValue('file').updateValueAndValidity();
     this.getValue('files').updateValueAndValidity();
   }
@@ -73,11 +73,9 @@ export class RegisterComponent implements OnInit {
     this.user.enable = this.isSpecialist ? false : true;
 
     if (this.getValue("password").value === this.getValue("rePassword").value) {
-
       this.modal.modarlCaptcha().then(res => {
-
         if (res) {
-          this.auth.register(this.form.value, this.files).then((res) => {
+          this.auth.register(this.form.value, this.files, this.specialty, this.isSpecialist).then((res) => {
           }).catch(error => {
             this.modal.modalMessage(error.message, "error"); console.log("Error de registro", error)
           }).finally(() => {
@@ -112,6 +110,7 @@ export class RegisterComponent implements OnInit {
       specialty: ['', [Validators.minLength(3), Validators.maxLength(100)]],
       socialWork: ['', [Validators.minLength(3), Validators.maxLength(100)]]
     });
+
   }
 
   validateCaptcha(value: any) {
@@ -122,6 +121,10 @@ export class RegisterComponent implements OnInit {
   async userA() {
     //this.userService.getUserAll();
     this.modal.modarlCaptcha();
+  }
 
+  specialtySelect(specialty: Specialty[]) {
+    console.log(specialty);
+    this.specialty = specialty;
   }
 }

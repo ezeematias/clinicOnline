@@ -32,13 +32,16 @@
 
                         <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
                             <button ngbDropdownItem routerLink="home/profile">Mi perfil</button>
-                            <div class="dropdown-divider"></div>
 
                             <div *ngIf="admin|async as User">
-                                <a ngbDropdownItem id="control" routerLink="home/panel"
-                                    *ngIf="User[0].role == 'Admin' && user">Panel de Control</a>
-                                <a ngbDropdownItem routerLink="home/panel-shift"
-                                    *ngIf="User[0].role == 'Admin' && user">Panel de Turnos</a>
+                                <div *ngIf="User && role == 'Admin'">
+                                    <div class="dropdown-divider">
+                                    </div>
+                                    <a ngbDropdownItem *ngIf="role == 'Admin' && user" id="control"
+                                        routerLink="home/panel">Panel de Control</a>
+                                    <a ngbDropdownItem *ngIf="role == 'Admin' && user"
+                                        routerLink="home/panel-shift">Panel de Turnos</a>
+                                </div>
 
                             </div>
                             <div class="dropdown-divider"></div>

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import Swal, { SweetAlertResult } from 'sweetalert2';
+import { Specialty } from '../entities/specialty';
 
 export type icon = 'warning' | 'error' | 'success' | 'info' | 'question';
 
@@ -54,6 +55,37 @@ export class ModalService {
       msg,
       icon
     )
+  }
+
+  async modalText(): Promise<Specialty> {
+    const { value: result } = await Swal.fire({
+      title: 'Input email address',
+      input: 'text',
+      inputLabel: 'Ingrese especialidad',
+      inputPlaceholder: 'especialidad',
+      inputValidator: (value) => {
+        if (!value) {
+          return 'Debe ingresar la especialidad'
+        } else {
+          return null;
+        }
+      }
+    })
+
+    if (result) {
+      Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: 'Captcha correcto',
+        showConfirmButton: false,
+        timer: 1500
+      })
+      let newSpecialty = new Specialty();
+      newSpecialty.name = result;
+      newSpecialty.id = '15';
+      return newSpecialty;
+    }
+    return result;
   }
 
   async modarlCaptcha(): Promise<boolean> {

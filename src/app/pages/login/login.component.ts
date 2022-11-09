@@ -34,28 +34,26 @@ export class LoginComponent implements OnInit {
 
   async ingresar(user: User) {
     this.spinnerService.show();
-    await this.userService.getUserEmail(user.email).subscribe(async (userRef) => {
+    await this.userService.getUserEmail(user.email, 'users').subscribe(async (userRef) => {
       if (userRef) {
         this.userService.userLogged = userRef[0];
       }
     });
     setTimeout(() => {
-      if(this.userService.userLogged.registerAdmin){
+      if (this.userService.userLogged.registerAdmin) {
         this.auth.registerAdmin(this.userService.userLogged).then((res) => {
-          this.userService.updateUserUid(user,res);
+          this.userService.updateUserUid(user, res);
         })
       }
       if (this.userService.userLogged.enable == true) {
         sessionStorage.setItem('user', JSON.stringify(this.userService.userLogged));
         this.auth.login(user).then().catch(error => { this.modal.modalMessage(error.message, "error"); });
       } else if (this.userService.userLogged.enable == false) {
-        this.modal.modalSimple("Usuario pendiente de habilitación","Hablar con un administrador", "info");
+        this.modal.modalSimple("Usuario pendiente de habilitación", "Hablar con un administrador", "info");
       }
       this.spinnerService.hide();
     }, 2000);
   }
-
-  
 
   ingresarConGoogle() {
     this.spinnerService.show();

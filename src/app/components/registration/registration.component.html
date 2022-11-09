@@ -1,6 +1,10 @@
-<button class="btn btn-primary" (click)="selector('Specialist')">Especialista</button>
-<button class="btn btn-primary" (click)="selector('Admin')">Administrador</button>
-<button class="btn btn-primary" (click)="selector('Patient')">Paciente</button>
+<input type="radio" class="btn-check" name="btnradio" id="Specialist" (click)="selector('Specialist')"
+    autocomplete="off" checked>
+<label class="btn btn-outline-primary" for="Specialist">Especialista</label>
+<input type="radio" class="btn-check" name="btnradio" id="Admin" (click)="selector('Admin')" autocomplete="off">
+<label class="btn btn-outline-primary" for="Admin">Administrador</label>
+<input type="radio" class="btn-check" name="btnradio" id="Patient" (click)="selector('Patient')" autocomplete="off">
+<label class="btn btn-outline-primary" for="Patient">Paciente</label>
 
 <form [formGroup]="form">
     <div class="form-group input-group-sm">

@@ -9,6 +9,9 @@ import { ProfileComponent } from '../profile/profile.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RegistrationComponent } from 'src/app/components/registration/registration.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ScheduleComponent } from 'src/app/components/schedule/schedule.component';
+import { SelectoButtonComponent } from 'src/app/components/selecto-button/selecto-button.component';
+import { MyShiftComponent } from '../my-shift/my-shift.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +21,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     SpecialistListComponent,
     ProfileComponent,
     RegistrationComponent,
+    ScheduleComponent,
+    SelectoButtonComponent,
+    MyShiftComponent
   ],
   imports: [
     CommonModule,

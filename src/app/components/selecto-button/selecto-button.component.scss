@@ -1,0 +1,24 @@
+.btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: sticky;
+}
+
+.back {
+    background-size: cover;
+    background-position: absolute;
+    width: 100%;
+    position: fixed;
+}
+
+// . {
+//     justify-content: center;
+//     align-items: center;
+// }
+
+.autoLog {
+    align-items: center;
+    position: relative;
+    margin-top: 20px;
+}

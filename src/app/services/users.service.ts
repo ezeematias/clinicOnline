@@ -3,6 +3,9 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { collectionData, Firestore, doc, deleteDoc } from '@angular/fire/firestore';
 import { collection, getDoc, getDocs, query, updateDoc, where } from 'firebase/firestore';
 import { Observable } from 'rxjs';
+import { Schedule } from '../entities/schedule';
+import { ScheduleManagement } from '../entities/schedule-management';
+import { Specialty } from '../entities/specialty';
 import { User } from '../entities/user';
 import { RoleValidator } from '../helpers/role-validator';
 
@@ -63,8 +66,8 @@ export class UsersService extends RoleValidator {
     return collectionData(q, { idField: 'id' }) as Observable<User[]>;
   }
 
-  getUserEmail(email: any): Observable<User[]> {
-    const pattientRef = collection(this.firestore, 'users');
+  getUserEmail(email: any, collectionName: string): Observable<User[]> {
+    const pattientRef = collection(this.firestore, collectionName);
     const q = query(pattientRef, where("email", "==", email));
     return collectionData(q, { idField: 'id' }) as Observable<User[]>;
   }
@@ -103,5 +106,41 @@ export class UsersService extends RoleValidator {
   get isLoggedIn(): boolean {
     const user = JSON.parse(localStorage.getItem('user')!);
     return (user !== null) ? true : false;
+  }
+
+  // Schedule
+  async addSchedule(schedule: ScheduleManagement) {
+    let newSchedule: ScheduleManagement = {
+      specialist: schedule.specialist,
+      specialty: schedule.specialty,
+      timeShift: schedule.timeShift,
+      schedule: schedule.schedule,
+    }
+    return await this.afs.collection('schedules').add(newSchedule);
+  }
+
+  getScheduleId(userUid: any): Observable<ScheduleManagement[]> {
+    const pattientRef = collection(this.firestore, 'schedules');
+    const q = query(pattientRef, where("specialist", "==", userUid));
+    return collectionData(q, { idField: 'id' }) as Observable<ScheduleManagement[]>;
+  }
+
+  updateSchule(user: ScheduleManagement, change: ScheduleManagement) {
+    const placeRef = doc(this.firestore, `schedules/${user.id}`);
+    return updateDoc(placeRef, { schedule: change.schedule, timeShift: change.timeShift });
+  }
+
+
+  //Specialty
+  async addSpecialty(specialty: Specialty) {
+    let newSpecialty: Specialty = {
+      name: specialty.name,
+    }
+    return await this.afs.collection('specialty').add(newSpecialty);
+  }
+
+  getSpecialtyAll(): Observable<Specialty[]> {
+    const userRef = collection(this.firestore, 'specialty');
+    return collectionData(userRef, { idField: 'id' }) as Observable<Specialty[]>;
   }
 }

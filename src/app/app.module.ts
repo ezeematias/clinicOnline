@@ -31,6 +31,10 @@ import { RegistrationComponent } from './components/registration/registration.co
 import { RequestShiftComponent } from './pages/request-shift/request-shift.component';
 import { MyShiftComponent } from './pages/my-shift/my-shift.component';
 import { AdminShiftComponent } from './pages/admin-shift/admin-shift.component';
+import { ScheduleComponent } from './components/schedule/schedule.component';
+import { SelectoButtonComponent } from './components/selecto-button/selecto-button.component';
+import { ManagementService } from './services/management.service';
+import { SpecialtyComponent } from './components/specialty/specialty.component';
 
 const firebaseConfig = {
   projectId: 'eu-cliniconline',
@@ -56,8 +60,9 @@ const firebaseConfig = {
     WelcomeComponent,
     CaptchaComponent,
     RequestShiftComponent,
-    MyShiftComponent,
     AdminShiftComponent,
+    SpecialtyComponent,
+
     //RegistrationComponent,
   ],
   imports: [
@@ -73,7 +78,7 @@ const firebaseConfig = {
     AngularFirestoreModule,
     AngularFireStorageModule, provideFirebaseApp(() => initializeApp(environment.firebase)), provideAuth(() => getAuth()), provideFirestore(() => getFirestore()), provideStorage(() => getStorage())
   ],
-  providers: [AuthService, UsersService, PermissionsGuard],
+  providers: [AuthService, UsersService, ManagementService, PermissionsGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -8,6 +8,7 @@
                     height="50" class="imageBtn">
             </div>
             <button (click)="userA()">ASD</button>
+
             <form [formGroup]="form">
                 <div class="form-group input-group-sm">
                     <label style="float: left">Nombre</label>
@@ -48,14 +49,14 @@
                             Ingrese una obra social válida</div>
                     </div>
                     <ng-template #then_specialist>
-                        <label style="float: left">Especialidad</label>
-                        <input class="form-control" formControlName="specialty" type="specialty"
-                            placeholder="Ingrese su especialidad">
+                        <label class="labelB" style="float: left">Especialidad</label>
+                        <div class="buttons">
+                            <app-specialty (itemSelected)="specialtySelect($event)"></app-specialty>
+                        </div>
                         <div class="errorMessage"
                             *ngIf="getValue('specialty')?.invalid && (getValue('specialty').touched || getValue('specialty').dirty)">
                             Ingrese una especialidad válida</div>
                     </ng-template>
-
                     <label style="float: left">Email</label>
                     <input class="form-control" formControlName="email" type="email" placeholder="Ingrese su email"
                         required>

@@ -1,0 +1,13 @@
+<div class="btn-group btn-group-sm m-1" *ngFor="let item of listDays; index as i">
+    <input type="radio" class="btn-check" name="btnradio" id="{{item.name}}" (click)="selectorDay(item)"
+        autocomplete="off">
+    <label class="btn btn-outline-primary" for="{{item.name}}">{{ item | dayFormat }}</label>
+</div>
+
+<div class="btn-group btn-group-sm m-1" *ngFor="let item of listTurn; index as i">
+    <input type="radio" class="btn-check" name="btnradio" id="{{item.name}}" (click)="selector(item)"
+        autocomplete="off">
+    <label class="btn btn-outline-primary" for="{{item.name}}">{{ item | tunsHour }}</label>
+</div>
+
+<button (click)="send()">Prueba</button>

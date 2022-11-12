@@ -65,13 +65,7 @@ export class AuthService {
       user.uid = res.user.uid;
       user.role = isSpecialist ? 'Specialist' : 'Patient';
       user.registerAdmin = false;
-      let bufferSpe: string[] = [];
-      specialty.forEach(spe => {
-        if (spe.name) {
-          bufferSpe.push(spe.name);
-        }
-      })
-      user.specialty = bufferSpe;
+      user.specialty = specialty;
       console.log(specialty);
       this.storage.updateImages(user.email, files).then(async () => {
         await this.storage.getImages(user.email).then(() => {

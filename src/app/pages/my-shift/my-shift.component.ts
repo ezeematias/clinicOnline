@@ -1,8 +1,7 @@
-import { Component, Input, OnChanges, OnInit } from '@angular/core';
-import { Schedule } from 'src/app/entities/schedule';
+import { Component, OnInit } from '@angular/core';
 import { ScheduleManagement } from 'src/app/entities/schedule-management';
 import { Specialty } from 'src/app/entities/specialty';
-
+import { Turns } from 'src/app/entities/turns';
 import { User } from 'src/app/entities/user';
 import { UsersService } from 'src/app/services/users.service';
 
@@ -16,12 +15,16 @@ export class MyShiftComponent implements OnInit {
   specialtys: Specialty[] = [];
   specialist: User[] = [];
   specialtySelected: string = '';
+  specialistSelected: string = '';
 
   specialityName: string = 'specialityName';
   specialistName: string = 'specialistName';
+  turnsName: string = 'turnsName';
 
   schedulesUser: ScheduleManagement[] = [];
   scheduleSelected = new ScheduleManagement();
+
+  turns: Turns[] = [];
 
   constructor(private userService: UsersService) { }
 
@@ -40,10 +43,10 @@ export class MyShiftComponent implements OnInit {
     let bufferUs: User[] = [];
     this.userService.getUserAllSpecialist().subscribe(user => {
       bufferUs = user;
-      bufferUs.forEach(user => {
-        user.specialty?.forEach(us => {
-          if (this.specialtySelected == '' || us == this.specialtySelected) {
-            this.specialist.push(user);
+      bufferUs.forEach(userb => {
+        userb.specialty?.forEach(us => {
+          if (this.specialtySelected == '' || us.name == this.specialtySelected) {
+            this.specialist.push(userb);
           }
         })
       })
@@ -55,33 +58,49 @@ export class MyShiftComponent implements OnInit {
     this.loadSpecialist();
   }
 
-  selectorSpe(specialist: User) {
-    this.generateTurns(specialist);
+  async selectorSpe(specialist: User) {
+    this.specialistSelected = specialist.name!;
+    let newTurns = this.generateTurnsForDay(specialist);
+    setTimeout(() => {
+      this.turns = this.filterDayWeek(newTurns, 3);
+    }, 300);
   }
 
-  generateTurns(specialist: User) {
-    let turns: string[] = [];
+  generateTurnsForDay(specialist: User): Turns[] {
+    let newTurns: Turns[] = [];
     this.userService.getScheduleId(specialist.uid).subscribe(user => {
       this.scheduleSelected = user.filter(fill => fill.specialist === specialist.uid)[0];
-      var d = new Date(); // Por ejemplo 1
-      var n = this.getDia(new Date().getDay());
-      var m = new Date().getDate();
-      console.log(d.getDay());
-      console.log(m);
-      /*
-      this.scheduleSelected.schedule.forEach(user => {
-        for (let index = 0; index < 15; index++) {
-          for ( let j = user.from; j?.hour! < user.to?.hour!; j) {
-            const element = array[index];
-            
+      if (this.scheduleSelected) {
+        for (const key in this.scheduleSelected.schedule) {
+          let day = new Date();
+          day.setHours(this.scheduleSelected.schedule[key].from!.hour);
+          day.setMinutes(this.scheduleSelected.schedule[key].from!.minute);
+          let hour = day.getHours();
+          let minutes = day.getMinutes();
+          while (this.scheduleSelected.schedule[key].to!.hour > hour) {
+            let turn: Turns = {
+              dayWeek: this.scheduleSelected.schedule[key].dayWeek,
+              hour: hour,
+              minutes: minutes,
+            };
+            newTurns.push(turn);
+            day.setMinutes(minutes + this.scheduleSelected.timeShift!);
+            hour = day.getHours();
+            minutes = day.getMinutes();
           }
-          
         }
-      })*/
+      }
     });
+    return newTurns;
   }
 
-  getDia(index: number) {
+  filterDayWeek(listTurns: Turns[], dayWeek: number): Turns[] {
+    let newTurns: Turns[] = [];
+    newTurns = listTurns.filter((turn: Turns) => turn.dayWeek === dayWeek);
+    return newTurns;
+  }
+
+  getDaySpanish(index: number) {
     var dia = new Array(7);
     dia[0] = "Domingo";
     dia[1] = "Lunes";
@@ -91,8 +110,5 @@ export class MyShiftComponent implements OnInit {
     dia[5] = "Viernes";
     dia[6] = "Sábado";
     return dia[index];
-
   }
-
-
 }

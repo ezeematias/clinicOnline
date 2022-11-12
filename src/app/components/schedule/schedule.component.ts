@@ -4,6 +4,7 @@ import { map, Observable } from 'rxjs';
 import { Roles } from 'src/app/entities/role';
 import { Days, Schedule } from 'src/app/entities/schedule';
 import { ScheduleManagement } from 'src/app/entities/schedule-management';
+import { Specialty } from 'src/app/entities/specialty';
 import { ModalService } from 'src/app/services/modal.service';
 
 @Component({
@@ -13,7 +14,7 @@ import { ModalService } from 'src/app/services/modal.service';
 })
 export class ScheduleComponent implements OnInit, OnChanges {
 
-  @Input() specialtyParent!: string;
+  @Input() specialtyParent!: Specialty;
   @Input() specialistParent!: string;
   @Input() listSchedule!: Schedule[];
   @Output() scheduleManag = new EventEmitter<ScheduleManagement>();
@@ -118,7 +119,6 @@ export class ScheduleComponent implements OnInit, OnChanges {
   }
 
   enable(day: string) {
-
   }
 
   sendSchedule() {
@@ -131,21 +131,21 @@ export class ScheduleComponent implements OnInit, OnChanges {
       if (this.sundayTimeFrom.hour > this.sundayTimeTo.hour || this.sundayTimeFrom.hour == this.sundayTimeTo.hour && this.sundayTimeFrom.minute >= this.sundayTimeTo.minute) {
         output = false;
       } else {
-        this.scheduleMan.schedule?.push(this.setSchedule('sunday', this.sundayTimeFrom, this.sundayTimeTo));
+        this.scheduleMan.schedule?.push(this.setSchedule(0, 'sunday', this.sundayTimeFrom, this.sundayTimeTo));
       }
     }
     if (this.mondayFlag) {
       if (this.mondayTimeFrom.hour > this.mondayTimeTo.hour || this.mondayTimeFrom.hour == this.mondayTimeTo.hour && this.mondayTimeFrom.minute >= this.mondayTimeTo.minute) {
         output = false;
       } else {
-        this.scheduleMan.schedule?.push(this.setSchedule('monday', this.mondayTimeFrom, this.mondayTimeTo));
+        this.scheduleMan.schedule?.push(this.setSchedule(1, 'monday', this.mondayTimeFrom, this.mondayTimeTo));
       }
     }
     if (this.tuesdayFlag) {
       if (this.tuesdayTimeFrom.hour > this.tuesdayTimeTo.hour || this.tuesdayTimeFrom.hour == this.tuesdayTimeTo.hour && this.tuesdayTimeFrom.minute >= this.tuesdayTimeTo.minute) {
         output = false;
       } else {
-        this.scheduleMan.schedule?.push(this.setSchedule('tuesday', this.tuesdayTimeFrom, this.tuesdayTimeTo));
+        this.scheduleMan.schedule?.push(this.setSchedule(2, 'tuesday', this.tuesdayTimeFrom, this.tuesdayTimeTo));
 
       }
     }
@@ -153,7 +153,7 @@ export class ScheduleComponent implements OnInit, OnChanges {
       if (this.wednesdayTimeFrom.hour > this.wednesdayTimeTo.hour || this.wednesdayTimeFrom.hour == this.wednesdayTimeTo.hour && this.wednesdayTimeFrom.minute >= this.wednesdayTimeTo.minute) {
         output = false;
       } else {
-        this.scheduleMan.schedule?.push(this.setSchedule('wednesday', this.wednesdayTimeFrom, this.wednesdayTimeTo));
+        this.scheduleMan.schedule?.push(this.setSchedule(3, 'wednesday', this.wednesdayTimeFrom, this.wednesdayTimeTo));
 
       }
     }
@@ -161,7 +161,7 @@ export class ScheduleComponent implements OnInit, OnChanges {
       if (this.thursdayTimeFrom.hour > this.thursdayTimeTo.hour || this.thursdayTimeFrom.hour == this.thursdayTimeTo.hour && this.thursdayTimeFrom.minute >= this.thursdayTimeTo.minute) {
         output = false;
       } else {
-        this.scheduleMan.schedule?.push(this.setSchedule('thursday', this.thursdayTimeFrom, this.thursdayTimeTo));
+        this.scheduleMan.schedule?.push(this.setSchedule(4, 'thursday', this.thursdayTimeFrom, this.thursdayTimeTo));
 
       }
     }
@@ -169,7 +169,7 @@ export class ScheduleComponent implements OnInit, OnChanges {
       if (this.fridayTimeFrom.hour > this.fridayTimeTo.hour || this.fridayTimeFrom.hour == this.fridayTimeTo.hour && this.fridayTimeFrom.minute >= this.fridayTimeTo.minute) {
         output = false;
       } else {
-        this.scheduleMan.schedule?.push(this.setSchedule('friday', this.fridayTimeFrom, this.fridayTimeTo));
+        this.scheduleMan.schedule?.push(this.setSchedule(5, 'friday', this.fridayTimeFrom, this.fridayTimeTo));
 
       }
     }
@@ -177,7 +177,7 @@ export class ScheduleComponent implements OnInit, OnChanges {
       if (this.saturdayTimeFrom.hour > this.saturdayTimeTo.hour || this.saturdayTimeFrom.hour == this.saturdayTimeTo.hour && this.saturdayTimeFrom.minute >= this.saturdayTimeTo.minute) {
         output = false;
       } else {
-        this.scheduleMan.schedule?.push(this.setSchedule('saturday', this.saturdayTimeFrom, this.saturdayTimeTo));
+        this.scheduleMan.schedule?.push(this.setSchedule(6, 'saturday', this.saturdayTimeFrom, this.saturdayTimeTo));
       }
     }
     this.scheduleMan.timeShift = this.timeTurn;
@@ -187,11 +187,10 @@ export class ScheduleComponent implements OnInit, OnChanges {
     } else {
       this.modal.modalMessage("Los horarios de inicio no pueden ser superiores a los de finalización", 'error');
     }
-    //this.management.addSchedule(this.scheduleMan);
   }
 
-  setSchedule(day: Days, from: { hour: number, minute: number }, to: { hour: number, minute: number }): Schedule {
-    let newSchedule: Schedule = { day: day, from: from, to: to }
+  setSchedule(dayWeek: number, day: Days, from: { hour: number, minute: number }, to: { hour: number, minute: number }): Schedule {
+    let newSchedule: Schedule = { dayWeek: dayWeek, day: day, from: from, to: to }
     return newSchedule;
   }
 }

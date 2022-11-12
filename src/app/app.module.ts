@@ -27,14 +27,13 @@ import { WelcomeComponent } from './pages/welcome/welcome.component';
 import { VerificationComponent } from './pages/verification/verification.component';
 import { CaptchaComponent } from './components/captcha/captcha.component';
 import { UsersService } from './services/users.service';
-import { RegistrationComponent } from './components/registration/registration.component';
 import { RequestShiftComponent } from './pages/request-shift/request-shift.component';
-import { MyShiftComponent } from './pages/my-shift/my-shift.component';
 import { AdminShiftComponent } from './pages/admin-shift/admin-shift.component';
-import { ScheduleComponent } from './components/schedule/schedule.component';
-import { SelectoButtonComponent } from './components/selecto-button/selecto-button.component';
 import { ManagementService } from './services/management.service';
 import { SpecialtyComponent } from './components/specialty/specialty.component';
+import { TunsDayPipe } from './pipes/tuns-day.pipe';
+import { TunsListDayPipe } from './pipes/tuns-list-day.pipe';
+import { DayFormatPipe } from './pipes/day-format.pipe';
 
 const firebaseConfig = {
   projectId: 'eu-cliniconline',
@@ -62,6 +61,7 @@ const firebaseConfig = {
     RequestShiftComponent,
     AdminShiftComponent,
     SpecialtyComponent,
+
 
     //RegistrationComponent,
   ],

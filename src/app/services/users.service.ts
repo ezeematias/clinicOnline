@@ -8,6 +8,7 @@ import { ScheduleManagement } from '../entities/schedule-management';
 import { Specialty } from '../entities/specialty';
 import { User } from '../entities/user';
 import { RoleValidator } from '../helpers/role-validator';
+import { getDatabase, ref, child, get } from "firebase/database";
 
 @Injectable({
   providedIn: 'root'
@@ -130,7 +131,6 @@ export class UsersService extends RoleValidator {
     return updateDoc(placeRef, { schedule: change.schedule, timeShift: change.timeShift });
   }
 
-
   //Specialty
   async addSpecialty(specialty: Specialty) {
     let newSpecialty: Specialty = {
@@ -143,4 +143,5 @@ export class UsersService extends RoleValidator {
     const userRef = collection(this.firestore, 'specialty');
     return collectionData(userRef, { idField: 'id' }) as Observable<Specialty[]>;
   }
+
 }

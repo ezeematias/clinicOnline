@@ -12,10 +12,21 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ScheduleComponent } from 'src/app/components/schedule/schedule.component';
 import { SelectoButtonComponent } from 'src/app/components/selecto-button/selecto-button.component';
 import { MyShiftComponent } from '../my-shift/my-shift.component';
+import { ListTostringPipe } from 'src/app/pipes/list-tostring.pipe';
+import { TunsHourPipe } from 'src/app/pipes/tuns-hour.pipe';
+import { TurnsComponent } from 'src/app/components/turns/turns.component';
+import { TunsDayPipe } from 'src/app/pipes/tuns-day.pipe';
+import { TunsListDayPipe } from 'src/app/pipes/tuns-list-day.pipe';
+import { DayFormatPipe } from 'src/app/pipes/day-format.pipe';
 
 @NgModule({
   declarations: [
     HomeComponent,
+    ListTostringPipe,
+    TunsHourPipe,
+    TunsDayPipe,
+    TunsListDayPipe,
+    DayFormatPipe,
     AdminPanelComponent,
     PacientListComponent,
     SpecialistListComponent,
@@ -23,7 +34,8 @@ import { MyShiftComponent } from '../my-shift/my-shift.component';
     RegistrationComponent,
     ScheduleComponent,
     SelectoButtonComponent,
-    MyShiftComponent
+    MyShiftComponent,
+    TurnsComponent
   ],
   imports: [
     CommonModule,

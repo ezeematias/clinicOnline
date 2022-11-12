@@ -3,6 +3,7 @@ export type Days = 'monday' | 'tuesday' | 'wednesday' | 'thursday' | 'friday' | 
 
 export class Schedule {
     day?: Days;
+    dayWeek?: number;
     from?: { hour: number, minute: number };
     to?: { hour: number, minute: number };
 }

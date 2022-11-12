@@ -59,7 +59,7 @@ export class ModalService {
 
   async modalText(): Promise<Specialty> {
     const { value: result } = await Swal.fire({
-      title: 'Input email address',
+      title: 'Nueva especialidad',
       input: 'text',
       inputLabel: 'Ingrese especialidad',
       inputPlaceholder: 'especialidad',

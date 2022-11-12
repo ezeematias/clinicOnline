@@ -11,7 +11,7 @@ import { SpinnerService } from 'src/app/services/spinner.service';
 })
 export class WelcomeComponent implements OnInit {
 
-  userLogged = this.auth.getAuth();
+  userLogged = this.auth.getAuth(); 
 
   constructor(private auth: AuthService, private spinnerService: SpinnerService, private router: Router, private modal: ModalService) { }
 

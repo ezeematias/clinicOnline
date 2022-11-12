@@ -23,26 +23,13 @@ export class NavbarComponent implements OnInit {
     this.userLogged = this.authService.getAuth();
     this.userLogged.subscribe((userRef) => {
       this.userService.isLogged = true;
-      this.admin = this.userService.getUserEmail(userRef.email, 'users');
-      this.admin.subscribe(user => {
-        user.forEach(us => this.role = us.role);
-      })
+      if (userRef) {
+        this.admin = this.userService.getUserEmail(userRef.email, 'users');
+        this.admin.subscribe(user => {
+          user.forEach(us => this.role = us.role);
+        })
+      }
     })
-
-    /*
-    const auth = this.authService.userCurrent();
-    auth.then(res => {
-      this.userService.getUserId(res.currentUser?.uid).subscribe((user) => {
-        this.userBase = user[0];
-        console.log(this.userBase);
-        if (user[0].role === 'Admin') {
-          this.admin = true;
-        } else {
-          this.admin = false;
-        }
-      })
-    });*/
-
   }
 
   logout() {

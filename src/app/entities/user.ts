@@ -1,4 +1,5 @@
 import { Roles } from "./role";
+import { Specialty } from "./specialty";
 
 export class User {
     id?: string;
@@ -13,13 +14,13 @@ export class User {
     dni: string;
     socialWork?: string;
     imageUrl: string[] = [];
-    specialty?: string[] = [];
+    specialty?: Specialty[] = [];
     enable: boolean;
     role: Roles;
     emailVerified?: boolean;
     registerAdmin?: boolean;
 
-    constructor(uid: string = '', email: string = '', password: string = '', displayName: string = '', photoURL: string = '', name: string = '', lastName: string = '', age: number = 0, dni: string = '', socialWork: string = '', imageUrl: string[] = [], specialty: string[] = [], enable: boolean = false, role: Roles = 'Admin', emailVerified: boolean = false, registerAdmin: boolean = false) {
+    constructor(uid: string = '', email: string = '', password: string = '', displayName: string = '', photoURL: string = '', name: string = '', lastName: string = '', age: number = 0, dni: string = '', socialWork: string = '', imageUrl: string[] = [], specialty: Specialty[] = [], enable: boolean = false, role: Roles = 'Admin', emailVerified: boolean = false, registerAdmin: boolean = false) {
         this.email = email;
         this.password = password;
         this.displayName = displayName;

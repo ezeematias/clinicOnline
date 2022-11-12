@@ -1,9 +1,10 @@
 import { Schedule } from "./schedule";
+import { Specialty } from "./specialty";
 
 export class ScheduleManagement {
-    id?:string;
+    id?: string;
     specialist?: string;
-    specialty?: string;
+    specialty?: Specialty;
     schedule: Schedule[] = [];
     timeShift?: number;
 }

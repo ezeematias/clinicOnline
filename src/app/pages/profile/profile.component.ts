@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { from, Observable } from 'rxjs';
 import { Schedule } from 'src/app/entities/schedule';
 import { ScheduleManagement } from 'src/app/entities/schedule-management';
+import { Specialty } from 'src/app/entities/specialty';
 import { User } from 'src/app/entities/user';
 import { AuthService } from 'src/app/services/auth.service';
 import { ManagementService } from 'src/app/services/management.service';
@@ -23,7 +24,7 @@ export class ProfileComponent implements OnInit {
   userRes: any;
   userBase = new User();
   logged: boolean = false;
-  sendSpecialty!: string;
+  sendSpecialty!: Specialty;
   schedule: boolean = false;
 
   schedulesUser: ScheduleManagement[] = [];
@@ -80,9 +81,9 @@ export class ProfileComponent implements OnInit {
     this.authService.uploadPhoto(img);
   }
 
-  specialtySelector(specialty: string) {
+  specialtySelector(specialty: Specialty) {
     this.sendSpecialty = specialty;
-    this.scheduleSelected = this.schedulesUser.filter(fill => fill.specialty == specialty)[0];
+    this.scheduleSelected = this.schedulesUser.filter(fill => fill.specialty?.name == specialty.name)[0];
   }
 
   scheduleStatus() {
@@ -99,13 +100,7 @@ export class ProfileComponent implements OnInit {
       this.userService.addSchedule(schedule).then(() => this.modal.modalMessage("Horario cargado correctamente", 'success')).finally(() => this.spinnerService.hide());
     }
   }
-
-  // listSchedule(): Observable<Schedule[]> | any {
-  //   if (this.scheduleSelected) {
-  //     let result = from(this.scheduleSelected.schedule);
-  //     return result as Observable<Schedule[]>
-  //   }
-  // }
+  
   listSchedule(): Schedule[] | any {
     if (this.scheduleSelected) {
       return this.scheduleSelected.schedule;

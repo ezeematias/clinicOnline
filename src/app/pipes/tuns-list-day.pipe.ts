@@ -12,9 +12,12 @@ export class TunsListDayPipe implements PipeTransform {
     let day = new Date();
     if (value) {
       value.forEach(res => {
-        if (day.getDate() == key.day && day.getHours() <= res.hour! && day.getMinutes() < res.minutes! && key.dayWeek == res.dayWeek) {
+        console.log("PIPI ===")
+        console.log(res)
+        console.log("PIPI ===")
+        if (day.getDate() == key.day && day.getHours() <= res.hour! && day.getMinutes() < res.minutes! && key.dayWeek == res.dayWeek && res.status != 'Reserved') {
           newList.push(res);
-        } else if (day.getDate() != key.day && key.dayWeek == res.dayWeek) {
+        } else if (day.getDate() != key.day && key.dayWeek == res.dayWeek && res.status != 'Reserved') {
           newList.push(res);
         }
       });

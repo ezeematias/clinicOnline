@@ -8,7 +8,7 @@ import { Specialty } from '../entities/specialty';
 import { User } from '../entities/user';
 import { RoleValidator } from '../helpers/role-validator';
 import { Turns } from '../entities/turns';
-import * as firebase from 'firebase/compat/app';
+import firebase from 'firebase/compat/app';
 
 @Injectable({
   providedIn: 'root'
@@ -163,22 +163,22 @@ export class UsersService extends RoleValidator {
     return await this.afs.collection('turns').add(newTurn);
   }
 
-  getUserApproved(patientUid: string, specialist: string) {
-    /*var data: any;
+  getReservedTurns(specialist: string) {
+    const data: Turns[] = [];
     return firebase
       .firestore()
-      .collection('users')
-      .where('uid', '==', uid)
+      .collection('turns')
+      .where('specialist', '==', specialist)
       .get()
       .then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
-          data = doc.data()['approved'];
+          data.push(doc.data());
         });
         return data;
       })
       .catch((error) => {
         console.log('Error getting documents: ', error);
-      });*/
+      });
   }
 
 }

@@ -28,8 +28,10 @@ export class MyShiftComponent implements OnInit {
   scheduleSelected = new ScheduleManagement();
 
   allTurns: Turns[] = [];
+  availableTurn: Turns[] = [];
 
   turns: Turns[] = [];
+  turnsReserved: Turns[] = [];
   days: DaysSelec[] = [];
 
   daySelected = new DaysSelec();
@@ -69,10 +71,6 @@ export class MyShiftComponent implements OnInit {
 
   addTurn() {
     if (this.turnSelected.name) {
-      console.log(this.turnSelected);
-      console.log(this.daySelected);
-
-
       this.userService.addTurn({
         name: this.daySelected.name,
         specialist: this.specialistSelected,
@@ -98,6 +96,7 @@ export class MyShiftComponent implements OnInit {
     this.specialist = [];
     this.days = [];
     this.allTurns = [];
+    this.availableTurn = [];
     let bufferUs: User[] = [];
     this.userService.getUserAllSpecialist().subscribe(user => {
       bufferUs = user;
@@ -121,12 +120,16 @@ export class MyShiftComponent implements OnInit {
     this.loadSpecialist();
   }
 
-  selectorSpe(specialist: User) {
+  async selectorSpe(specialist: User) {
     this.resetInputs();
     this.specialistSelected = specialist.name!;
     this.allTurns = this.generateTurnsForDay(specialist);
     setTimeout(() => {
-      this.days = this.getDaysAvailables(this.allTurns);
+      this.userService.getReservedTurns(this.specialistSelected).then(spe => {
+        this.turnsReserved = spe!;
+        this.days = this.getDaysAvailables(this.allTurns);
+        console.log(this.days);
+      })
     }, 300);
   }
 
@@ -136,11 +139,29 @@ export class MyShiftComponent implements OnInit {
   selectorDay(day: DaysSelec) {
     this.turnSelected = new Turns();
     this.daySelected = day;
-    console.log(day);
+    this.availableTurn = this.allTurns;
+    this.customerTurns(this.availableTurn, this.turnsReserved!);
   }
 
   buttonTest() {
     console.log(this.turnSelected);
+  }
+
+  //Turn List, lo único que tiene es los horarios por una semana. Hay que chequear las 2 semanas.
+  customerTurns(turnList: Turns[], reservedTurn: Turns[]) {
+    //console.log(this.daySelected)
+    // console.log("OOOOOOOOOO")
+    // console.log(reservedTurn)
+    // console.log("OOOOOOOOOO")
+    turnList.forEach(res => {
+      //console.log(res);
+      //console.log(`Día => ${this.daySelected.day} Mes => ${this.daySelected.month} // Hora => ${res.hour} Minutos => ${res.minutes}  `);
+
+      if (reservedTurn.find(find => find.day == this.daySelected.day && find.dayWeek == res.dayWeek && find.hour == res.hour && find.minutes == res.minutes && find.month == this.daySelected.month)) {
+        res.status = 'Reserved';
+        console.log("Entré")
+      }
+    })
   }
 
   getDaysAvailables(listTurns: Turns[]): DaysSelec[] {

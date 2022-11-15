@@ -18,6 +18,7 @@ import { TurnsComponent } from 'src/app/components/turns/turns.component';
 import { TunsDayPipe } from 'src/app/pipes/tuns-day.pipe';
 import { TunsListDayPipe } from 'src/app/pipes/tuns-list-day.pipe';
 import { DayFormatPipe } from 'src/app/pipes/day-format.pipe';
+import { RequestShiftComponent } from '../request-shift/request-shift.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { DayFormatPipe } from 'src/app/pipes/day-format.pipe';
     ScheduleComponent,
     SelectoButtonComponent,
     MyShiftComponent,
+    RequestShiftComponent,
     TurnsComponent
   ],
   imports: [

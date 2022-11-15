@@ -49,6 +49,25 @@ export class ProfileComponent implements OnInit {
         this.userRes = res;
         this.userService.getUserId(res.uid).subscribe(user => {
           this.userBase = user[0];
+          this.userBase.specialty?.forEach(name => {
+            switch (name.name) {
+              case 'Clínico':
+                name.photoURL = "../../../assets/clinic.png";
+                break;
+              case 'Ortodoncia':
+                name.photoURL = "../../../assets/dentist.png";
+                break;
+              case 'Psiquiatra':
+                name.photoURL = "../../../assets/psychiatrist.png";
+                break;
+              case 'Cardiólogo':
+                name.photoURL = "../../../assets/cardiologist.png";
+                break;
+              default:
+                name.photoURL = "../../../assets/specialty.png";
+                break;
+            }
+          })
           this.forms = this.fb.group({
             email: [this.userBase.email, Validators.pattern("^[^@]+@[^@]+\.[a-zA-Z]{2,}$")],
             name: [this.userBase.name, [Validators.minLength(3), Validators.maxLength(20)]],
@@ -97,7 +116,7 @@ export class ProfileComponent implements OnInit {
       this.userService.addSchedule(schedule).then(() => this.modal.modalMessage("Horario cargado correctamente", 'success')).finally(() => this.spinnerService.hide());
     }
   }
-  
+
   listSchedule(): Schedule[] | any {
     if (this.scheduleSelected) {
       return this.scheduleSelected.schedule;

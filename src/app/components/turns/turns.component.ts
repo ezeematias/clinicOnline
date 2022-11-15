@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { DaysSelec } from 'src/app/entities/days-selec';
 import { Turns } from 'src/app/entities/turns';
 
@@ -15,24 +15,23 @@ export class TurnsComponent implements OnInit {
   @Output() itemSelected = new EventEmitter<Turns>();
 
   turns: Turns[] = [];
+  dayPipe = new DaysSelec();
 
   constructor() { }
 
   ngOnInit(): void {
+    console.log(this.listDays)
   }
 
   selectorDay(item: DaysSelec) {
+    this.dayPipe = item;
     this.daySelected.emit(item);
+  }
+  asd() {
+    console.log(this.listDays)
   }
 
   selector(item: Turns) {
     this.itemSelected.emit(item);
   }
-
-  send() {
-    console.log(this.listDays);
-    console.log('XXXXXXXXXXXXXXXXXXXXXXXXX');
-    console.log(this.listTurn);
-  }
-
 }

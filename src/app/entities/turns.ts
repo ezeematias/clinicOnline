@@ -4,6 +4,7 @@ export class Turns {
     id?: string;
     name?: string;
     specialist?: string;
+    specialty?: string;
     patient?: string;
     date?: Date;
     day?: number;

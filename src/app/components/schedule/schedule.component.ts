@@ -1,7 +1,5 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { NgbTimepickerConfig } from '@ng-bootstrap/ng-bootstrap';
-import { map, Observable } from 'rxjs';
-import { Roles } from 'src/app/entities/role';
 import { Days, Schedule } from 'src/app/entities/schedule';
 import { ScheduleManagement } from 'src/app/entities/schedule-management';
 import { Specialty } from 'src/app/entities/specialty';

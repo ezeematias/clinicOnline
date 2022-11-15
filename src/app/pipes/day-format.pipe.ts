@@ -5,10 +5,9 @@ import { DaysSelec } from '../entities/days-selec';
   name: 'dayFormat'
 })
 export class DayFormatPipe implements PipeTransform {
-  
-  //OJO CON EL DÍA
+
   transform(value: DaysSelec, ...args: unknown[]): unknown {
-    return `${value.dayWeek}/${value.name}`;
+    return `${value.name} ${value.day}/${value.month}`;
   }
 
 }

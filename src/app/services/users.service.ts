@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { collectionData, Firestore, doc, deleteDoc } from '@angular/fire/firestore';
-import { collection, getDoc, getDocs, query, updateDoc, where } from 'firebase/firestore';
+import { collection, getDocs, query, updateDoc, where } from 'firebase/firestore';
 import { Observable } from 'rxjs';
-import { Schedule } from '../entities/schedule';
 import { ScheduleManagement } from '../entities/schedule-management';
 import { Specialty } from '../entities/specialty';
 import { User } from '../entities/user';
 import { RoleValidator } from '../helpers/role-validator';
-import { getDatabase, ref, child, get } from "firebase/database";
+import { Turns } from '../entities/turns';
+import * as firebase from 'firebase/compat/app';
 
 @Injectable({
   providedIn: 'root'
@@ -142,6 +142,43 @@ export class UsersService extends RoleValidator {
   getSpecialtyAll(): Observable<Specialty[]> {
     const userRef = collection(this.firestore, 'specialty');
     return collectionData(userRef, { idField: 'id' }) as Observable<Specialty[]>;
+  }
+
+  //Turns
+  async addTurn(turn: Turns) {
+    let newTurn: Turns = {
+      name: turn.name,
+      specialist: turn.specialist,
+      patient: turn.patient,
+      date: turn.date,
+      day: turn.day,
+      dayWeek: turn.dayWeek,
+      month: turn.month,
+      hour: turn.hour,
+      minutes: turn.minutes,
+      poll: turn.poll,
+      rating: turn.rating,
+      status: turn.status,
+    }
+    return await this.afs.collection('turns').add(newTurn);
+  }
+
+  getUserApproved(patientUid: string, specialist: string) {
+    /*var data: any;
+    return firebase
+      .firestore()
+      .collection('users')
+      .where('uid', '==', uid)
+      .get()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          data = doc.data()['approved'];
+        });
+        return data;
+      })
+      .catch((error) => {
+        console.log('Error getting documents: ', error);
+      });*/
   }
 
 }

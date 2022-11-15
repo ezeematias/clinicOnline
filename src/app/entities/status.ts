@@ -1,1 +1,1 @@
-export type Status = 'Cancelled' | 'Refused' | 'Finalized' | 'Accepted' | 'Available';
+export type Status = 'Cancelled' | 'Refused' | 'Finalized' | 'Accepted' | 'Reserved';

@@ -153,9 +153,9 @@ export class AuthService {
   deleteUserAuth(user: User) {
   }
 
-  async currentUser(): Promise<any> {
+  async currentUser(): Promise<string> {
     let auth = await getAuth();
-    return auth.currentUser?.uid;
+    return auth.currentUser?.uid!;
 
   }
 

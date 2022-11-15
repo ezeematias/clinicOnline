@@ -1,13 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { from, Observable } from 'rxjs';
 import { Schedule } from 'src/app/entities/schedule';
 import { ScheduleManagement } from 'src/app/entities/schedule-management';
 import { Specialty } from 'src/app/entities/specialty';
 import { User } from 'src/app/entities/user';
 import { AuthService } from 'src/app/services/auth.service';
-import { ManagementService } from 'src/app/services/management.service';
 import { ModalService } from 'src/app/services/modal.service';
 import { SpinnerService } from 'src/app/services/spinner.service';
 import { UsersService } from 'src/app/services/users.service';

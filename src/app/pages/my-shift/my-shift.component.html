@@ -8,7 +8,13 @@
 </div>
 <br>
 
-<app-turns [listTurn]="turns"></app-turns>
+<app-turns [listTurn]="allTurns" [listDays]="days" (daySelected)="selectorDay($event)" (itemSelected)="selectorTurn($event)">
+</app-turns>
+<br>
+
+<button class="btn btn-outline-success" (click)="addTurn()">Sacar Turno</button>
+
+<!-- <button (click)="buttonTest()">PROBAR DIAS</button> -->
 
 <!-- <div *ngIf="specialistSelected"> -->
 <!-- <div>

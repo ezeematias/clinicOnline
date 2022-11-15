@@ -1,13 +1,13 @@
 <div class="btn-group btn-group-sm m-1" *ngFor="let item of listDays; index as i">
-    <input type="radio" class="btn-check" name="btnradio" id="{{item.name}}" (click)="selectorDay(item)"
+    <input type="radio" class="btn-check" name="btnradioDay" id="{{item.day}}" (click)="selectorDay(item)"
         autocomplete="off">
-    <label class="btn btn-outline-primary" for="{{item.name}}">{{ item | dayFormat }}</label>
+    <label class="btn btn-outline-primary" for="{{item.day}}">{{ item | dayFormat }}</label>
+</div>
+<br>
+<div class="btn-group btn-group-sm m-1" *ngFor="let itemT of listTurn | tunsListDay: dayPipe; index as i">
+    <input type="radio" class="btn-check" name="btnradioHour" id="{{itemT.name}}" (click)="selector(itemT)"
+        autocomplete="off">
+    <label class="btn btn-outline-primary" for="{{itemT.name}}">{{ itemT | tunsHour }}</label>
 </div>
 
-<div class="btn-group btn-group-sm m-1" *ngFor="let item of listTurn; index as i">
-    <input type="radio" class="btn-check" name="btnradio" id="{{item.name}}" (click)="selector(item)"
-        autocomplete="off">
-    <label class="btn btn-outline-primary" for="{{item.name}}">{{ item | tunsHour }}</label>
-</div>
-
-<button (click)="send()">Prueba</button>
+<button (click)="asd()">ASD</button>

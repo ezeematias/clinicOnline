@@ -19,6 +19,12 @@ import { TunsDayPipe } from 'src/app/pipes/tuns-day.pipe';
 import { TunsListDayPipe } from 'src/app/pipes/tuns-list-day.pipe';
 import { DayFormatPipe } from 'src/app/pipes/day-format.pipe';
 import { RequestShiftComponent } from '../request-shift/request-shift.component';
+import { TurnsListComponent } from 'src/app/components/turns-list/turns-list.component';
+import { TurnsFilterPipe } from 'src/app/pipes/turns-filter.pipe';
+import { TurnsListAssignedComponent } from 'src/app/components/turns-list-assigned/turns-list-assigned.component';
+import { TurnsFilterSPipe } from 'src/app/pipes/turns-filter-s.pipe';
+import { TurnsListAllComponent } from 'src/app/components/turns-list-all/turns-list-all.component';
+import { TurnsFilterAPipe } from 'src/app/pipes/turns-filter-a.pipe';
 
 @NgModule({
   declarations: [
@@ -37,7 +43,13 @@ import { RequestShiftComponent } from '../request-shift/request-shift.component'
     SelectoButtonComponent,
     MyShiftComponent,
     RequestShiftComponent,
-    TurnsComponent
+    TurnsListComponent,
+    TurnsComponent,
+    TurnsFilterPipe,
+    TurnsListAssignedComponent,
+    TurnsFilterSPipe,
+    TurnsListAllComponent,
+    TurnsFilterAPipe,
   ],
   imports: [
     CommonModule,

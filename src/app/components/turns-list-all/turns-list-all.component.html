@@ -1,0 +1,39 @@
+<div class="input-group input-group-sm mb-3">
+    <span class="input-group-text" id="inputGroup-sizing-sm">Filtro</span>
+    <input type="text" [(ngModel)]="textFill" class="form-control" aria-label="Sizing example input"
+        aria-describedby="inputGroup-sizing-sm">
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Fecha</th>
+            <th scope="col">Paciente</th>
+            <th scope="col">Especialista</th>
+            <th scope="col">Especialidad</th>
+            <th scope="col">Estado</th>
+            <th scope="col">Cancelar Turno</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr
+            *ngFor="let user of (turns | turnsFilterA : textFill : ['date','status','patient','specialty','specialist'] ); index as i">
+            <th scope="row">{{ i + 1 }}</th>
+            <td>{{user | tunsDay}} {{ user | tunsHour }}</td>
+            <td>{{ user.patient }}</td>
+            <td>{{ user.specialist }}</td>
+            <td>{{ user.specialty }}</td>
+            <td>{{ user.status }}</td>
+            <td *ngIf="(user.status != 'Cancelled' && user.status != 'Finalized' && user.status != 'Accepted' && user.status
+            != 'Refused') else cancel"><button (click)="onClickCanel(user)" class="btn btn-danger">Cancelar</button>
+            </td>
+            <ng-template #cancel>
+                <td *ngIf="(user.status == 'Cancelled') else nn"><button disabled
+                        class="btn btn-outline-danger">Cancelado</button></td>
+                <ng-template #nn>
+                    <td></td>
+                </ng-template>
+            </ng-template>
+        </tr>
+    </tbody>
+</table>

@@ -139,6 +139,12 @@ export class UsersService extends RoleValidator {
     return await this.afs.collection('specialty').add(newSpecialty);
   }
 
+  getSpecialtyName(name: string): Observable<Specialty[]> {
+    const pattientRef = collection(this.firestore, 'specialty');
+    const q = query(pattientRef, where("name", "==", name));
+    return collectionData(q, { idField: 'id' }) as Observable<Specialty[]>;
+  }
+
   getSpecialtyAll(): Observable<Specialty[]> {
     const userRef = collection(this.firestore, 'specialty');
     return collectionData(userRef, { idField: 'id' }) as Observable<Specialty[]>;
@@ -148,8 +154,12 @@ export class UsersService extends RoleValidator {
   async addTurn(turn: Turns) {
     let newTurn: Turns = {
       name: turn.name,
+      nameDate: turn.nameDate,
       specialist: turn.specialist,
+      specialistUid: turn.specialistUid,
+      specialty: turn.specialty,
       patient: turn.patient,
+      patientUid: turn.patientUid,
       date: turn.date,
       day: turn.day,
       dayWeek: turn.dayWeek,
@@ -163,12 +173,12 @@ export class UsersService extends RoleValidator {
     return await this.afs.collection('turns').add(newTurn);
   }
 
-  getReservedTurns(specialist: string) {
+  getReservedTurns(specialist: User) {
     const data: Turns[] = [];
     return firebase
       .firestore()
       .collection('turns')
-      .where('specialist', '==', specialist)
+      .where('specialistUid', '==', specialist.uid)
       .get()
       .then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
@@ -181,4 +191,28 @@ export class UsersService extends RoleValidator {
       });
   }
 
+  getTurnId(userUid: string, typeUser: string): Observable<Turns[]> {
+    const pattientRef = collection(this.firestore, 'turns');
+    const q = query(pattientRef, where(typeUser, "==", userUid));
+    return collectionData(q, { idField: 'id' }) as Observable<Turns[]>;
+  }
+
+  getTurnsAll(): Observable<Turns[]> {
+    const userRef = collection(this.firestore, 'turns');
+    return collectionData(userRef, { idField: 'id' }) as Observable<Turns[]>;
+  }
+
+  updateTurns(turn: Turns, msg: string, status: string) {
+    const placeRef = doc(this.firestore, `turns/${turn.id}`);
+    return updateDoc(placeRef, { status: status, commentCancel: msg });
+  }
+
+  updateTurnsReview(turn: Turns, msg: string) {
+    const placeRef = doc(this.firestore, `turns/${turn.id}`);
+    return updateDoc(placeRef, { review: msg });
+  }
+  updateTurnsPoll(turn: Turns, msg: string) {
+    const placeRef = doc(this.firestore, `turns/${turn.id}`);
+    return updateDoc(placeRef, { poll: msg });
+  }
 }

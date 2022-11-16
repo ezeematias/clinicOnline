@@ -1,0 +1,65 @@
+<div class="input-group input-group-sm mb-3">
+    <span class="input-group-text" id="inputGroup-sizing-sm">Filtro</span>
+    <input type="text" [(ngModel)]="textFill" class="form-control" aria-label="Sizing example input"
+        aria-describedby="inputGroup-sizing-sm">
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Fecha</th>
+            <th scope="col">Paciente</th>
+            <th scope="col">Especialidad</th>
+            <th scope="col">Iniciar Turno</th>
+            <th scope="col">Finalizar Turno</th>
+            <th scope="col">Ver Reseña</th>
+            <th scope="col">Estado</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let user of (turns | turnsFilterS : textFill : ['patient','date','status','specialty'] ); index as i">
+            <th scope="row">{{ i + 1 }}</th>
+            <td>{{user | tunsDay}} {{ user | tunsHour }}</td>
+            <td>{{ user.patient }}</td>
+            <td>{{ user.specialty }}</td>
+            <td
+                *ngIf="(user.status != 'Cancelled' && user.status != 'Finalized' && user.status != 'Refused'&& user.status != 'Accepted') else refused">
+                <button (click)="onClickAccepted(user)" class="btn btn-success">Aceptar</button>
+            </td>
+            <ng-template #refused>
+                <td></td>
+            </ng-template>
+            <td *ngIf="(user.status == 'Accepted') else finally">
+                <button (click)="onClickFinally(user)" class="btn btn-outline-success">Finalizar</button>
+            </td>
+            <ng-template #finally>
+                <td *ngIf="(user.status == 'Accepted')"></td>
+                <td *ngIf="(user.status == 'Finalized')"><button disabled
+                        class="btn btn-outline-dark">Finalizado</button></td>
+                <td *ngIf="(user.status == 'Cancelled')"><button disabled
+                        class="btn btn-outline-danger">Cancelado</button></td>
+                <td
+                    *ngIf="(user.status != 'Cancelled' && user.status != 'Finalized' && user.status != 'Accepted' && user.status != 'Refused')">
+                    <button (click)="onClickCanel(user)" class="btn btn-danger">Cancelar</button>
+                </td>
+            </ng-template>
+
+            <!-- <td
+                *ngIf="(user.status != 'Cancelled' && user.status != 'Finalized' && user.status != 'Accepted' && user.status != 'Refused') else refused">
+                <button (click)="onClickRefused(user)" class="btn btn-danger">Si</button>
+            </td>
+            <ng-template #refused>
+                <td><button disabled class="btn btn-outline-dark">Rechazado</button></td>
+            </ng-template> -->
+
+            <td *ngIf="(user.status == 'Finalized' && user.review) else review"><button
+                    (click)="onClickShowReview(user)" class="btn btn-outline-info">Ver</button></td>
+            <ng-template #review>
+                <td><button disabled class="btn btn-outline-dark">Ver</button></td>
+            </ng-template>
+
+            <td>{{user.status}}</td>
+
+        </tr>
+    </tbody>
+</table>

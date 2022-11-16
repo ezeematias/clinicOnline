@@ -30,7 +30,10 @@ import { UsersService } from './services/users.service';
 import { AdminShiftComponent } from './pages/admin-shift/admin-shift.component';
 import { ManagementService } from './services/management.service';
 import { SpecialtyComponent } from './components/specialty/specialty.component';
-
+import { TurnsListAssignedComponent } from './components/turns-list-assigned/turns-list-assigned.component';
+import { TurnsFilterSPipe } from './pipes/turns-filter-s.pipe';
+import { TurnsListAllComponent } from './components/turns-list-all/turns-list-all.component';
+import { TurnsFilterAPipe } from './pipes/turns-filter-a.pipe';
 
 const firebaseConfig = {
   projectId: 'eu-cliniconline',
@@ -58,7 +61,6 @@ const firebaseConfig = {
     AdminShiftComponent,
     SpecialtyComponent,
 
-    //RegistrationComponent,
   ],
   imports: [
     BrowserModule,

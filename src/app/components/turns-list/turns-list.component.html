@@ -1,0 +1,49 @@
+<div class="input-group input-group-sm mb-3">
+    <span class="input-group-text" id="inputGroup-sizing-sm">Filtro</span>
+    <input type="text" [(ngModel)]="textFill" class="form-control" aria-label="Sizing example input"
+        aria-describedby="inputGroup-sizing-sm">
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Fecha</th>
+            <th scope="col">Especialista</th>
+            <th scope="col">Especialidad</th>
+            <th scope="col">Cancelar Turno</th>
+            <th scope="col">Ver Reseña</th>
+            <th scope="col">Encuesta</th>
+            <th scope="col">Calificar Atención</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let user of (turns | turnsFilter : textFill : ['date','specialist','specialty'] ); index as i">
+            <th scope="row">{{ i + 1 }}</th>
+            <td>{{user | tunsDay}} {{ user | tunsHour }}</td>
+            <td>{{ user.specialist }}</td>
+            <td>{{ user.specialty }}</td>
+            <td *ngIf="(user.status != 'Cancelled' && user.status != 'Finalized') else cancel"><button
+                    (click)="onClickCanel(user)" class="btn btn-danger">Si</button>
+            </td>
+            <ng-template #cancel>
+                <td><button disabled class="btn btn-outline-dark">Cancelado</button></td>
+            </ng-template>
+            <td *ngIf="(user.status == 'Finalized' && user.review) else review"><button
+                    (click)="onClickShowReview(user)" class="btn btn-outline-info">Ver</button></td>
+            <ng-template #review>
+                <td><button disabled class="btn btn-outline-dark">Ver</button></td>
+            </ng-template>
+            <td *ngIf="user.status == 'Finalized' else poll"><button (click)="onClickPoll(user)"
+                    class="btn btn-outline-info">Completar</button></td>
+            <ng-template #poll>
+                <td><button disabled class="btn btn-outline-dark">Completar</button></td>
+            </ng-template>
+            <td *ngIf="user.status == 'Finalized' else rating"><button (click)="onClickReview(user)"
+                    class="btn btn-outline-info">Calificar</button>
+            </td>
+            <ng-template #rating>
+                <td><button disabled class="btn btn-outline-dark">Calificar</button></td>
+            </ng-template>
+        </tr>
+    </tbody>
+</table>

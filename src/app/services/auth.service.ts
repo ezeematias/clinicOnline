@@ -31,6 +31,10 @@ export class AuthService {
     }).finally(() => { });
   }
 
+  async getCurrentUser() {
+    return await this.afauth.currentUser;
+  }
+
   async login(user: User): Promise<any> {
     return await signInWithEmailAndPassword(this.auth, user.email, user.password).then(res => {
       this.userService.isLogged = true;

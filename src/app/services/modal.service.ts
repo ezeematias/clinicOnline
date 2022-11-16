@@ -23,6 +23,14 @@ export class ModalService {
       timer: 2000
     })
   }
+  modalMessageOk(msg: string, icon: icon) {
+    Swal.fire({
+      position: 'center',
+      icon: icon,
+      title: msg,
+      confirmButtonText: 'Cerrar'
+    })
+  }
 
   async modalCancel(msg: string): Promise<SweetAlertResult<any>> {
     return await Swal.fire({
@@ -44,6 +52,17 @@ export class ModalService {
       icon: 'warning',
       showCancelButton: true,
       confirmButtonText: 'Si, eliminarlo',
+      cancelButtonText: 'No, cancelar',
+      reverseButtons: true
+    });
+  }
+  async modalCancelConfirmMsg(title: string, txt: string, icon: icon, btnMsg: string): Promise<SweetAlertResult<any>> {
+    return await Swal.fire({
+      title: title,
+      text: txt,
+      icon: icon,
+      showCancelButton: true,
+      confirmButtonText: `Si, ${btnMsg}`,
       cancelButtonText: 'No, cancelar',
       reverseButtons: true
     });
@@ -84,6 +103,60 @@ export class ModalService {
       newSpecialty.name = result;
       newSpecialty.id = '15';
       return newSpecialty;
+    }
+    return result;
+  }
+
+  async modalInputTextCancel(): Promise<string> {
+    const { value: result } = await Swal.fire({
+      title: 'Motivo de cancelación',
+      input: 'text',
+      inputLabel: 'Ingrese su motivo',
+      inputPlaceholder: 'Motivo',
+      inputValidator: (value) => {
+        if (!value) {
+          return 'Debe ingresar el motivo'
+        } else {
+          return null;
+        }
+      }
+    })
+
+    if (result) {
+      Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: 'Captcha correcto',
+        showConfirmButton: false,
+        timer: 1500
+      })
+    }
+    return result;
+  }
+
+  async modalInputText(title: string, inputLabel: string, inputPlaceholder: string): Promise<string> {
+    const { value: result } = await Swal.fire({
+      title: title,
+      input: 'text',
+      inputLabel: inputLabel,
+      inputPlaceholder: inputPlaceholder,
+      inputValidator: (value) => {
+        if (!value) {
+          return `Debe ingresar ${inputPlaceholder}`
+        } else {
+          return null;
+        }
+      }
+    })
+
+    if (result) {
+      Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: 'Correcto',
+        showConfirmButton: false,
+        timer: 1500
+      })
     }
     return result;
   }

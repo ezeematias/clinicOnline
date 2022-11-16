@@ -7,7 +7,7 @@ import { Turns } from '../entities/turns';
 export class TunsDayPipe implements PipeTransform {
 
   transform(value: Turns, ...args: unknown[]): string {
-    return `${value.day}/${value.date}`;
+    return `${value.name} ${value.day}/${value.month}`;
   }
 
 }

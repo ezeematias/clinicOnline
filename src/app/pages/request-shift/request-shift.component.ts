@@ -21,7 +21,7 @@ export class RequestShiftComponent implements OnInit {
   specialtys: Specialty[] = [];
   specialist: User[] = [];
   specialtySelected: string = '';
-  specialistSelected: string = '';
+  specialistSelected = new User();
 
   specialityName: string = 'specialityName';
   specialistName: string = 'specialistName';
@@ -41,11 +41,18 @@ export class RequestShiftComponent implements OnInit {
   turnSelected = new Turns();
 
   user: string = '';
+  userLogged = this.authService.getCurrentUser();
+  userBase = new User();
 
-  constructor(private router: Router, private auth: AuthService, private userService: UsersService, private modal: ModalService, private spinnerService: SpinnerService) { }
+  constructor(private router: Router, private authService: AuthService, private userService: UsersService, private modal: ModalService, private spinnerService: SpinnerService) { }
 
   ngOnInit(): void {
-    this.auth.currentUser().then(user => this.user = user);
+    this.authService.currentUser().then(user => this.user = user);
+    this.userLogged.then((res) => {
+      this.userService.getUserId(res?.uid).subscribe(user => {
+        this.userBase = user[0];
+      })
+    });
     let bufferSpe: Specialty[] = [];
     this.userService.getSpecialtyAll().subscribe(spe => {
       spe.forEach(name => {
@@ -74,12 +81,21 @@ export class RequestShiftComponent implements OnInit {
 
   addTurn() {
     this.spinnerService.show();
+    let time: string;
+    if (this.turnSelected.hour! > 12) {
+      time = `${this.turnSelected.hour! - 12}:${this.turnSelected.minutes == 0 ? '00' : this.turnSelected.minutes}pm`;
+    } else {
+      time = `${this.turnSelected.hour!}:${this.turnSelected.minutes == 0 ? '00' : this.turnSelected.minutes}am`;
+    }
     if (this.turnSelected.name) {
       this.userService.addTurn({
         name: this.daySelected.name,
-        specialist: this.specialistSelected,
+        nameDate: `${this.daySelected.name} ${this.daySelected.day}/${this.daySelected.month} ${time}`,
+        specialist: `${this.specialistSelected.name} ${this.specialistSelected.lastName}`,
+        specialistUid: this.specialistSelected.uid,
         specialty: this.specialtySelected,
-        patient: this.user,
+        patient: `${this.userBase.name} ${this.userBase.lastName}`,
+        patientUid: this.user,
         date: this.daySelected.date,
         day: this.daySelected.day,
         dayWeek: this.daySelected.dayWeek,
@@ -130,7 +146,7 @@ export class RequestShiftComponent implements OnInit {
 
   async selectorSpe(specialist: User) {
     this.resetInputs();
-    this.specialistSelected = specialist.name!;
+    this.specialistSelected = specialist;
     this.allTurns = this.generateTurnsForDay(specialist);
     setTimeout(() => {
       this.userService.getReservedTurns(this.specialistSelected).then(spe => {
@@ -181,7 +197,8 @@ export class RequestShiftComponent implements OnInit {
   customerTurns(turnList: Turns[], reservedTurn: Turns[]) {
     turnList.forEach(res => {
 
-      if (reservedTurn.find(find => find.day == res.day && find.dayWeek == res.dayWeek && find.hour == res.hour && find.minutes == res.minutes && find.month == find.month)) {
+      if (reservedTurn.find(find => find.day == res.day && find.dayWeek == res.dayWeek && find.hour == res.hour && find.minutes == res.minutes && find.month == find.month &&
+        find.status != 'Cancelled')) {
         res.status = 'Reserved';
         console.log("Entré")
       }

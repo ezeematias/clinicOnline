@@ -3,12 +3,12 @@
 Bienvenido a nuestra clínica online. Te ayudaremos a entender como funciona.
 
 ## Registro
-
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+Podés registrarte [acá](eu-cliniconline.web.app/register).
+<img src="assetsReadme/registro.png">
 
 ## Iniciar Sesión
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Podés iniciar sesión [acá](eu-cliniconline.web.app/login).
+<img src="assetsReadme/login.png">
 
 ## Mi perfil
 

@@ -3,11 +3,11 @@
 Bienvenido a nuestra clínica online. Te ayudaremos a entender como funciona.
 
 ## Registro
-Podés registrarte [acá](eu-cliniconline.web.app/register).
+Podés registrarte [acá](https://eu-cliniconline.web.app/register).
 <img src="assetsReadme/registro.png">
 
 ## Iniciar Sesión
-Podés iniciar sesión [acá](eu-cliniconline.web.app/login).
+Podés iniciar sesión [acá](https://eu-cliniconline.web.app/login).
 <img src="assetsReadme/login.png">
 
 ## Mi perfil

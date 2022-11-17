@@ -3,6 +3,9 @@
     <input type="text" [(ngModel)]="textFill" class="form-control" aria-label="Sizing example input"
         aria-describedby="inputGroup-sizing-sm">
 </div>
+<ng-template #content let-c="close" let-d="dismiss">
+    <app-summary [turn]="turnSelected"></app-summary>
+</ng-template>
 <table class="table">
     <thead>
         <tr>
@@ -17,7 +20,8 @@
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let user of (turns | turnsFilterS : textFill : ['patient','date','status','specialty'] ); index as i">
+        <tr
+            *ngFor="let user of (turns | turnsFilterS : textFill : ['patient','date','status','specialty'] ); index as i">
             <th scope="row">{{ i + 1 }}</th>
             <td>{{user | tunsDay}} {{ user | tunsHour }}</td>
             <td>{{ user.patient }}</td>
@@ -30,7 +34,7 @@
                 <td></td>
             </ng-template>
             <td *ngIf="(user.status == 'Accepted') else finally">
-                <button (click)="onClickFinally(user)" class="btn btn-outline-success">Finalizar</button>
+                <button (click)="onClickFinally(user, content)" class="btn btn-outline-success">Finalizar</button>
             </td>
             <ng-template #finally>
                 <td *ngIf="(user.status == 'Accepted')"></td>

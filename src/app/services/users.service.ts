@@ -9,6 +9,7 @@ import { User } from '../entities/user';
 import { RoleValidator } from '../helpers/role-validator';
 import { Turns } from '../entities/turns';
 import firebase from 'firebase/compat/app';
+import { Summary } from '../entities/summary';
 
 @Injectable({
   providedIn: 'root'
@@ -207,12 +208,44 @@ export class UsersService extends RoleValidator {
     return updateDoc(placeRef, { status: status, commentCancel: msg });
   }
 
+  updateTurnsFinnally(turn: Turns, status: string) {
+    const placeRef = doc(this.firestore, `turns/${turn.id}`);
+    return updateDoc(placeRef, { status: status });
+  }
+
   updateTurnsReview(turn: Turns, msg: string) {
     const placeRef = doc(this.firestore, `turns/${turn.id}`);
     return updateDoc(placeRef, { review: msg });
   }
+
   updateTurnsPoll(turn: Turns, msg: string) {
     const placeRef = doc(this.firestore, `turns/${turn.id}`);
     return updateDoc(placeRef, { poll: msg });
+  }
+
+  //Summary
+  async addSummary(summary: Summary, turn: Turns) {
+    let newUser: Summary = {
+      height: summary.height,
+      weight: summary.weight,
+      temperature: summary.temperature,
+      pressure: summary.pressure,
+      name1: summary.name1 ?? '',
+      value1: summary.value1 ?? '',
+      name2: summary.name2 ?? '',
+      value2: summary.value2 ?? '',
+      name3: summary.name3 ?? '',
+      value3: summary.value3 ?? '',
+      patientUid: turn.patientUid,
+      specialistUid: turn.specialistUid,
+      date: new Date(),
+    };
+    return await this.afs.collection('summary').add(newUser);
+  }
+
+  getSumariId(userUid: string, typeUser: string): Observable<Summary[]> {
+    const pattientRef = collection(this.firestore, 'summary');
+    const q = query(pattientRef, where(typeUser, "==", userUid));
+    return collectionData(q, { idField: 'id' }) as Observable<Summary[]>;
   }
 }

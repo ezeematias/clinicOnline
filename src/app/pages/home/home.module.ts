@@ -25,6 +25,11 @@ import { TurnsListAssignedComponent } from 'src/app/components/turns-list-assign
 import { TurnsFilterSPipe } from 'src/app/pipes/turns-filter-s.pipe';
 import { TurnsListAllComponent } from 'src/app/components/turns-list-all/turns-list-all.component';
 import { TurnsFilterAPipe } from 'src/app/pipes/turns-filter-a.pipe';
+import { AdminShiftComponent } from '../admin-shift/admin-shift.component';
+import { SpecialistPanelComponent } from '../specialist-panel/specialist-panel.component';
+import { SummaryComponent } from 'src/app/components/summary/summary.component';
+import { SummaryListComponent } from 'src/app/components/summary-list/summary-list.component';
+import { PatientCardListComponent } from 'src/app/components/patient-card-list/patient-card-list.component';
 
 @NgModule({
   declarations: [
@@ -50,6 +55,11 @@ import { TurnsFilterAPipe } from 'src/app/pipes/turns-filter-a.pipe';
     TurnsFilterSPipe,
     TurnsListAllComponent,
     TurnsFilterAPipe,
+    AdminShiftComponent,
+    SpecialistPanelComponent,
+    SummaryComponent,
+    SummaryListComponent,
+    PatientCardListComponent,
   ],
   imports: [
     CommonModule,

@@ -6,17 +6,19 @@ import { AdminShiftComponent } from '../admin-shift/admin-shift.component';
 import { MyShiftComponent } from '../my-shift/my-shift.component';
 import { ProfileComponent } from '../profile/profile.component';
 import { RequestShiftComponent } from '../request-shift/request-shift.component';
+import { SpecialistPanelComponent } from '../specialist-panel/specialist-panel.component';
 import { HomeComponent } from './home.component';
 
 const routes: Routes = [
   {
     path: '', component: HomeComponent, children: [
-      { path: '', pathMatch: 'full', redirectTo: '/home/panel' },
+      { path: '', pathMatch: 'full', redirectTo: '/home/profile' },
       { path: 'panel', component: AdminPanelComponent/*, canActivate: [AdminGuard] */ },
       { path: 'profile', component: ProfileComponent },
       { path: 'turns', component: MyShiftComponent },
       { path: 'request', component: RequestShiftComponent },
       { path: 'panel-shift', component: AdminShiftComponent },
+      { path: 'panel-patient', component: SpecialistPanelComponent, },
     ]
   }
 ];

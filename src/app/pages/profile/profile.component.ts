@@ -23,6 +23,7 @@ export class ProfileComponent implements OnInit {
   logged: boolean = false;
   sendSpecialty!: Specialty;
   schedule: boolean = false;
+  summary: boolean = false;
 
   schedulesUser: ScheduleManagement[] = [];
   scheduleSelected = new ScheduleManagement();
@@ -106,6 +107,9 @@ export class ProfileComponent implements OnInit {
 
   scheduleStatus() {
     this.schedule = !this.schedule;
+  }
+  summaryStatus() {
+    this.summary = !this.summary;
   }
 
   addSchedule(schedule: ScheduleManagement) {

@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { SummaryComponent } from 'src/app/components/summary/summary.component';
 import { User } from 'src/app/entities/user';
 import { AuthService } from 'src/app/services/auth.service';
 import { ModalService } from 'src/app/services/modal.service';
@@ -19,7 +21,7 @@ export class AdminPanelComponent implements OnInit {
 
   }
 
-  async ngOnInit(): Promise<void> {    
+  async ngOnInit(): Promise<void> {
     const auth = this.authService.userCurrent();
     await auth.then(res => {
       this.userService.getUserId(res.currentUser?.uid).subscribe((user) => {

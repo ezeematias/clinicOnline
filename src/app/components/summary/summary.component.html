@@ -1,0 +1,69 @@
+<div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Ficha</h4>
+    <button type="button" #closebtn class="btn-close" aria-label="Close" (click)="close()"></button>
+</div>
+<div class="modal-body">
+    <form [formGroup]="summary" (ngSubmit)="saveSummary()">
+        <div class="mb-3">
+            <label>Altura</label>
+            <div class="input-group">
+                <input name="height" class="form-control" formControlName="height" required>
+            </div>
+            <div class="errorMessage"
+                *ngIf="getValue('height')?.invalid && (getValue('height').touched || getValue('height').dirty)">
+                Ingrese una altura válida</div>
+        </div>
+        <div class="mb-3">
+            <label>Peso</label>
+            <div class="input-group">
+                <input name="weight" class="form-control" formControlName="weight" required>
+            </div>
+            <div class="errorMessage"
+                *ngIf="getValue('weight')?.invalid && (getValue('weight').touched || getValue('weight').dirty)">
+                Ingrese un peso válida</div>
+        </div>
+        <div class="mb-3">
+            <label>Temperatura</label>
+            <div class="input-group">
+                <input name="temperature" class="form-control" formControlName="temperature" required>
+            </div>
+            <div class="errorMessage"
+                *ngIf="getValue('temperature')?.invalid && (getValue('temperature').touched || getValue('temperature').dirty)">
+                Ingrese una temperatura válida</div>
+
+        </div>
+        <div class="mb-3">
+            <label>Presión</label>
+            <div class="input-group">
+                <input name="pressure" class="form-control" formControlName="pressure" required>
+            </div>
+            <div class="errorMessage"
+                *ngIf="getValue('pressure')?.invalid && (getValue('pressure').touched || getValue('pressure').dirty)">
+                Ingrese una presión válida</div>
+        </div>
+        <h6>Datos dinámicos</h6>
+        <label>Primer dato</label>
+        <div class="input-group"> 
+            <span class="input-group-text">Nombre | Valor</span>
+            <input type="text" aria-label="First name" class="form-control" formControlName="name1">
+            <input type="text" aria-label="Last name" class="form-control" formControlName="value1">
+        </div>
+        <label>Segundo dato</label>
+
+        <div class="input-group">
+            <span class="input-group-text">Nombre | Valor</span>
+            <input type="text" aria-label="First name" class="form-control" formControlName="name2">
+            <input type="text" aria-label="Last name" class="form-control" formControlName="value2">
+        </div>
+        <label>Tercer dato</label>
+        <div class="input-group">
+            <span class="input-group-text">Nombre | Valor</span>
+            <input type="text" aria-label="First name" class="form-control" formControlName="name3">
+            <input type="text" aria-label="Last name" class="form-control" formControlName="value3">
+        </div>
+    </form>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-success" [disabled]="!summary.valid"
+            (click)="saveSummary()">Guardar</button>
+    </div>
+</div>

@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Summary } from 'src/app/entities/summary';
 import { Turns } from 'src/app/entities/turns';
 import { AuthService } from 'src/app/services/auth.service';
 import { ModalService } from 'src/app/services/modal.service';
 import { UsersService } from 'src/app/services/users.service';
 import Swal from 'sweetalert2';
+import { SummaryComponent } from '../summary/summary.component';
 
 @Component({
   selector: 'app-turns-list-assigned',
@@ -16,8 +19,18 @@ export class TurnsListAssignedComponent implements OnInit {
   turns: Turns[] = [];
   currentRate = 6;
   textFill: string = '';
+  turnSelected!: Turns;
 
-  constructor(private userService: UsersService, private authService: AuthService, private modal: ModalService) { }
+  abrirModal: boolean = false;
+  abrirModala() {
+    this.abrirModal = true;
+  }
+
+  open(content: any) {
+    this.modalService.open(content);
+  }
+
+  constructor(private userService: UsersService, private authService: AuthService, private modal: ModalService, private modalService: NgbModal) { }
 
   ngOnInit(): void {
     this.userLogged.then((res) => {
@@ -49,13 +62,14 @@ export class TurnsListAssignedComponent implements OnInit {
       }
     })
   }
-  onClickFinally(tuns: Turns) {
+
+  onClickFinally(tuns: Turns, content: any) {
     this.modal.modalCancelConfirmMsg("¿Desea finalizar el turno?", "Se cerrará el turno", 'info', "finalizarlo").then((result) => {
       if (result.isConfirmed) {
-        this.modal.modalInputTextCancel().then(res => {
-          this.userService.updateTurns(tuns, res, 'Finalized');
-          this.modal.modalSimple("Finalizado", "Se finalizó el turno correctamente", "success");
-        })
+        //this.userService.updateTurnsFinnally(tuns, 'Finalized');
+        this.turnSelected = tuns;
+        this.modalService.open(content);
+        //this.modal.modalSimple("Finalizado", "Se finalizó el turno correctamente", "success");        
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         this.modal.modalSimple("Cancelado", "El turno queda pendiente de terminar", "error");
       }

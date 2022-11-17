@@ -1,0 +1,30 @@
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Fecha</th>
+            <th scope="col">Altura</th>
+            <th scope="col">Peso</th>
+            <th scope="col">Temperatura</th>
+            <th scope="col">Presión</th>
+            <th scope="col">Primer Adicional</th>
+            <th scope="col">Segundo Adicional</th>
+            <th scope="col">Tercero Adicional</th>
+            <th scope="col">Descargar</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let user of listSummary; index as i">
+            <th scope="row">{{ i + 1 }}</th>
+            <td>{{ user.date | date }}</td>
+            <td>{{ user.height }}</td>
+            <td>{{ user.weight }}</td>
+            <td>{{ user.temperature }}</td>
+            <td>{{ user.pressure }}</td>
+            <td>{{ user.name1 }}: {{ user.value1 }}</td>
+            <td>{{ user.name2 }}: {{ user.value2 }}</td>
+            <td>{{ user.name3 }}: {{ user.value3 }}</td>
+            <td><button class="btn btn-outline-primary">Excel</button></td>
+        </tr>
+    </tbody>
+</table>

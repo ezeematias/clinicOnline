@@ -16,7 +16,7 @@ export class PermissionsGuard implements CanActivate {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
 
-    if (this.userService.isLogged === false) {
+    if (!sessionStorage.getItem('user')) {
       this.modal.modalMessage("No tienes permiso para esta ruta.", 'info');
       this.router.navigate(["login"]);
       return false;

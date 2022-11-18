@@ -26,19 +26,24 @@
                     (click)="onClickCanel(user)" class="btn btn-danger">Si</button>
             </td>
             <ng-template #cancel>
-                <td><button disabled class="btn btn-outline-dark">Cancelado</button></td>
+                <td *ngIf="user.status == 'Cancelled' else nothing"><button disabled
+                        class="btn btn-outline-dark">Cancelado</button>
+                </td>
+                <ng-template #nothing>
+                    <td></td>
+                </ng-template>
             </ng-template>
             <td *ngIf="(user.status == 'Finalized' && user.review) else review"><button
                     (click)="onClickShowReview(user)" class="btn btn-outline-info">Ver</button></td>
             <ng-template #review>
                 <td><button disabled class="btn btn-outline-dark">Ver</button></td>
             </ng-template>
-            <td *ngIf="user.status == 'Finalized' else poll"><button (click)="onClickPoll(user)"
+            <td *ngIf="(user.status == 'Finalized' && !user.poll)else poll"><button (click)="onClickPoll(user)"
                     class="btn btn-outline-info">Completar</button></td>
             <ng-template #poll>
                 <td><button disabled class="btn btn-outline-dark">Completar</button></td>
             </ng-template>
-            <td *ngIf="user.status == 'Finalized' else rating"><button (click)="onClickReview(user)"
+            <td *ngIf="(user.status == 'Finalized' && !user.review) else rating"><button (click)="onClickReview(user)"
                     class="btn btn-outline-info">Calificar</button>
             </td>
             <ng-template #rating>

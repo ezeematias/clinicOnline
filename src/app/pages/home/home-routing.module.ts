@@ -13,7 +13,7 @@ const routes: Routes = [
   {
     path: '', component: HomeComponent, children: [
       { path: '', pathMatch: 'full', redirectTo: '/home/profile' },
-      { path: 'panel', component: AdminPanelComponent/*, canActivate: [AdminGuard] */ },
+      { path: 'panel', component: AdminPanelComponent, canActivate: [AdminGuard] },
       { path: 'profile', component: ProfileComponent },
       { path: 'turns', component: MyShiftComponent },
       { path: 'request', component: RequestShiftComponent },

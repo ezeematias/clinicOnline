@@ -1,10 +1,16 @@
-<div *ngFor="let user of turns1; index as i">
-    <div class="card" style="width: 18rem;">
-        <img class="card-img-top" src="../../../assets/picUser.jpeg" alt="">
-        <div class="card-body">
-            <h5 class="card-title">{{user.patient}}</h5>
-            <p class="card-text">{{user.patient}}</p>
-            <a href="#" class="btn btn-primary">{{user.nameDate}}</a>
+<div *ngFor="let user of users; index as i">
+    <div *ngIf="count(user.turns!) > 0">
+        <div class="card" style="width: 18rem;">
+            <img class="card-img-top" src="{{user.photoURL}}" alt="">
+            <div class="card-body">
+                <h5 class="card-title">{{user.name}}</h5>
+                <p class="card-text">{{user.role}}</p>
+                <div *ngFor="let turn of user.turns; index as i">
+                    <div *ngIf="turn.specialistUid == specialist">
+                        <a href="#" class="btn btn-primary">{{turn.nameDate}}</a>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

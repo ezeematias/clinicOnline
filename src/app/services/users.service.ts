@@ -10,6 +10,7 @@ import { RoleValidator } from '../helpers/role-validator';
 import { Turns } from '../entities/turns';
 import firebase from 'firebase/compat/app';
 import { Summary } from '../entities/summary';
+import { InfoCard } from '../entities/info-card';
 
 @Injectable({
   providedIn: 'root'
@@ -153,6 +154,7 @@ export class UsersService extends RoleValidator {
 
   //Turns
   async addTurn(turn: Turns) {
+    console.log(turn);
     let newTurn: Turns = {
       name: turn.name,
       nameDate: turn.nameDate,
@@ -167,8 +169,6 @@ export class UsersService extends RoleValidator {
       month: turn.month,
       hour: turn.hour,
       minutes: turn.minutes,
-      poll: turn.poll,
-      rating: turn.rating,
       status: turn.status,
     }
     return await this.afs.collection('turns').add(newTurn);
@@ -248,4 +248,47 @@ export class UsersService extends RoleValidator {
     const q = query(pattientRef, where(typeUser, "==", userUid));
     return collectionData(q, { idField: 'id' }) as Observable<Summary[]>;
   }
+
+  //InfoCard
+  /*
+  getInfoCards(specialist:User):Observable<InfoCard>{
+    let turns = this.getTurnId(specialist.uid!,'SpecialistUid');
+    
+    let newInfoCard = {
+      photoUrl:
+    }
+}
+  updateSchule(user: ScheduleManagement, change: ScheduleManagement) {
+    const placeRef = doc(this.firestore, `schedules/${user.id}`);
+    return updateDoc(placeRef, { schedule: change.schedule, timeShift: change.timeShift });
+  }
+*/
+  async addTurnsToUser(users: User[], turn: Turns[]) {
+    let empty: Turns[] = [];
+    return await users.forEach(user => {
+      let turnExit: Turns[] = [];
+      let newTurns: Turns[] = turn.filter(fill => fill.patientUid == user.uid).sort((a, b) => {
+        if (a.nameDate! < b.nameDate!) {
+          return 1;
+        }
+        if (a.nameDate! > b.nameDate!) {
+          return -1;
+        }
+        return 0;
+      });
+
+      for (let index = 0; index < 3; index++) {
+        if (newTurns.length > index) {
+          const element = newTurns[index];
+          turnExit.push(element);
+        }
+      }
+
+      const placeRef = doc(this.firestore, `users/${user.id}`);
+      updateDoc(placeRef, { turns: empty }).then(() => {
+        updateDoc(placeRef, { turns: turnExit });
+      })
+    })
+  }
+
 }

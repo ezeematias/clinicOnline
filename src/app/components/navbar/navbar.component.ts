@@ -16,10 +16,9 @@ export class NavbarComponent implements OnInit {
   userLogged: Observable<any>;
   userBase: any;
   admin: Observable<User[]> | undefined;
-  role: Roles = 'Patient';
+  role: any = this.getRole();
 
   constructor(private authService: AuthService, private userService: UsersService, private router: Router) {
-
     this.userLogged = this.authService.getAuth();
     this.userLogged.subscribe((userRef) => {
       this.userService.isLogged = true;
@@ -30,6 +29,11 @@ export class NavbarComponent implements OnInit {
         })
       }
     })
+  }
+
+  getRole() {
+    let user: User = JSON.parse(sessionStorage.getItem('user')!);
+    return user.role;
   }
 
   logout() {

@@ -19,7 +19,7 @@ export class SpecialistPanelComponent implements OnInit {
 
   constructor(private userService: UsersService, private authService: AuthService, private modal: ModalService, private modalService: NgbModal) { }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     this.userService.getUserAllPatient().subscribe((users) => {
       this.users = users;
       console.log(this.users);
@@ -28,8 +28,16 @@ export class SpecialistPanelComponent implements OnInit {
       this.userService.getTurnId(res?.uid!, "specialistUid").subscribe(turn => {
         this.turns = turn;
         console.log(this.turns);
-
       })
+    });
+    this.userService.addTurnsToUser(this.users, this.turns).then(()=> {
+    });
+
+  }
+
+  pruebaCard() {
+    this.userService.addTurnsToUser(this.users, this.turns).then(()=> {
+
     });
   }
 

@@ -88,7 +88,7 @@ export class RequestShiftComponent implements OnInit {
       time = `${this.turnSelected.hour!}:${this.turnSelected.minutes == 0 ? '00' : this.turnSelected.minutes}am`;
     }
     if (this.turnSelected.name) {
-      this.userService.addTurn({
+      let newTurn: Turns = {
         name: this.daySelected.name,
         nameDate: `${this.daySelected.name} ${this.daySelected.day}/${this.daySelected.month} ${time}`,
         specialist: `${this.specialistSelected.name} ${this.specialistSelected.lastName}`,
@@ -102,13 +102,12 @@ export class RequestShiftComponent implements OnInit {
         month: this.daySelected.month,
         hour: this.turnSelected.hour,
         minutes: this.turnSelected.minutes,
-        poll: 'a',
-        rating: 0,
         status: 'Reserved',
-      }).then(() => {
+      }
+      this.userService.addTurn(newTurn).then(() => {
         this.modal.modalSimple("Reserva", "Se reservó el turno correctamente", 'success');
         this.router.navigate(['/home/turns'])
-      }).finally(() => this.spinnerService.hide())
+      }).catch(error => { console.log(error); this.modal.modalMessage("Hubo un error con el usuario logueado. \nCierre sesión y vuelva a iniciar", 'error') }).finally(() => this.spinnerService.hide())
     } else {
       this.modal.modalMessage("Debe seleccionar el turno correctamente", 'error');
       this.spinnerService.hide();
@@ -200,7 +199,6 @@ export class RequestShiftComponent implements OnInit {
       if (reservedTurn.find(find => find.day == res.day && find.dayWeek == res.dayWeek && find.hour == res.hour && find.minutes == res.minutes && find.month == find.month &&
         find.status != 'Cancelled')) {
         res.status = 'Reserved';
-        console.log("Entré")
       }
     })
   }

@@ -6,7 +6,7 @@
     <form [formGroup]="summary" (ngSubmit)="saveSummary()">
         <div class="mb-3">
             <label>Altura</label>
-            <div class="input-group">
+            <div class="input-group-sm">
                 <input name="height" class="form-control" formControlName="height" required>
             </div>
             <div class="errorMessage"
@@ -15,7 +15,7 @@
         </div>
         <div class="mb-3">
             <label>Peso</label>
-            <div class="input-group">
+            <div class="input-group-sm">
                 <input name="weight" class="form-control" formControlName="weight" required>
             </div>
             <div class="errorMessage"
@@ -24,7 +24,7 @@
         </div>
         <div class="mb-3">
             <label>Temperatura</label>
-            <div class="input-group">
+            <div class="input-group-sm">
                 <input name="temperature" class="form-control" formControlName="temperature" required>
             </div>
             <div class="errorMessage"
@@ -34,7 +34,7 @@
         </div>
         <div class="mb-3">
             <label>Presión</label>
-            <div class="input-group">
+            <div class="input-group-sm">
                 <input name="pressure" class="form-control" formControlName="pressure" required>
             </div>
             <div class="errorMessage"
@@ -43,23 +43,46 @@
         </div>
         <h6>Datos dinámicos</h6>
         <label>Primer dato</label>
-        <div class="input-group"> 
+
+        <div class="input-group-sm">
             <span class="input-group-text">Nombre | Valor</span>
             <input type="text" aria-label="First name" class="form-control" formControlName="name1">
             <input type="text" aria-label="Last name" class="form-control" formControlName="value1">
         </div>
         <label>Segundo dato</label>
 
-        <div class="input-group">
+        <div class="input-group-sm">
             <span class="input-group-text">Nombre | Valor</span>
             <input type="text" aria-label="First name" class="form-control" formControlName="name2">
             <input type="text" aria-label="Last name" class="form-control" formControlName="value2">
         </div>
         <label>Tercer dato</label>
-        <div class="input-group">
+        <div class="input-group-sm">
             <span class="input-group-text">Nombre | Valor</span>
             <input type="text" aria-label="First name" class="form-control" formControlName="name3">
             <input type="text" aria-label="Last name" class="form-control" formControlName="value3">
+        </div>
+
+        <label>Cuarto dato</label>
+        <div class="input-group-sm">
+            <span class="input-group-text">Nombre | Rango</span>
+            <input type="text" aria-label="First name" class="form-control" formControlName="name4">
+            <input type="range" class="form-range d-flex mb-4" id="customRange1" formControlName="value4">
+        </div>
+        <label>Quinto dato</label>
+        <div class="input-group-sm">
+            <span class="input-group-text">Nombre | Número</span>
+            <input type="text" aria-label="First name" class="form-control" formControlName="name5">
+            <input type="number" class="form-control" formControlName="value5">
+        </div>
+        <label>Sexto dato</label>
+        <div class="input-group-sm">
+            <span class="input-group-text">Nombre | Habilitado</span>
+            <input type="text" aria-label="First name" class="form-control" formControlName="name6">
+            <div class="form-check form-switch">                
+                <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault"
+                    formControlName="value6">
+              </div>
         </div>
     </form>
     <div class="modal-footer">
@@ -67,3 +90,33 @@
             (click)="saveSummary()">Guardar</button>
     </div>
 </div>
+
+<!-- <div class="modal-body bg-image overlay" style="background-image: url('images/hero_1.jpg');">
+    <div class="line px-3 to-front">
+        <div class="row align-items-center">
+            <div class="col logo">
+                <a href="#"><img src="images/google-drive.svg" alt="Image" class="img-fluid"></a>
+            </div>
+            <div class="col-md-8 text-center">
+                <h2>Exclusive Offer</h2>
+            </div>
+            <div class="col text-right">
+                <a href="#" class="close-btn" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true"><span class="icon-close2"></span></span>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="p-4 to-front">
+        <div class="text-center">
+            <h3>Get a free a Ebook</h3>
+            <p class="mb-4">All their equipment and instruments are alive. The sky was cloudless and of a deep dark
+                blue. </p>
+            <form class="d-flex mb-4">
+                <input type="email" class="form-control mr-3" placeholder="Enter your email address">
+                <input type="range" class="form-range d-flex mb-4" id="customRange1" formControlName="value3">
+            </form>
+            <p class="mb-0 cancel"><a href="#" data-dismiss="modal">Maybe later</a></p>
+        </div>
+    </div>
+</div> -->

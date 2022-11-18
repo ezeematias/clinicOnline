@@ -40,8 +40,6 @@ export class CaptchaComponent implements OnInit {
   }
 
   validateCaptcha() {
-    console.log(this.enteredCaptcha)
-    console.log(this.captcha)
     this.captchaResult.emit(this.enteredCaptcha === this.captcha);
   }
 

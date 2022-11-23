@@ -20,11 +20,14 @@ export class RequestShiftComponent implements OnInit {
 
   specialtys: Specialty[] = [];
   specialist: User[] = [];
+  patient: User[] = [];
   specialtySelected: string = '';
   specialistSelected = new User();
+  patientSelected: User | null = null;
 
   specialityName: string = 'specialityName';
   specialistName: string = 'specialistName';
+  patentName: string = 'patentName';
   turnsName: string = 'turnsName';
 
   schedulesUser: ScheduleManagement[] = [];
@@ -77,6 +80,9 @@ export class RequestShiftComponent implements OnInit {
       })
     });
     this.specialtys = bufferSpe;
+    this.userService.getUserAllPatient().subscribe(pat => {
+      this.patient = pat;
+    });
   }
 
   addTurn() {
@@ -87,15 +93,15 @@ export class RequestShiftComponent implements OnInit {
     } else {
       time = `${this.turnSelected.hour!}:${this.turnSelected.minutes == 0 ? '00' : this.turnSelected.minutes}am`;
     }
-    if (this.turnSelected.name) {
+    if ((this.turnSelected.name && this.userBase.role != 'Admin') || (this.turnSelected.name && this.patientSelected != null)) {
       let newTurn: Turns = {
         name: this.daySelected.name,
         nameDate: `${this.daySelected.name} ${this.daySelected.day}/${this.daySelected.month} ${time}`,
         specialist: `${this.specialistSelected.name} ${this.specialistSelected.lastName}`,
         specialistUid: this.specialistSelected.uid,
         specialty: this.specialtySelected,
-        patient: `${this.userBase.name} ${this.userBase.lastName}`,
-        patientUid: this.user,
+        patient: this.userBase.role != 'Admin' ? `${this.userBase.name} ${this.userBase.lastName}` : `${this.patientSelected!.name} ${this.patientSelected!.lastName}`,
+        patientUid: this.userBase.role != 'Admin' ? this.user : this.patientSelected!.uid,
         date: this.daySelected.date,
         day: this.daySelected.day,
         dayWeek: this.daySelected.dayWeek,
@@ -157,6 +163,9 @@ export class RequestShiftComponent implements OnInit {
         console.log(this.availableTurn);
       })
     }, 300);
+  }
+  async selectorPat(patient: User) {
+    this.patientSelected = patient;
   }
 
   selectorTurn(turn: Turns) {

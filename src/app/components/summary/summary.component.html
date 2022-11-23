@@ -79,44 +79,14 @@
         <div class="input-group-sm">
             <span class="input-group-text">Nombre | Habilitado</span>
             <input type="text" aria-label="First name" class="form-control" formControlName="name6">
-            <div class="form-check form-switch">                
+            <div class="form-check form-switch">
                 <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault"
                     formControlName="value6">
-              </div>
+            </div>
         </div>
     </form>
     <div class="modal-footer">
-        <button type="button" class="btn btn-outline-success" [disabled]="!summary.valid"
+        <button *ngIf="!disabled" type="button" class="btn btn-outline-success" [disabled]="!summary.valid"
             (click)="saveSummary()">Guardar</button>
     </div>
 </div>
-
-<!-- <div class="modal-body bg-image overlay" style="background-image: url('images/hero_1.jpg');">
-    <div class="line px-3 to-front">
-        <div class="row align-items-center">
-            <div class="col logo">
-                <a href="#"><img src="images/google-drive.svg" alt="Image" class="img-fluid"></a>
-            </div>
-            <div class="col-md-8 text-center">
-                <h2>Exclusive Offer</h2>
-            </div>
-            <div class="col text-right">
-                <a href="#" class="close-btn" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true"><span class="icon-close2"></span></span>
-                </a>
-            </div>
-        </div>
-    </div>
-    <div class="p-4 to-front">
-        <div class="text-center">
-            <h3>Get a free a Ebook</h3>
-            <p class="mb-4">All their equipment and instruments are alive. The sky was cloudless and of a deep dark
-                blue. </p>
-            <form class="d-flex mb-4">
-                <input type="email" class="form-control mr-3" placeholder="Enter your email address">
-                <input type="range" class="form-range d-flex mb-4" id="customRange1" formControlName="value3">
-            </form>
-            <p class="mb-0 cancel"><a href="#" data-dismiss="modal">Maybe later</a></p>
-        </div>
-    </div>
-</div> -->

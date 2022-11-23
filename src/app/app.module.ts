@@ -27,17 +27,9 @@ import { WelcomeComponent } from './pages/welcome/welcome.component';
 import { VerificationComponent } from './pages/verification/verification.component';
 import { CaptchaComponent } from './components/captcha/captcha.component';
 import { UsersService } from './services/users.service';
-import { AdminShiftComponent } from './pages/admin-shift/admin-shift.component';
 import { ManagementService } from './services/management.service';
 import { SpecialtyComponent } from './components/specialty/specialty.component';
-import { TurnsListAssignedComponent } from './components/turns-list-assigned/turns-list-assigned.component';
-import { TurnsFilterSPipe } from './pipes/turns-filter-s.pipe';
-import { TurnsListAllComponent } from './components/turns-list-all/turns-list-all.component';
-import { TurnsFilterAPipe } from './pipes/turns-filter-a.pipe';
-import { SpecialistPanelComponent } from './pages/specialist-panel/specialist-panel.component';
-import { SummaryComponent } from './components/summary/summary.component';
-import { SummaryListComponent } from './components/summary-list/summary-list.component';
-import { PatientCardListComponent } from './components/patient-card-list/patient-card-list.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 const firebaseConfig = {
   projectId: 'eu-cliniconline',
@@ -63,6 +55,7 @@ const firebaseConfig = {
     WelcomeComponent,
     CaptchaComponent,
     SpecialtyComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -73,6 +66,7 @@ const firebaseConfig = {
     AngularFireModule.initializeApp(firebaseConfig),
     RouterModule,
     HttpClientModule,
+    BrowserAnimationsModule,
     SpinnerModule,
     AngularFirestoreModule,
     AngularFireStorageModule, provideFirebaseApp(() => initializeApp(environment.firebase)), provideAuth(() => getAuth()), provideFirestore(() => getFirestore()), provideStorage(() => getStorage())

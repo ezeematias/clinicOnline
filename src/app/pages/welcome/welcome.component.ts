@@ -11,7 +11,7 @@ import { SpinnerService } from 'src/app/services/spinner.service';
 })
 export class WelcomeComponent implements OnInit {
 
-  userLogged = this.auth.getAuth(); 
+  userLogged = this.auth.getAuth();
 
   constructor(private auth: AuthService, private spinnerService: SpinnerService, private router: Router, private modal: ModalService) { }
 
@@ -24,15 +24,8 @@ export class WelcomeComponent implements OnInit {
     this.spinnerService.show();
   }
 
-
   ngAfterViewInit(): void {
     this.spinnerService.hide();
-    /*
-    if (this.auth.userCredential != null && !this.auth.userCredential?.emailVerified) {
-      console.log(this.auth.userCredential);
-      console.log(!this.auth.userCredential?.emailVerified);
-      this.router.navigate(['verification'])
-    }*/
   }
 
 }

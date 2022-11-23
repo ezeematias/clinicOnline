@@ -192,6 +192,25 @@ export class UsersService extends RoleValidator {
       });
   }
 
+  getFinallyTurns(patient: User) {
+    const data: Turns[] = [];
+    return firebase
+      .firestore()
+      .collection('turns')
+      .where('patientUid', '==', patient.uid)
+      .where('status', '==', 'Finalized')
+      .get()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          data.push(doc.data());
+        });
+        return data;
+      })
+      .catch((error) => {
+        console.log('Error getting documents: ', error);
+      });
+  }
+
   getTurnId(userUid: string, typeUser: string): Observable<Turns[]> {
     const pattientRef = collection(this.firestore, 'turns');
     const q = query(pattientRef, where(typeUser, "==", userUid));
@@ -236,8 +255,18 @@ export class UsersService extends RoleValidator {
       value2: summary.value2 ?? '',
       name3: summary.name3 ?? '',
       value3: summary.value3 ?? '',
+      name4: summary.name4 ?? '',
+      value4: summary.value4 ?? '',
+      name5: summary.name5 ?? '',
+      value5: summary.value5 ?? '',
+      name6: summary.name6 ?? '',
+      value6: summary.value6 ?? '',
       patientUid: turn.patientUid,
       specialistUid: turn.specialistUid,
+      turnUid: turn.id,
+      specialty: turn.specialty,
+      specialist: turn.specialist,
+      patient: turn.patient,
       date: new Date(),
     };
     return await this.afs.collection('summary').add(newUser);
@@ -247,6 +276,24 @@ export class UsersService extends RoleValidator {
     const pattientRef = collection(this.firestore, 'summary');
     const q = query(pattientRef, where(typeUser, "==", userUid));
     return collectionData(q, { idField: 'id' }) as Observable<Summary[]>;
+  }
+
+  getSummaryTurnId(userUid: string) {
+    const data: Summary[] = [];
+    return firebase
+      .firestore()
+      .collection('summary')
+      .where('turnUid', '==', userUid)
+      .get()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          data.push(doc.data());
+        });
+        return data;
+      })
+      .catch((error) => {
+        console.log('Error getting documents: ', error);
+      });
   }
 
   //InfoCard
@@ -280,7 +327,9 @@ export class UsersService extends RoleValidator {
       for (let index = 0; index < 3; index++) {
         if (newTurns.length > index) {
           const element = newTurns[index];
-          turnExit.push(element);
+          if (element.status == 'Finalized') {
+            turnExit.push(element);
+          }
         }
       }
 

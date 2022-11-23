@@ -1,1 +1,4 @@
-<router-outlet></router-outlet>
+<div [@panel]="getState(o)" [@profile]="getState(o)" [@turns]="getState(o)" [@request]="getState(o)"
+    [@panel-shift]="getState(o)" [@panel-patient]="getState(o)">
+    <router-outlet #o="outlet"></router-outlet>
+</div>

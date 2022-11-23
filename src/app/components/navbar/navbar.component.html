@@ -6,7 +6,7 @@
             </div>
         </a>
         <div class="row">
-            <div class="col">                
+            <div class="col">
                 <div ngbDropdown display="dynamic" class="d-inline-block">
                     <a class="navbar-brand" *ngIf="userLogged|async as user; else then_content" id="dropdownBasic1"
                         ngbDropdownToggle>
@@ -50,7 +50,8 @@
                                 <div class="dropdown-divider"></div>
                                 <button *ngIf="role != 'Admin'" ngbDropdownItem routerLink="home/turns">Mis
                                     Turnos</button>
-                                <button ngbDropdownItem routerLink="home/request">Solicitar Turno</button>
+                                <button *ngIf="role != 'Specialist'" ngbDropdownItem routerLink="home/request">Solicitar
+                                    Turno</button>
                                 <div class="dropdown-divider"></div>
                                 <button ngbDropdownItem (click)="logout()">Cerrar Sesión</button>
                             </div>

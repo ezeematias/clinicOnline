@@ -1,4 +1,6 @@
-<table class="table">
+<button class="btn btn-outline-secondary" (click)="changeStyle()">Cambiar Estilo</button>
+<button *ngIf="!isCard" class="btn btn-outline-secondary" (click)="downloadUsers()">Descargar Plantilla</button>
+<table *ngIf="!isCard" class="table" id="users-table">
     <thead>
         <tr>
             <th scope="col">#</th>
@@ -20,3 +22,16 @@
         </tr>
     </tbody>
 </table>
+<div class="menu" *ngIf="isCard">
+    <div class="row" *ngFor="let user of users; index as i">
+        <div class="column" (click)="downloadTurns(user)">
+            <div class="card" style="width: 18rem;">
+                <img class="card-img-top" src="{{user.photoURL}}" alt="">
+                <div class="card-body">
+                    <h5 class="card-title">{{user.name}}</h5>
+                    <p class="card-text">{{user.role}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

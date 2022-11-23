@@ -1,4 +1,8 @@
 <app-navbar></app-navbar>
 <app-spinner></app-spinner>
-<router-outlet></router-outlet>
+<div class="router-wrapper" [@moveFromRight]="getState(o)" [@moveFromBottom]="getState(o)"
+    [@scaleDownFromBottom]="getState(o)">
+    <router-outlet #o="outlet"></router-outlet>
+</div>
+<!-- <router-outlet></router-outlet> -->
 <!-- <app-footer></app-footer> -->

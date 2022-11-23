@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { Roles } from 'src/app/entities/role';
 import { User } from 'src/app/entities/user';
 import { AuthService } from 'src/app/services/auth.service';
 import { UsersService } from 'src/app/services/users.service';
@@ -16,17 +15,18 @@ export class NavbarComponent implements OnInit {
   userLogged: Observable<any>;
   userBase: any;
   admin: Observable<User[]> | undefined;
-  role: any = this.getRole();
+  role: any;
 
   constructor(private authService: AuthService, private userService: UsersService, private router: Router) {
     this.userLogged = this.authService.getAuth();
     this.userLogged.subscribe((userRef) => {
       this.userService.isLogged = true;
+      this.role = this.getRole();
       if (userRef) {
         this.admin = this.userService.getUserEmail(userRef.email, 'users');
-        this.admin.subscribe(user => {
-          user.forEach(us => this.role = us.role);
-        })
+        // this.admin.subscribe(user => {
+        //   user.forEach(us => this.role = us.role);
+        // })
       }
     })
   }

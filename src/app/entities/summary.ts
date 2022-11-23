@@ -9,7 +9,17 @@ export class Summary {
     value2?: string;
     name3?: string;
     value3?: string;
+    name4?: string;
+    value4?: string;
+    name5?: string;
+    value5?: string;
+    name6?: string;
+    value6?: string;
     specialistUid?: string;
-    patientUid?: string;
+    patientUid?: string;     
+    patient?: string;
+    specialist?: string;
+    turnUid?: string;
+    specialty?: string;
     date?: Date;
 }

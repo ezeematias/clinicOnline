@@ -1,29 +1,76 @@
-<table class="table">
+<button class="btn btn-success" (click)="downloadSummary()">Descargar historia clínica completa</button>
+<hr>
+Descargas por Especialidad<br>
+<div class="btn-group btn-group-sm" style="margin-right: 3;" *ngFor="let user of listSpecialty">
+    <button class="btn btn-secondary" (click)="downloadForSpecialty(user)">{{user}}</button>
+</div>
+<hr>
+<button class="btn btn-secondary" *ngIf="!isResume" (click)="resume()">Resumen</button>
+<button class="btn btn-secondary" *ngIf="isResume" (click)="resume()">Completa</button>
+<table class="table" *ngIf="!isResume">
     <thead>
         <tr>
             <th scope="col">#</th>
             <th scope="col">Fecha</th>
+            <th scope="col">Especialista</th>
+            <th scope="col">Especialidad</th>
             <th scope="col">Altura</th>
             <th scope="col">Peso</th>
             <th scope="col">Temperatura</th>
             <th scope="col">Presión</th>
-            <th scope="col">Primer Adicional</th>
-            <th scope="col">Segundo Adicional</th>
-            <th scope="col">Tercero Adicional</th>
+            <th scope="col">1º Adicional</th>
+            <th scope="col">2º Adicional</th>
+            <th scope="col">3º Adicional</th>
+            <th scope="col">4º Adicional</th>
+            <th scope="col">5º Adicional</th>
+            <th scope="col">6º Adicional</th>
             <th scope="col">Descargar</th>
         </tr>
     </thead>
     <tbody>
         <tr *ngFor="let user of listSummary; index as i">
             <th scope="row">{{ i + 1 }}</th>
-            <td>{{ user.date | date }}</td>
+            <td>{{ user | formatDay}}</td>
+            <td>{{ user.specialist }}</td>
+            <td>{{ user.specialty }}</td>
             <td>{{ user.height }}</td>
             <td>{{ user.weight }}</td>
             <td>{{ user.temperature }}</td>
             <td>{{ user.pressure }}</td>
-            <td>{{ user.name1 }}: {{ user.value1 }}</td>
-            <td>{{ user.name2 }}: {{ user.value2 }}</td>
-            <td>{{ user.name3 }}: {{ user.value3 }}</td>
+            <td>{{ user | summaryDinamic : 1}}</td>
+            <td>{{ user | summaryDinamic : 2}}</td>
+            <td>{{ user | summaryDinamic : 3}}</td>
+            <td>{{ user | summaryDinamic : 4}}</td>
+            <td>{{ user | summaryDinamic : 5}}</td>
+            <td>{{ user | summaryDinamic : 6}}</td>
+            <td><button class="btn btn-outline-primary">Excel</button></td>
+        </tr>
+    </tbody>
+</table>
+<table class="table" *ngIf="isResume">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Fecha</th>
+            <th scope="col">Especialista</th>
+            <th scope="col">Especialidad</th>
+            <th scope="col">Altura</th>
+            <th scope="col">Peso</th>
+            <th scope="col">Temperatura</th>
+            <th scope="col">Presión</th>
+            <th scope="col">Descargar</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let user of listSummary; index as i">
+            <th scope="row">{{ i + 1 }}</th>
+            <td>{{ user | formatDay}}</td>
+            <td>{{ user.specialist }}</td>
+            <td>{{ user.specialty }}</td>
+            <td>{{ user.height }}</td>
+            <td>{{ user.weight }}</td>
+            <td>{{ user.temperature }}</td>
+            <td>{{ user.pressure }}</td>
             <td><button class="btn btn-outline-primary">Excel</button></td>
         </tr>
     </tbody>

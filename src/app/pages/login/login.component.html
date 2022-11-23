@@ -1,21 +1,21 @@
-<div class="backgroundStyle"><img class="back" src="../../../assets/EMU_Patterns-background_03.jpg">
-    <div class="container">
+<div class="profile">
+    <div class="center card" style="width: 70%;">
         <form [formGroup]="form" (ngSubmit)="onSubmit()">
             <div class="card-body p-4">
                 <div class="form-group">
                     <label style="float: left">Email</label>
                     <input class="form-control" formControlName="email" type="email" placeholder="Ingrese su email"
-                        required>
+                    required>
                     <div class="errorMessage"
-                        *ngIf="getValue('email')?.invalid && (getValue('email').touched || getValue('email').dirty)">
-                        Ingrese un mail válido</div>
-
+                    *ngIf="getValue('email')?.invalid && (getValue('email').touched || getValue('email').dirty)">
+                    Ingrese un mail válido</div>
+                    
                     <label style="float: left">Password</label>
                     <input autocomplete="new-password" #password class="form-control" formControlName="password"
-                        type="password" placeholder="Ingrese su password" required>
+                    type="password" placeholder="Ingrese su password" required>
                     <div class="errorMessage"
-                        *ngIf="getValue('password')?.invalid && (getValue('password').touched || getValue('password').dirty)">
-                        Mínimo 6 caracteres</div>
+                    *ngIf="getValue('password')?.invalid && (getValue('password').touched || getValue('password').dirty)">
+                    Mínimo 6 caracteres</div>
                 </div>
                 <button class="btn btn-primary form-control" type="submit" [disabled]="!form.valid">Ingresar</button>
                 <button class="btn btn-danger form-control" (click)="ingresarConGoogle()">Ingresar con Google</button>
@@ -24,18 +24,18 @@
             </div>
         </form>
         <div class="card-body p-4 autoLog">
-            <input type=image src="../../../assets/CO_Patient_01.png" (click)="autoLogin('pacienteroberto.p1')"
-                width="150" height="150" class="imageBtn">
-            <input type=image src="../../../assets/CO_Patient_03.png" (click)="autoLogin('pacientemaria.p2')"
-                width="150" height="150" class="imageBtn">
-            <input type=image src="../../../assets/CO_Patient_02.png" (click)="autoLogin('pacientesandra.p3')"
-                width="150" height="150" class="imageBtn">
-            <input type=image src="../../../assets/CO_SpecialistAvatar_01.png"
-                (click)="autoLogin('especialistacandela.e1')" width="150" height="150">
-            <input type=image src="../../../assets/CO_SpecialistAvatar_02.png"
-                (click)="autoLogin('especialistalorena.e2')" width="150" height="150">
+            <input type=image src="../../../assets/CO_Patient_01.png" (click)="autoLogin('pacienteroberto.p1')" width="150"
+            height="150" class="imageBtn">
+            <input type=image src="../../../assets/CO_Patient_03.png" (click)="autoLogin('pacientemaria.p2')" width="150"
+            height="150" class="imageBtn">
+            <input type=image src="../../../assets/CO_Patient_02.png" (click)="autoLogin('pacientesandra.p3')" width="150"
+            height="150" class="imageBtn">
+            <input type=image src="../../../assets/CO_SpecialistAvatar_01.png" (click)="autoLogin('especialistacandela.e1')"
+            width="150" height="150">
+            <input type=image src="../../../assets/CO_SpecialistAvatar_02.png" (click)="autoLogin('especialistalorena.e2')"
+            width="150" height="150">
             <input type=image src="../../../assets/CO_Admin_01.png" (click)="autoLogin('admjorge.a1')" width="150"
-                height="150">
+            height="150">
         </div>
     </div>
 </div>

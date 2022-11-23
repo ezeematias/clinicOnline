@@ -1,16 +1,27 @@
-<app-selecto-button [listParent]="specialtys" [className]="specialityName" (itemSelected)="selector($event)">
-</app-selecto-button>
-<br>
+<div class="profile">
+    <div class="center card" style="width: 70%;">
 
-<div *ngIf="specialtySelected">
-    <app-selecto-button [listParent]="specialist" [className]="specialistName" (itemSelected)="selectorSpe($event)">
-    </app-selecto-button>
+        <app-selecto-button [listParent]="specialtys" [className]="specialityName" (itemSelected)="selector($event)">
+        </app-selecto-button>
+        <br>
+
+        <div *ngIf="specialtySelected">
+            <app-selecto-button [listParent]="specialist" [className]="specialistName"
+                (itemSelected)="selectorSpe($event)">
+            </app-selecto-button>
+        </div>
+        <br>
+
+        <app-turns [listTurn]="availableTurn" [listDays]="days" (daySelected)="selectorDay($event)"
+            (itemSelected)="selectorTurn($event)">
+        </app-turns>
+
+        <div *ngIf="(turnSelected.name && userBase.role == 'Admin')">
+            <app-selecto-button [listParent]="patient" [className]="patentName" (itemSelected)="selectorPat($event)">
+            </app-selecto-button>
+        </div>
+        <br>
+
+        <button class="btn btn-outline-success" (click)="addTurn()">Sacar Turno</button>
+    </div>
 </div>
-<br>
-
-<app-turns [listTurn]="availableTurn" [listDays]="days" (daySelected)="selectorDay($event)"
-    (itemSelected)="selectorTurn($event)">
-</app-turns>
-<br>
-
-<button class="btn btn-outline-success" (click)="addTurn()">Sacar Turno</button>

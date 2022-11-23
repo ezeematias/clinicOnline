@@ -30,6 +30,8 @@ import { SpecialistPanelComponent } from '../specialist-panel/specialist-panel.c
 import { SummaryComponent } from 'src/app/components/summary/summary.component';
 import { SummaryListComponent } from 'src/app/components/summary-list/summary-list.component';
 import { PatientCardListComponent } from 'src/app/components/patient-card-list/patient-card-list.component';
+import { SummaryDinamicPipe } from 'src/app/pipes/summary-dinamic.pipe';
+import { FormatDayPipe } from 'src/app/pipes/format-day.pipe';
 
 @NgModule({
   declarations: [
@@ -60,6 +62,8 @@ import { PatientCardListComponent } from 'src/app/components/patient-card-list/p
     SummaryComponent,
     SummaryListComponent,
     PatientCardListComponent,
+    SummaryDinamicPipe,
+    FormatDayPipe,
   ],
   imports: [
     CommonModule,

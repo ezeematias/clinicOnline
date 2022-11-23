@@ -1,16 +1,22 @@
-<div *ngFor="let user of users; index as i">
-    <div *ngIf="count(user.turns!) > 0">
-        <div class="card" style="width: 18rem;">
-            <img class="card-img-top" src="{{user.photoURL}}" alt="">
-            <div class="card-body">
-                <h5 class="card-title">{{user.name}}</h5>
-                <p class="card-text">{{user.role}}</p>
-                <div *ngFor="let turn of user.turns; index as i">
-                    <div *ngIf="turn.specialistUid == specialist">
-                        <a href="#" class="btn btn-primary">{{turn.nameDate}}</a>
+<div class="menu">
+
+    <div class="row" *ngFor="let user of users; index as i">
+        <div class="column" *ngIf="count(user.turns!) > 0">
+            <div class="card" style="width: 18rem;">
+                <img class="card-img-top" src="{{user.photoURL}}" alt="">
+                <div class="card-body">
+                    <h5 class="card-title">{{user.name}}</h5>
+                    <p class="card-text">{{user.role}}</p>
+                    <div *ngFor="let turn of user.turns; index as i">
+                        <div *ngIf="turn.specialistUid == specialist">
+                            <a (click)="onClickTurn(turn, content)" class="btn btn-primary">{{turn.nameDate}}</a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <ng-template #content let-c="close" let-d="dismiss">
+        <app-summary [turn]="turnSelected" [editSummary]="summarySelected" [isDisable]="true"></app-summary>
+    </ng-template>
 </div>

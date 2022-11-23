@@ -22,21 +22,19 @@ export class SpecialistPanelComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     this.userService.getUserAllPatient().subscribe((users) => {
       this.users = users;
-      console.log(this.users);
     })
     this.userLogged.then((res) => {
       this.userService.getTurnId(res?.uid!, "specialistUid").subscribe(turn => {
         this.turns = turn;
-        console.log(this.turns);
+        this.userService.addTurnsToUser(this.users, this.turns).then(() => {
+        });
       })
-    });
-    this.userService.addTurnsToUser(this.users, this.turns).then(()=> {
     });
 
   }
 
   pruebaCard() {
-    this.userService.addTurnsToUser(this.users, this.turns).then(()=> {
+    this.userService.addTurnsToUser(this.users, this.turns).then(() => {
 
     });
   }

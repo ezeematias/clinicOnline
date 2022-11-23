@@ -84,7 +84,7 @@
         <div class="dropdown-divider"></div>
         <app-summary-list [user]="userBase"></app-summary-list>
     </div>
-    <div class="center card" *ngIf="schedule" style="width: 10%; margin-left: 3%;">
+    <div class="center card" *ngIf="schedule" style="margin-left: 3%;">
         <h5 class="text-center mt-3">Elegir especiaidad</h5>
         <div class="dropdown-divider"></div>
         <app-selecto-button [listParent]="userBase.specialty" (itemSelected)="specialtySelector($event)">

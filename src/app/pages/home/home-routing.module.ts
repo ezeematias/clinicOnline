@@ -13,12 +13,12 @@ const routes: Routes = [
   {
     path: '', component: HomeComponent, children: [
       { path: '', pathMatch: 'full', redirectTo: '/home/profile' },
-      { path: 'panel', component: AdminPanelComponent, canActivate: [AdminGuard] },
-      { path: 'profile', component: ProfileComponent },
-      { path: 'turns', component: MyShiftComponent },
-      { path: 'request', component: RequestShiftComponent },
-      { path: 'panel-shift', component: AdminShiftComponent },
-      { path: 'panel-patient', component: SpecialistPanelComponent, },
+      { path: 'panel', component: AdminPanelComponent, canActivate: [AdminGuard], data: { state: 'panel' } },
+      { path: 'profile', component: ProfileComponent, data: { state: 'profile' } },
+      { path: 'turns', component: MyShiftComponent, data: { state: 'turns' } },
+      { path: 'request', component: RequestShiftComponent, data: { state: 'request' } },
+      { path: 'panel-shift', component: AdminShiftComponent, data: { state: 'panel-shift' } },
+      { path: 'panel-patient', component: SpecialistPanelComponent, data: { state: 'panel-patient' } },
     ]
   }
 ];

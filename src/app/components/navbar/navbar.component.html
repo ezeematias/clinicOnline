@@ -41,6 +41,9 @@
                                         routerLink="home/panel">Panel de Control</a>
                                     <a ngbDropdownItem *ngIf="role == 'Admin' && user"
                                         routerLink="home/panel-shift">Panel de Turnos</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a ngbDropdownItem *ngIf="role == 'Admin' && user"
+                                        routerLink="home/reports">Reportes</a>
                                 </div>
                                 <div *ngIf="User && role == 'Specialist'">
                                     <a ngbDropdownItem *ngIf="role == 'Specialist' && user" id="control"

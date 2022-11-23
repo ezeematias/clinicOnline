@@ -30,6 +30,7 @@ import { UsersService } from './services/users.service';
 import { ManagementService } from './services/management.service';
 import { SpecialtyComponent } from './components/specialty/specialty.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ReportsComponent } from './pages/reports/reports.component';
 
 const firebaseConfig = {
   projectId: 'eu-cliniconline',
@@ -54,7 +55,7 @@ const firebaseConfig = {
     VerificationComponent,
     WelcomeComponent,
     CaptchaComponent,
-    SpecialtyComponent,
+    SpecialtyComponent,    
 
   ],
   imports: [

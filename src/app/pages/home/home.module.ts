@@ -32,6 +32,7 @@ import { SummaryListComponent } from 'src/app/components/summary-list/summary-li
 import { PatientCardListComponent } from 'src/app/components/patient-card-list/patient-card-list.component';
 import { SummaryDinamicPipe } from 'src/app/pipes/summary-dinamic.pipe';
 import { FormatDayPipe } from 'src/app/pipes/format-day.pipe';
+import { ReportsComponent } from '../reports/reports.component';
 
 @NgModule({
   declarations: [
@@ -64,6 +65,7 @@ import { FormatDayPipe } from 'src/app/pipes/format-day.pipe';
     PatientCardListComponent,
     SummaryDinamicPipe,
     FormatDayPipe,
+    ReportsComponent,
   ],
   imports: [
     CommonModule,

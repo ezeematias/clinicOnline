@@ -6,6 +6,7 @@ import { SpinnerService } from 'src/app/services/spinner.service';
 import { User } from 'src/app/entities/user';
 import { ModalService } from 'src/app/services/modal.service';
 import { UsersService } from 'src/app/services/users.service';
+import { LogsService } from 'src/app/services/logs.service';
 
 @Component({
   selector: 'app-login',
@@ -20,7 +21,8 @@ export class LoginComponent implements OnInit {
   constructor(private auth: AuthService, private router: Router,
     private readonly fb: FormBuilder, private spinnerService: SpinnerService,
     private modal: ModalService,
-    private userService: UsersService) {
+    private userService: UsersService,
+    private logService: LogsService) {
 
     this.form = new FormGroup({
       email: new FormControl(),
@@ -47,7 +49,7 @@ export class LoginComponent implements OnInit {
       }
       if (this.userService.userLogged.enable == true) {
         sessionStorage.setItem('user', JSON.stringify(this.userService.userLogged));
-        this.auth.login(user).then().catch(error => { this.modal.modalMessage(error.message, "error"); });
+        this.auth.login(user).then(() => this.logService.registerUserLoginTime(this.form)).catch(error => { this.modal.modalMessage(error.message, "error"); });
       } else if (this.userService.userLogged.enable == false) {
         this.modal.modalSimple("Usuario pendiente de habilitación", "Hablar con un administrador", "info");
       }

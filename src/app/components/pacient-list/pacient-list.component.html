@@ -1,5 +1,7 @@
 <button class="btn btn-outline-secondary" (click)="changeStyle()">Cambiar Estilo</button>
 <button *ngIf="!isCard" class="btn btn-outline-secondary" (click)="downloadUsers()">Descargar Plantilla</button>
+<br>
+<br>
 <table *ngIf="!isCard" class="table" id="users-table">
     <thead>
         <tr>

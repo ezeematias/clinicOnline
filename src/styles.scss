@@ -8,14 +8,27 @@ body {
   //width: 100%;
   color: #006bdb;
   //background: linear-gradient(to left, #00a9e2, #006bdb);
+  height: 100%;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  background-size: contain;
+  background-position: absolute;
+  width: 100%;
+  //background: url("../src/assets/newBack5.jpg");
+  background: url("../src/assets/backS.png"), #b3aeff;
+  background: url("../src/assets/backS.png"),
+    -webkit-gradient(linear, right top, left top, from(#b3e3ff), to(#c08e91));
+  background: url("../src/assets/backS.png"),
+    linear-gradient(to left, #8194d4, #abd8e0);  
+  //background: url("../src/assets/EMU_Patterns-background_02.jpg");
 }
 
-.background {
-  background: url("../src/assets/EMU_Patterns-background_02.jpg");
-  //background-color: #cccccc;
-  background-position: center;
-  background-size: cover;
-}
+// .background {
+//   background: url("../src/assets/newBack.jpg");
+//   //background-color: #cccccc;
+//   background-position: center;
+//   /* Center the image */
+//   background-size: cover;
+// }
 
 .picLog {
   display: flex;
@@ -96,8 +109,8 @@ body {
 }
 
 .kenburns-top-right {
-	-webkit-animation: kenburns-top-right 5s ease-out both;
-	        animation: kenburns-top-right 5s ease-out both;
+  -webkit-animation: kenburns-top-right 5s ease-out both;
+  animation: kenburns-top-right 5s ease-out both;
 }
 
 /* ----------------------------------------------
@@ -112,31 +125,34 @@ body {
  * animation kenburns-top-right
  * ----------------------------------------
  */
- @-webkit-keyframes kenburns-top-right {
+@-webkit-keyframes kenburns-top-right {
   0% {
     -webkit-transform: scale(1) translate(0, 0);
-            transform: scale(1) translate(0, 0);
+    transform: scale(1) translate(0, 0);
     -webkit-transform-origin: 84% 16%;
-            transform-origin: 84% 16%;
+    transform-origin: 84% 16%;
   }
+
   100% {
     -webkit-transform: scale(1.25) translate(20px, -15px);
-            transform: scale(1.25) translate(20px, -15px);
+    transform: scale(1.25) translate(20px, -15px);
     -webkit-transform-origin: right top;
-            transform-origin: right top;
+    transform-origin: right top;
   }
 }
+
 @keyframes kenburns-top-right {
   0% {
     -webkit-transform: scale(1) translate(0, 0);
-            transform: scale(1) translate(0, 0);
+    transform: scale(1) translate(0, 0);
     -webkit-transform-origin: 84% 16%;
-            transform-origin: 84% 16%;
+    transform-origin: 84% 16%;
   }
+
   100% {
     -webkit-transform: scale(1.25) translate(20px, -15px);
-            transform: scale(1.25) translate(20px, -15px);
+    transform: scale(1.25) translate(20px, -15px);
     -webkit-transform-origin: right top;
-            transform-origin: right top;
+    transform-origin: right top;
   }
 }

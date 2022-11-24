@@ -26,7 +26,7 @@ import { rotateCubeToRight, slide, rotateFlipToLeft, fromRightEasing, scaleDownF
       transition('* => panel-patient', useAnimation(rotateFlipToLeft))
     ]),
     trigger('reports', [
-      transition('* => panel-patient', useAnimation(rotateFlipToBottom))
+      transition('* => reports', useAnimation(rotateFlipToBottom))
     ]),
   ]
 })

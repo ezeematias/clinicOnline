@@ -85,9 +85,9 @@
             </div>
         </div>
     </form>
-    <app-captcha (captchaResult)="captcha"></app-captcha>
+    <!-- <app-captcha (captchaResult)="captcha"></app-captcha> -->
     <div class="modal-footer">
-        <button *ngIf="!disabled" type="button" class="btn btn-outline-success"
-            [disabled]="!summary.valid" (click)="pruba()">Guardar</button>
+        <button *ngIf="!disabled" type="button" class="btn btn-outline-success" [disabled]="!summary.valid"
+            (click)="saveSummary()">Guardar</button>
     </div>
 </div>

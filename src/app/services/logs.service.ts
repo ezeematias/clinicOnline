@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { collectionData } from '@angular/fire/firestore';
 import { FormGroup } from '@angular/forms';
+import { collection, Firestore } from 'firebase/firestore';
+import { Observable } from 'rxjs';
 import { AuthService } from './auth.service';
 
 @Injectable({

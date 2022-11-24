@@ -2,7 +2,34 @@
     <div class="center card" style="width: 70%;">
         <div>
             <h4>Reportes</h4>
-            <canvas ID="CANVAS">{{chart}}</canvas>
+            <hr>
         </div>
+        <ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-0">
+            <ngb-panel title="Registro de inicio de sesión">
+                <ng-template ngbPanelContent>
+                    <app-logs-list></app-logs-list>
+                </ng-template>
+            </ngb-panel>
+            <ngb-panel title="Tunos por día">
+                <ng-template ngbPanelContent>
+                    <app-turns-day></app-turns-day>
+                </ng-template>
+            </ngb-panel>
+            <ngb-panel title="Turnos por médicos - Finalizados">
+                <ng-template ngbPanelContent>
+                    <app-turns-fanally></app-turns-fanally>
+                </ng-template>
+            </ngb-panel>
+            <ngb-panel title="Turnos por médicos - Pendientes">
+                <ng-template ngbPanelContent>
+                    <app-turns-request></app-turns-request>
+                </ng-template>
+            </ngb-panel>
+            <ngb-panel title="Turnos por especialidad">
+                <ng-template ngbPanelContent>
+                    <app-turns-specialty></app-turns-specialty>
+                </ng-template>
+            </ngb-panel>
+        </ngb-accordion>
     </div>
 </div>

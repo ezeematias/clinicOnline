@@ -41,6 +41,11 @@ import { NumberOnlyDirective } from 'src/app/directives/number-only.directive';
 import { SummaryFilterPipe } from 'src/app/pipes/summary-filter.pipe';
 import { CaptchaComponent } from 'src/app/components/captcha/captcha.component';
 import { CaptchaDirective } from 'src/app/directives/captcha.directive';
+import { LogsListComponent } from '../reports/logs-list/logs-list.component';
+import { TurnsDayComponent } from '../reports/turns-day/turns-day.component';
+import { TurnsFanallyComponent } from '../reports/turns-fanally/turns-fanally.component';
+import { TurnsRequestComponent } from '../reports/turns-request/turns-request.component';
+import { TurnsSpecialtyComponent } from '../reports/turns-specialty/turns-specialty.component';
 
 @NgModule({
   declarations: [
@@ -82,6 +87,11 @@ import { CaptchaDirective } from 'src/app/directives/captcha.directive';
     SummaryFilterPipe,
     CaptchaComponent,
     CaptchaDirective,
+    LogsListComponent,
+    TurnsSpecialtyComponent,
+    TurnsDayComponent,
+    TurnsRequestComponent,
+    TurnsFanallyComponent,
 
   ],
   imports: [

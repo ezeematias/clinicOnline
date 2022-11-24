@@ -1,0 +1,20 @@
+<div class="d-flex justify-content-between align-items-center">
+    <h5>Listado</h5>
+    <label (click)="downloadUsers()" class="btn btn-outline-primary">Descargar</label>
+</div>
+<table class="table" id="users-table">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Usuario</th>
+            <th scope="col">Fecha</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr appButtonSensitive *ngFor="let user of logs; index as i">
+            <th scope="row">{{ i + 1 }}</th>
+            <td>{{ user.email }}</td>
+            <td>{{ user.loginTime }}</td>
+        </tr>
+    </tbody>
+</table>

@@ -25,20 +25,11 @@ import { AuthService } from './services/auth.service';
 import { PermissionsGuard } from './guards/permissions.guard';
 import { WelcomeComponent } from './pages/welcome/welcome.component';
 import { VerificationComponent } from './pages/verification/verification.component';
-import { CaptchaComponent } from './components/captcha/captcha.component';
 import { UsersService } from './services/users.service';
 import { ManagementService } from './services/management.service';
 import { SpecialtyComponent } from './components/specialty/specialty.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ReportsComponent } from './pages/reports/reports.component';
-import { ButtonClickedDirective } from './directives/button-clicked.directive';
-import { ButtonSensitiveDirective } from './directives/button-sensitive.directive';
-import { ButtonRadiusSensitiveDirective } from './directives/button-radius-sensitive.directive';
-import { ButtonClicked2Directive } from './directives/button-clicked-2.directive';
-import { NumberOnlyDirective } from './directives/number-only.directive';
 import { ImgChangeDirective } from './directives/img-change.directive';
-import { SummaryFilterPipe } from './pipes/summary-filter.pipe';
-import { CaptchaDirective } from './directives/captcha.directive';
 
 const firebaseConfig = {
   projectId: 'eu-cliniconline',
@@ -64,6 +55,7 @@ const firebaseConfig = {
     WelcomeComponent,
     SpecialtyComponent,
     ImgChangeDirective,
+
   ],
   imports: [
     BrowserModule,

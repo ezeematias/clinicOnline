@@ -192,6 +192,24 @@ export class UsersService extends RoleValidator {
       });
   }
 
+  getAllReservedTurns() {
+    const data: Turns[] = [];
+    return firebase
+      .firestore()
+      .collection('turns')
+      .where('status', '==', 'Reserved')
+      .get()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          data.push(doc.data());
+        });
+        return data;
+      })
+      .catch((error) => {
+        console.log('Error getting documents: ', error);
+      });
+  }
+
   getFinallyTurns(patient: User) {
     const data: Turns[] = [];
     return firebase
@@ -199,6 +217,40 @@ export class UsersService extends RoleValidator {
       .collection('turns')
       .where('patientUid', '==', patient.uid)
       .where('status', '==', 'Finalized')
+      .get()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          data.push(doc.data());
+        });
+        return data;
+      })
+      .catch((error) => {
+        console.log('Error getting documents: ', error);
+      });
+  }
+
+  getAllFinallyTurns() {
+    const data: Turns[] = [];
+    return firebase
+      .firestore()
+      .collection('turns')
+      .where('status', '==', 'Finalized')
+      .get()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          data.push(doc.data());
+        });
+        return data;
+      })
+      .catch((error) => {
+        console.log('Error getting documents: ', error);
+      });
+  }
+  getAllTurns() {
+    const data: Turns[] = [];
+    return firebase
+      .firestore()
+      .collection('turns')
       .get()
       .then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
@@ -338,6 +390,12 @@ export class UsersService extends RoleValidator {
         updateDoc(placeRef, { turns: turnExit });
       })
     })
+  }
+
+  //Logs
+  getLogsAll(): Observable<any[]> {
+    const userRef = collection(this.firestore, 'logs');
+    return collectionData(userRef, { idField: 'id' }) as Observable<any[]>;
   }
 
 }

@@ -16,6 +16,7 @@ import { UsersService } from 'src/app/services/users.service';
 export class SummaryListComponent implements OnInit {
 
   public listSummary: Summary[] = [];
+  public listSummarySmall: Summary[] = [];
   @Input() user!: User;
   isResume = true;
   textFill: string = '';
@@ -26,6 +27,7 @@ export class SummaryListComponent implements OnInit {
   ngOnInit(): void {
     this.userService.getSumariId(this.user.uid!, 'patientUid').subscribe((users) => {
       this.listSummary = users;
+      this.listSummarySmall = users;
       users.forEach(res => {
         if (!this.listSpecialty.find(srch => srch == res.specialty)) {
           this.listSpecialty.push(res.specialty!);

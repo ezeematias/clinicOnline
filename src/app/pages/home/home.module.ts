@@ -47,6 +47,7 @@ import { TurnsFanallyComponent } from '../reports/turns-fanally/turns-fanally.co
 import { TurnsRequestComponent } from '../reports/turns-request/turns-request.component';
 import { TurnsSpecialtyComponent } from '../reports/turns-specialty/turns-specialty.component';
 import { StatusTraPipe } from 'src/app/pipes/status-tra.pipe';
+import { SummaryFilterSmallPipe } from 'src/app/pipes/summary-filter-small.pipe';
 
 @NgModule({
   declarations: [
@@ -94,6 +95,7 @@ import { StatusTraPipe } from 'src/app/pipes/status-tra.pipe';
     TurnsRequestComponent,
     TurnsFanallyComponent,
     StatusTraPipe,
+    SummaryFilterSmallPipe,
   ],
   imports: [
     CommonModule,

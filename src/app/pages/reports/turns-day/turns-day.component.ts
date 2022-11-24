@@ -4,6 +4,7 @@ import { UsersService } from 'src/app/services/users.service';
 import { LineChart } from 'chartist';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
+import { SpinnerService } from 'src/app/services/spinner.service';
 
 @Component({
   selector: 'app-turns-day',
@@ -12,7 +13,7 @@ import html2canvas from 'html2canvas';
 })
 export class TurnsDayComponent implements OnInit {
 
-  constructor(private userService: UsersService) { }
+  constructor(private userService: UsersService, private spinnerService: SpinnerService) { }
 
   turnRes: any;
   turnAll: Turns[] = [];
@@ -61,21 +62,7 @@ export class TurnsDayComponent implements OnInit {
   }
 
   downloadData() {
-    /*
-    let DATA = <HTMLElement>document.getElementById('pdf');
-
-    html2canvas(DATA).then((canvas) => {
-      let fileWidth = 208;
-      let fileHeight = (canvas.height * fileWidth) / canvas.width;
-
-      const FILEURI = canvas.toDataURL('image/png');
-      let PDF = new jsPDF('p', 'mm', 'a4');
-      let position = 0;
-      PDF.addImage(FILEURI, 'PNG', 0, position, fileWidth, fileHeight);
-      var nombreArchivo = 'turnosxEspecialidad.pdf';
-      PDF.save(nombreArchivo);
-    });
-*/
+    this.spinnerService.show();
     var imgData;
     html2canvas(document.getElementById('chart1')!).then(function (canvas) {
       imgData = canvas.toDataURL('image');
@@ -87,7 +74,8 @@ export class TurnsDayComponent implements OnInit {
       doc.text(`Turnos por día`, 70, 30);
       doc.addImage(imgData, 'PNG', 80, 80, 200, 200);
       doc.save('turnos-por-dia.pdf');
-    });
+    }).finally(() => this.spinnerService.hide());
+
   }
 
 }

@@ -66,7 +66,7 @@ export class SummaryFilterPipe implements PipeTransform {
           itemFound = true;
           break;
         }
-        if (item.value6!.toLowerCase().indexOf(keyword.toLowerCase()) !== -1) {
+        if (item.value6!.toString().toLowerCase().indexOf(keyword.toLowerCase()) !== -1) {
           itemFound = true;
           break;
         }

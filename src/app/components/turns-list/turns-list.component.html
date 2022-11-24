@@ -14,10 +14,12 @@
             <th scope="col">Ver Reseña</th>
             <th scope="col">Encuesta</th>
             <th scope="col">Calificar Atención</th>
+            <th scope="col">Estado</th>
         </tr>
     </thead>
     <tbody>
-        <tr appButtonSensitive *ngFor="let user of (turns | turnsFilter : textFill : ['date','specialist','specialty'] ); index as i">
+        <tr appButtonSensitive
+            *ngFor="let user of (turns | turnsFilter : textFill : ['date','specialist','specialty'] ); index as i">
             <th scope="row">{{ i + 1 }}</th>
             <td>{{user | tunsDay}} {{ user | tunsHour }}</td>
             <td>{{ user.specialist }}</td>
@@ -43,12 +45,13 @@
             <ng-template #poll>
                 <td><button disabled class="btn btn-outline-dark">Completar</button></td>
             </ng-template>
-            <td *ngIf="(user.status == 'Finalized' && !user.review) else rating"><button (click)="onClickReview(user)"
+            <td *ngIf="(user.status == 'Finalized' && !user.rating) else rating"><button (click)="onClickReview(user)"
                     class="btn btn-outline-info">Calificar</button>
             </td>
             <ng-template #rating>
                 <td><button disabled class="btn btn-outline-dark">Calificar</button></td>
             </ng-template>
+            <td>{{user.status | statusTra}}</td>
         </tr>
     </tbody>
 </table>

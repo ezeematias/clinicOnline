@@ -30,6 +30,7 @@ import { ManagementService } from './services/management.service';
 import { SpecialtyComponent } from './components/specialty/specialty.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ImgChangeDirective } from './directives/img-change.directive';
+import { StatusTraPipe } from './pipes/status-tra.pipe';
 
 const firebaseConfig = {
   projectId: 'eu-cliniconline',

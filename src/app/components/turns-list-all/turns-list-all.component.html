@@ -23,7 +23,7 @@
             <td>{{ user.patient }}</td>
             <td>{{ user.specialist }}</td>
             <td>{{ user.specialty }}</td>
-            <td>{{ user.status }}</td>
+            <td>{{ user.status | statusTra}}</td>
             <td *ngIf="(user.status != 'Cancelled' && user.status != 'Finalized' && user.status != 'Accepted' && user.status
             != 'Refused') else cancel"><button (click)="onClickCanel(user)" class="btn btn-danger">Cancelar</button>
             </td>

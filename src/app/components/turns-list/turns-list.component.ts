@@ -56,8 +56,8 @@ export class TurnsListComponent implements OnInit {
   }
 
   onClickReview(tuns: Turns) {
-    this.modal.modalInputText("Reseña", "Ingrese su comentario", "reseña").then(res => {
-      this.userService.updateTurnsReview(tuns, res);
+    this.modal.modalInputText("Calificar Atención", "Ingrese su comentario", "reseña").then(res => {
+      this.userService.updateTurnsRating(tuns, res);
       this.modal.modalSimple("Guardado", "Se guardó correctamente su reseña", "success");
     })
   }

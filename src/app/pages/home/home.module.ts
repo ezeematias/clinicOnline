@@ -46,6 +46,7 @@ import { TurnsDayComponent } from '../reports/turns-day/turns-day.component';
 import { TurnsFanallyComponent } from '../reports/turns-fanally/turns-fanally.component';
 import { TurnsRequestComponent } from '../reports/turns-request/turns-request.component';
 import { TurnsSpecialtyComponent } from '../reports/turns-specialty/turns-specialty.component';
+import { StatusTraPipe } from 'src/app/pipes/status-tra.pipe';
 
 @NgModule({
   declarations: [
@@ -92,7 +93,7 @@ import { TurnsSpecialtyComponent } from '../reports/turns-specialty/turns-specia
     TurnsDayComponent,
     TurnsRequestComponent,
     TurnsFanallyComponent,
-
+    StatusTraPipe,
   ],
   imports: [
     CommonModule,

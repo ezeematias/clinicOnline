@@ -288,6 +288,10 @@ export class UsersService extends RoleValidator {
     const placeRef = doc(this.firestore, `turns/${turn.id}`);
     return updateDoc(placeRef, { review: msg });
   }
+  updateTurnsRating(turn: Turns, msg: string) {
+    const placeRef = doc(this.firestore, `turns/${turn.id}`);
+    return updateDoc(placeRef, { rating: msg });
+  }
 
   updateTurnsPoll(turn: Turns, msg: string) {
     const placeRef = doc(this.firestore, `turns/${turn.id}`);

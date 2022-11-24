@@ -66,9 +66,18 @@ export class TurnsListAssignedComponent implements OnInit {
   onClickFinally(tuns: Turns, content: any) {
     this.modal.modalCancelConfirmMsg("¿Desea finalizar el turno?", "Se cerrará el turno", 'info', "finalizarlo").then((result) => {
       if (result.isConfirmed) {
+        if (!tuns.review) {
+          this.modal.modalInputText("Reseña", "Ingrese su comentario", "reseña").then(res => {
+            this.userService.updateTurnsReview(tuns, res);
+            this.modal.modalSimple("Guardado", "Se guardó correctamente su reseña", "success");
+            this.turnSelected = tuns;
+            this.modalService.open(content);
+          })
+        }else{
+          this.turnSelected = tuns;
+          this.modalService.open(content);
+        }
         //this.userService.updateTurnsFinnally(tuns, 'Finalized');
-        this.turnSelected = tuns;
-        this.modalService.open(content);
         //this.modal.modalSimple("Finalizado", "Se finalizó el turno correctamente", "success");        
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         this.modal.modalSimple("Cancelado", "El turno queda pendiente de terminar", "error");

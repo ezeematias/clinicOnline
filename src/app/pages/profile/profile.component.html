@@ -80,12 +80,12 @@
         </div>
     </div>
     <div class="center card" *ngIf="summary" style="margin-left: 3%;">
-        <h5 class="text-center mt-3">Historia Clínica</h5>
+        <h4 class="text-center mt-3">Historia Clínica</h4>
         <div class="dropdown-divider"></div>
         <app-summary-list [user]="userBase"></app-summary-list>
     </div>
     <div class="center card" *ngIf="schedule" style="margin-left: 3%;">
-        <h5 class="text-center mt-3">Elegir especiaidad</h5>
+        <h4 class="text-center mt-3">Elegir especiaidad</h4>
         <div class="dropdown-divider"></div>
         <app-selecto-button [listParent]="userBase.specialty" (itemSelected)="specialtySelector($event)">
         </app-selecto-button>

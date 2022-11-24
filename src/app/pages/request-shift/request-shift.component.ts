@@ -223,7 +223,7 @@ export class RequestShiftComponent implements OnInit {
           name: this.getDaySpanish(day.getDay()),
           dayWeek: day.getDay(),
           day: day.getDate(),
-          month: day.getMonth(),
+          month: day.getMonth() + 1,
           date: day,
         }
         daysAvailables.push(auxDay);

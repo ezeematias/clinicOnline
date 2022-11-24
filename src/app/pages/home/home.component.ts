@@ -1,6 +1,6 @@
 import { trigger, transition, useAnimation } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
-import { rotateCubeToRight } from 'ngx-router-animations';
+import { rotateCubeToRight, slide, rotateFlipToLeft, fromRightEasing, scaleDownFromBottom, rotateFlipToBottom } from 'ngx-router-animations';
 
 @Component({
   selector: 'app-home',
@@ -8,22 +8,25 @@ import { rotateCubeToRight } from 'ngx-router-animations';
   styleUrls: ['./home.component.scss'],
   animations: [
     trigger('panel', [
-      transition('* => panel', useAnimation(rotateCubeToRight))
+      transition('* => panel', useAnimation(fromRightEasing))
     ]),
     trigger('profile', [
-      transition('home => profile', useAnimation(rotateCubeToRight))
+      transition('* => profile', useAnimation(rotateCubeToRight))
     ]),
     trigger('turns', [
-      transition('home => turns', useAnimation(rotateCubeToRight))
+      transition('* => turns', useAnimation(scaleDownFromBottom))
     ]),
     trigger('request', [
-      transition('home => request', useAnimation(rotateCubeToRight))
+      transition('* => request', useAnimation(rotateCubeToRight))
     ]),
     trigger('panel-shift', [
-      transition('home => panel-shift', useAnimation(rotateCubeToRight))
+      transition('* => panel-shift', useAnimation(slide))
     ]),
     trigger('panel-patient', [
-      transition('home => panel-patient', useAnimation(rotateCubeToRight))
+      transition('* => panel-patient', useAnimation(rotateFlipToLeft))
+    ]),
+    trigger('reports', [
+      transition('* => panel-patient', useAnimation(rotateFlipToBottom))
     ]),
   ]
 })

@@ -1,7 +1,9 @@
 <div style="width: 200px;" class="my-3">
     <div class="row">
         <div class="col-12">
-            <div id="captcha" class="captcha"></div>
+            <div id="captcha" class="captcha" appCaptcha [requestCaptcha]="generateCaptcha"
+                [enteredCaptcha]="captchaForDirective" (captcha)="newCaptcha($event)"
+                (captchaResult)="captchaResultDirective($event)">{{captcha}}></div>
         </div>
         <div class="col-4">
             <button class="btn rounded btn-primary" type="button" (click)="createCaptcha()">Cambiar</button>

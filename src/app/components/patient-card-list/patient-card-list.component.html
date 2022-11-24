@@ -2,7 +2,7 @@
 
     <div class="row" *ngFor="let user of users; index as i">
         <div class="column" *ngIf="count(user.turns!) > 0">
-            <div class="card" style="width: 18rem;">
+            <div class="card" appButtonSensitive style="width: 18rem;">
                 <img class="card-img-top" src="{{user.photoURL}}" alt="">
                 <div class="card-body">
                     <h5 class="card-title">{{user.name}}</h5>

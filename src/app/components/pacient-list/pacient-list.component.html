@@ -12,7 +12,7 @@
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let user of users; index as i">
+        <tr appButtonSensitive *ngFor="let user of users; index as i">
             <th scope="row">{{ i + 1 }}</th>
             <td>{{ user.name }}</td>
             <td>{{ user.lastName }}</td>
@@ -25,7 +25,7 @@
 <div class="menu" *ngIf="isCard">
     <div class="row" *ngFor="let user of users; index as i">
         <div class="column" (click)="downloadTurns(user)">
-            <div class="card" style="width: 18rem;">
+            <div class="card" appButtonSensitive style="width: 18rem;">
                 <img class="card-img-top" src="{{user.photoURL}}" alt="">
                 <div class="card-body">
                     <h5 class="card-title">{{user.name}}</h5>

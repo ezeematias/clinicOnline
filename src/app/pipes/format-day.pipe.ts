@@ -6,7 +6,7 @@ import { Summary } from '../entities/summary';
 })
 export class FormatDayPipe implements PipeTransform {
 
-  transform(value: any, ...args: unknown[]): unknown {
+  transform(value: any, ...args: unknown[]): string {
     let time = value.date;
 
     const fireBaseTime = new Date(

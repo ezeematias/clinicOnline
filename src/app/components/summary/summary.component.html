@@ -73,7 +73,7 @@
         <div class="input-group-sm">
             <span class="input-group-text">Nombre | Número</span>
             <input type="text" aria-label="First name" class="form-control" formControlName="name5">
-            <input type="number" class="form-control" formControlName="value5">
+            <input type="text" numberOnly class="form-control" formControlName="value5">
         </div>
         <label>Sexto dato</label>
         <div class="input-group-sm">
@@ -85,8 +85,9 @@
             </div>
         </div>
     </form>
+    <app-captcha (captchaResult)="captcha"></app-captcha>
     <div class="modal-footer">
-        <button *ngIf="!disabled" type="button" class="btn btn-outline-success" [disabled]="!summary.valid"
-            (click)="saveSummary()">Guardar</button>
+        <button *ngIf="!disabled" type="button" class="btn btn-outline-success"
+            [disabled]="!summary.valid" (click)="pruba()">Guardar</button>
     </div>
 </div>

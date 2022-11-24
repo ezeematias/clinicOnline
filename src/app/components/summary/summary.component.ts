@@ -65,6 +65,8 @@ export class SummaryComponent implements OnInit {
   destdata: any;
   newSummary = new Summary();
   disabled: boolean = false;
+  captcha: boolean = false;
+
 
   getValue(value: string): AbstractControl {
     return this.summary.get(value) as FormGroup;
@@ -154,5 +156,9 @@ export class SummaryComponent implements OnInit {
 
   close() {
     this.modalService.dismissAll();
+  }
+
+  pruba(){
+    console.log(this.captcha);
   }
 }

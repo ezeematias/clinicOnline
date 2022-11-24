@@ -17,6 +17,7 @@ export class SummaryListComponent implements OnInit {
   public listSummary: Summary[] = [];
   @Input() user!: User;
   isResume = true;
+  textFill: string = '';
   listSpecialty: string[] = [];
 
   constructor(private userService: UsersService, private modal: ModalService) { }

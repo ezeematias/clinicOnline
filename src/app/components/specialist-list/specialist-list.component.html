@@ -11,7 +11,7 @@
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let user of specialists; index as i">
+        <tr appButtonSensitive *ngFor="let user of specialists; index as i">
             <th scope="row">{{ i + 1 }}</th>
             <td>{{ user.name }}</td>
             <td>{{ user.lastName }}</td>

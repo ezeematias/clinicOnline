@@ -7,24 +7,34 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 })
 export class CaptchaComponent implements OnInit {
 
-  captcha: any = []
+  captcha: any = [];
   enteredCaptcha: any;
+  generateCaptcha: any;
+  captchaForDirective: any;
   @Output() captchaResult = new EventEmitter<boolean>();
   constructor() { }
 
   ngOnInit(): void {
-    this.createCaptcha();
+    //this.createCaptcha();
   }
 
   onChange(value: any) {
     if (value.length == 6) {
       setTimeout(() => {
-        this.validateCaptcha();
+        //this.validateCaptcha();
+        this.captchaForDirective = this.enteredCaptcha;
       }, 200)
     }
   }
 
   createCaptcha() {
+    this.generateCaptcha = true;
+    // setTimeout(() => {
+    //   this.generateCaptcha = false;
+    // }, 200)
+
+    /*
+    // Captcha Viejo
     const activeCaptcha = document.getElementById("captcha");
     let captcha = []
     for (let q = 0; q < 6; q++) {
@@ -36,11 +46,19 @@ export class CaptchaComponent implements OnInit {
     }
     const theCaptcha = captcha.join("");
     this.captcha = theCaptcha;
-    activeCaptcha!.innerHTML = `${theCaptcha}`;
+    activeCaptcha!.innerHTML = `${theCaptcha}`;*/
+  }
+  /*
+    validateCaptcha() {
+      this.captchaResult.emit(this.enteredCaptcha === this.captcha);
+    }*/
+
+  newCaptcha(captcha: any) {
+    this.captcha = captcha;
   }
 
-  validateCaptcha() {
-    this.captchaResult.emit(this.enteredCaptcha === this.captcha);
+  captchaResultDirective(captchaResult: any) {
+    this.captchaResult.emit(captchaResult);
   }
 
 }

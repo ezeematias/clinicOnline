@@ -17,7 +17,7 @@
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let user of (turns | turnsFilter : textFill : ['date','specialist','specialty'] ); index as i">
+        <tr appButtonSensitive *ngFor="let user of (turns | turnsFilter : textFill : ['date','specialist','specialty'] ); index as i">
             <th scope="row">{{ i + 1 }}</th>
             <td>{{user | tunsDay}} {{ user | tunsHour }}</td>
             <td>{{ user.specialist }}</td>

@@ -1,5 +1,8 @@
 import { Injectable } from '@angular/core';
 import Swal, { SweetAlertResult } from 'sweetalert2';
+import { CaptchaComponent } from '../components/captcha/captcha.component';
+import { CaptchaDirective } from '../directives/captcha.directive';
+import { Captcha2Directive } from '../directives/captcha2.directive';
 import { Specialty } from '../entities/specialty';
 
 export type icon = 'warning' | 'error' | 'success' | 'info' | 'question';
@@ -162,18 +165,19 @@ export class ModalService {
   }
 
   async modarlCaptcha(): Promise<boolean> {
-    let captcha = []
-    for (let q = 0; q < 6; q++) {
-      if (q % 2 == 0) {
-        captcha[q] = String.fromCharCode(Math.floor(Math.random() * 26 + 65));
-      } else {
-        captcha[q] = Math.floor(Math.random() * 10 + 0);
-      }
-    }
-    const theCaptcha = captcha.join("");
+    // let captcha = []
+    // for (let q = 0; q < 6; q++) {
+    //   if (q % 2 == 0) {
+    //     captcha[q] = String.fromCharCode(Math.floor(Math.random() * 26 + 65));
+    //   } else {
+    //     captcha[q] = Math.floor(Math.random() * 10 + 0);
+    //   }
+    // }
+    // const theCaptcha = captcha.join("");
+    let captcha2 = new Captcha2Directive().createCaptcha();
 
     const { value: result } = await Swal.fire({
-      title: `Ingrese el código \n\n${theCaptcha}`,
+      title: `Ingrese el código \n\n${captcha2}`,
       input: 'text',
       text: '¡No sea un robot!',
       icon: 'info',
@@ -181,7 +185,7 @@ export class ModalService {
       cancelButtonText: 'Cancelar',
       confirmButtonText: 'Confirmar',
       inputValidator: (value) => {
-        if (!value || value != theCaptcha) {
+        if (!value || value != captcha2) {
           return 'El código ingresado es incorrecto.'
         } else {
           return null;

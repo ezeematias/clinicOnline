@@ -31,6 +31,7 @@ import { SpecialtyComponent } from './components/specialty/specialty.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ImgChangeDirective } from './directives/img-change.directive';
 import { StatusTraPipe } from './pipes/status-tra.pipe';
+import { Captcha2Directive } from './directives/captcha2.directive';
 
 const firebaseConfig = {
   projectId: 'eu-cliniconline',
@@ -56,6 +57,7 @@ const firebaseConfig = {
     WelcomeComponent,
     SpecialtyComponent,
     ImgChangeDirective,
+    Captcha2Directive,
 
   ],
   imports: [

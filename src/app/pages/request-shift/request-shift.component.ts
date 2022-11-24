@@ -110,14 +110,33 @@ export class RequestShiftComponent implements OnInit {
         minutes: this.turnSelected.minutes,
         status: 'Reserved',
       }
-      this.userService.addTurn(newTurn).then(() => {
-        this.modal.modalSimple("Reserva", "Se reservó el turno correctamente", 'success');
-        this.router.navigate(['/home/turns'])
-      }).catch(error => { console.log(error); this.modal.modalMessage("Hubo un error con el usuario logueado. \nCierre sesión y vuelva a iniciar", 'error') }).finally(() => this.spinnerService.hide())
+      let captcha = this.getCaptcha();
+      if (captcha == true) {
+        this.modal.modarlCaptcha().then(res => {
+          if (res) {
+            this.userService.addTurn(newTurn).then(() => {
+              this.modal.modalSimple("Reserva", "Se reservó el turno correctamente", 'success');
+              this.router.navigate(['/home/turns'])
+            }).catch(error => { console.log(error); this.modal.modalMessage("Hubo un error con el usuario logueado. \nCierre sesión y vuelva a iniciar", 'error') }).finally(() => this.spinnerService.hide())
+          } else {
+            this.spinnerService.hide();
+          }
+        })
+      } else {
+        this.userService.addTurn(newTurn).then(() => {
+          this.modal.modalSimple("Reserva", "Se reservó el turno correctamente", 'success');
+          this.router.navigate(['/home/turns'])
+        }).catch(error => { console.log(error); this.modal.modalMessage("Hubo un error con el usuario logueado. \nCierre sesión y vuelva a iniciar", 'error') }).finally(() => this.spinnerService.hide())
+      }
     } else {
       this.modal.modalMessage("Debe seleccionar el turno correctamente", 'error');
       this.spinnerService.hide();
     }
+  }
+
+  getCaptcha() {
+    let captcha = JSON.parse(sessionStorage.getItem('captcha')!);
+    return captcha ? captcha : null;
   }
 
   loadSpecialist() {

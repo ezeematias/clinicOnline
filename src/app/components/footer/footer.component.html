@@ -1,6 +1,9 @@
-<footer>
+<footer *ngIf="getRole()">
     <div class="container-fluid">
-    <a class="navbar-brand" routerLink="quien-soy"> <img class="imgLogo" src="../../../assets/icon.png" > Quien soy</a>      
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault"
+                        formControlName="value6" [checked]="isCaptcha" (click)="captchaChange()"> Captcha
+                </div>     
     &copy; Ezequiel Matías Unía
     </div>
 </footer>

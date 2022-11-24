@@ -31,7 +31,7 @@ export class TurnsDayComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.userService.getAllFinallyTurns().then(res => {
+    this.userService.getAllTurns().then(res => {
       this.turnRes = res;
       this.turnAll = [...this.turnRes];
       this.turnAll.forEach(turn => this.dates.push(turn.dayWeek));
@@ -61,6 +61,21 @@ export class TurnsDayComponent implements OnInit {
   }
 
   downloadData() {
+    /*
+    let DATA = <HTMLElement>document.getElementById('pdf');
+
+    html2canvas(DATA).then((canvas) => {
+      let fileWidth = 208;
+      let fileHeight = (canvas.height * fileWidth) / canvas.width;
+
+      const FILEURI = canvas.toDataURL('image/png');
+      let PDF = new jsPDF('p', 'mm', 'a4');
+      let position = 0;
+      PDF.addImage(FILEURI, 'PNG', 0, position, fileWidth, fileHeight);
+      var nombreArchivo = 'turnosxEspecialidad.pdf';
+      PDF.save(nombreArchivo);
+    });
+*/
     var imgData;
     html2canvas(document.getElementById('chart1')!).then(function (canvas) {
       imgData = canvas.toDataURL('image');

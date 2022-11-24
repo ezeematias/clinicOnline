@@ -32,8 +32,7 @@ export class NavbarComponent implements OnInit {
   }
 
   getRole() {
-    let user: User = JSON.parse(sessionStorage.getItem('user')!);
-   
+    let user: User = JSON.parse(sessionStorage.getItem('user')!);   
     return user ? user.role : ''
   }
 

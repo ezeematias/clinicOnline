@@ -133,12 +133,29 @@ export class SummaryComponent implements OnInit {
     }
   }
 
+  getCaptcha() {
+    let captcha = JSON.parse(sessionStorage.getItem('captcha')!);
+    return captcha ? captcha : null;
+  }
+
   saveSummary() {
     if (this.summary.valid) {
-      this.spinnerService.show();
-      this.userService.updateTurnsFinnally(this.turn, 'Finalized');
-      this.userService.addSummary(this.summary.value, this.turn).then(() => { this.modal.modalSimple("Finalizado", "Se finalizó el turno correctamente", "success"); }).finally(() => this.spinnerService.hide());
-      this.modalService.dismissAll();
+      let captcha = this.getCaptcha();
+      if (captcha == true) {
+        this.modal.modarlCaptcha().then(res => {
+          if (res) {
+            this.spinnerService.show();
+            this.userService.updateTurnsFinnally(this.turn, 'Finalized');
+            this.userService.addSummary(this.summary.value, this.turn).then(() => { this.modal.modalSimple("Finalizado", "Se finalizó el turno correctamente", "success"); }).finally(() => this.spinnerService.hide());
+            this.modalService.dismissAll();
+          }
+        })
+      } else {
+        this.spinnerService.show();
+        this.userService.updateTurnsFinnally(this.turn, 'Finalized');
+        this.userService.addSummary(this.summary.value, this.turn).then(() => { this.modal.modalSimple("Finalizado", "Se finalizó el turno correctamente", "success"); }).finally(() => this.spinnerService.hide());
+        this.modalService.dismissAll();
+      }
     }
   }
 
@@ -158,7 +175,7 @@ export class SummaryComponent implements OnInit {
     this.modalService.dismissAll();
   }
 
-  pruba(){
+  pruba() {
     console.log(this.captcha);
   }
 }

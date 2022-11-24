@@ -119,7 +119,25 @@ export class ScheduleComponent implements OnInit, OnChanges {
   enable(day: string) {
   }
 
+  getCaptcha() {
+    let captcha = JSON.parse(sessionStorage.getItem('captcha')!);
+    return captcha ? captcha : null;
+  }
+
   sendSchedule() {
+    let captcha = this.getCaptcha();
+    if (captcha == true) {
+      this.modal.modarlCaptcha().then(res => {
+        if (res) {
+          this.sendScheduleOrigin();
+        }
+      });
+    } else {
+      this.sendScheduleOrigin();
+    }
+  }
+
+  sendScheduleOrigin() {
     this.scheduleMan.schedule = [];
     let output = true;
     this.scheduleMan.specialist = this.specialistParent;

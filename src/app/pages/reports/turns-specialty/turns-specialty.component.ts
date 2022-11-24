@@ -74,7 +74,7 @@ export class TurnsSpecialtyComponent implements OnInit {
       doc.text(`Clínica Online`, 70, 20);
       doc.text(`${date}`, 150, 10);
       doc.text(`Turnos por especialidad`, 70, 30);
-      doc.addImage(imgData, 'PNG', 10, 50, 200, 200);
+      doc.addImage(imgData, 'PNG', -50, 50, 300, 200);
       doc.save('turnos-especialidad.pdf');
     });
   }

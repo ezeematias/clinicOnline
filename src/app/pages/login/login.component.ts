@@ -49,6 +49,7 @@ export class LoginComponent implements OnInit {
       }
       if (this.userService.userLogged.enable == true) {
         sessionStorage.setItem('user', JSON.stringify(this.userService.userLogged));
+        sessionStorage.setItem('captcha', 'true');
         this.auth.login(user).then(() => this.logService.registerUserLoginTime(this.form)).catch(error => { this.modal.modalMessage(error.message, "error"); });
       } else if (this.userService.userLogged.enable == false) {
         this.modal.modalSimple("Usuario pendiente de habilitación", "Hablar con un administrador", "info");

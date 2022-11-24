@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import jsPDF from 'jspdf';
+import { NumberOnlyDirective } from 'src/app/directives/number-only.directive';
 import { Summary } from 'src/app/entities/summary';
 import { User } from 'src/app/entities/user';
 import { DayFormatPipe } from 'src/app/pipes/day-format.pipe';

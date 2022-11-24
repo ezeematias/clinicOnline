@@ -1,18 +1,30 @@
-.navbar-brand{
+.navbar-brand {
     display: flex;
-    color: white;
+    color: #006bdb;
+    font-style: initial;
     font-size: 100%;
+    font-weight: bold;
     align-items: center;
-
 }
 
-.container-fluid{
-display: flex;
-justify-content: space-between;
-align-items: center;
+footer {
+    position: fixed;
+    background-color: #463934;
+    width: 100%;
+    color: white;
+    text-align: right;
+    padding: 5px;
+    text-justify: auto;
+    bottom: 0;
 }
 
-.imgLogo{
+.container-fluid {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.imgLogo {
     width: 5%;
     margin-right: 5%;
 }

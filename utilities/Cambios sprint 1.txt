@@ -1,0 +1,8 @@
+Login
+3 pacientes
+1 administradores
+2 especialistas
+botones rectangulares y imagen de usuario
+
+Registro
+2 Botones rectangulares con imagen (Imagen paciente / especialista)

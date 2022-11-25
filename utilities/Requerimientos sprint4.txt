@@ -1,0 +1,3 @@
+Grupo 7 * Gráficos
+- Usar la librería ChartistJS
+- Cantidad de turnos por especialidad en gráfico de barras
